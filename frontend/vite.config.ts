@@ -8,6 +8,7 @@ export default defineConfig({
 	server: { host: true },
 	build: {
 		"target": "es2020",
+		emptyOutDir: true,
 		// servir el bundle en el backend
 		"outDir": "../backend/estatico"
 	}
