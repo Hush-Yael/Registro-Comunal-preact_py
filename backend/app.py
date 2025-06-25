@@ -4,6 +4,7 @@ from webview import create_window, start
 from threading import Thread, Event
 from flask import Flask
 from flask_cors import CORS
+from constantes import RUTA_BASE
 
 ARGS = sys.argv[1:]
 PREVIEW = "--preview" in ARGS
@@ -43,17 +44,9 @@ if __name__ == "__main__":
             "Configuración del backend completada, iniciando la interfaz de usuario..."
         )
 
-        # Se obtiene la ruta de la interfaz
-        if not PREVIEW:
-            # Ruta de la aplicación compilada con PyInstaller
-            ruta_base = sys._MEIPASS  # type: ignore
-        else:
-            # Ruta de la aplicación no compilada
-            ruta_base = os.path.dirname(os.path.abspath(__file__))
-
         create_window(
             "Flask example",
-            url=os.path.join(ruta_base, "estatico", "index.html"),
+            url=os.path.join(RUTA_BASE, "estatico", "index.html"),
             text_select=True,
             zoomable=True,
         )
