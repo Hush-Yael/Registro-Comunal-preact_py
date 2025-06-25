@@ -5,7 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
 	plugins: [preact(), tailwindcss()],
-	esbuild: {
-		target: 'es2020'
+	server: { host: true },
+	build: {
+		"target": "es2020",
+		// servir el bundle en el backend
+		"outDir": "../backend/estatico"
 	}
 });
