@@ -1,0 +1,14 @@
+{
+  "name": "registro-comunal",
+  "version": "0.0.0",
+  "scripts": {
+    "build-frontend": "cd frontend && npm run build",
+    "build": "npm run clean && npm run build-frontend && .\\backend\\.venv\\Scripts\\pyinstaller build-windows.spec",
+    "clean": "if exist dist rd /S /Q dist & if exist build rd /S /Q build & if exist gui rd /S /Q gui",
+    "dev": "cd frontend && npm run dev",
+    "init-frontend": "cd frontend && npm install",
+    "init-backend": "cd backend && python -m venv .venv && .\\.venv\\Scripts\\pip install -r .\\requerimientos.txt",
+    "preview": "npm run build-frontend && .\\backend\\.venv\\Scripts\\python backend\\app.py --preview --debug"
+  },
+  "packageManager": "pnpm@10.6.4"
+}
