@@ -51,13 +51,14 @@ if __name__ == "__main__":
             # Ruta de la aplicación no compilada
             ruta_base = os.path.dirname(os.path.abspath(__file__))
 
-            create_window(
-                "Flask example",
-                url=os.path.join(ruta_base, "estatico", "index.html"),
-                text_select=True,
-                zoomable=True,
-            )
-            start(debug=DEBUG)
+        create_window(
+            "Flask example",
+            url=os.path.join(ruta_base, "estatico", "index.html"),
+            text_select=True,
+            zoomable=True,
+        )
+
+        start(debug=DEBUG)
     # se inicia el servidor normalmente, para desarrollo
     else:
         app.run(host="localhost", debug=DEBUG, port=1144)
