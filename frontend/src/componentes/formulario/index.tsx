@@ -22,8 +22,8 @@ type FormularioProps<T extends Record<string, unknown>> = Omit<
   JSX.IntrinsicElements["form"],
   "onSubmit" | "onError"
 > & {
-  onSuccess?: (props: HandlerEvent<T>) => void | Promise<void>;
-  onError?: (props: HandlerEvent<T>) => void | Promise<void>;
+  onSuccess?: (props: HandlerEvent<T>) => any | Promise<any>;
+  onError?: (props: HandlerEvent<T>) => any | Promise<any>;
   datos: T;
   rutaApi: string;
 };
