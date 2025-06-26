@@ -10,16 +10,15 @@ import RegistroUsuarios from "./vistas/registro-usuarios";
 import RegistrosComunidad from "./vistas/registros-comunidad";
 import Usuarios from "./vistas/lista-usuarios";
 
-export function App() {
-	const sesion = signal({
-		"usuario": "",
-		rol: ""
-	})
+export const sesion = signal({
+  usuario: "",
+  rol: "",
+});
 
+export function App() {
 	return (
 		<LocationProvider>
 			<ErrorBoundary>
-				<ContextoSesion value={sesion}>
 					<main>
 						{!sesion.value.usuario ?
 							<Router>
@@ -40,7 +39,6 @@ export function App() {
 							</Router>
 						}
 					</main>
-				</ContextoSesion>
 			</ErrorBoundary>
 		</LocationProvider >
 	);
