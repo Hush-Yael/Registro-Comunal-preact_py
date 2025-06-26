@@ -76,3 +76,32 @@ button:disabled {
 		opacity: 1;
 	}
 }
+
+.carga {
+	--speed: .8s;
+	--bg-opacity: 0.1;
+	transform-origin: center;
+	animation: rotate var(--speed) linear infinite;
+	will-change: transform;
+	overflow: visible;
+}
+
+.carga .car {
+	fill: none;
+	stroke-dasharray: 25, 75;
+	stroke-dashoffset: 0;
+	stroke-linecap: round;
+	transition: stroke 0.5s ease;
+}
+
+.carga .track {
+	fill: none;
+	opacity: var(--bg-opacity);
+	transition: stroke 0.5s ease;
+}
+
+@keyframes rotate {
+	100% {
+		transform: rotate(360deg);
+	}
+}
