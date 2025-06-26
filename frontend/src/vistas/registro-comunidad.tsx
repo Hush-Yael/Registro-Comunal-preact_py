@@ -20,8 +20,8 @@ export default () => {
       <Formulario
         rutaApi="registro-comunidad"
         datos={{
-          nombres: "123",
-          apellidos: "123",
+          nombres: "",
+          apellidos: "",
           cedula: "",
           fecha_nacimiento: "",
           patologia: "",
