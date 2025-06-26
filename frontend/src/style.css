@@ -48,3 +48,31 @@ button:disabled {
 	cursor: not-allowed;
 	opacity: 0.5;
 }
+
+
+.col {
+	display: flex;
+	flex-direction: column;
+}
+
+.btn {
+	@apply flex items-center justify-center gap-2 p-1.5 px-2 rounded font-bold transition-colors;
+}
+
+.btn-primario {
+	@apply bg-neutral-900 hover:bg-neutral-800 text-white
+}
+
+.btn-secundario {
+	@apply bg-[#F2F2F2] hover:bg-neutral-300 text-neutral-500
+}
+
+@keyframes aparecer {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
