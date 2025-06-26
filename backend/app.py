@@ -5,14 +5,19 @@ from threading import Thread, Event
 from flask import Flask
 from flask_cors import CORS
 from constantes import RUTA_BASE
+from api.index import api
+
 
 ARGS = sys.argv[1:]
 PREVIEW = "--preview" in ARGS
 DEBUG = "--debug" in ARGS
 
+
 app = Flask(__name__)
 CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
+
+app.register_blueprint(api)
 
 
 def iniciar_flask(evento_listo):
