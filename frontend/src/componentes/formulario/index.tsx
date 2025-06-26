@@ -120,6 +120,37 @@ export default <T extends Record<string, unknown>>(
   );
 };
 
+export const Subir = (props: JSX.IntrinsicElements["button"]) => {
+  const { estado } = useContext(contextoFormulario);
+
+  return (
+    <button
+      {...props}
+      class={`btn btn-primario ${props.class || ""}`}
+      disabled={estado.value === "subiendo"}
+      type="submit"
+    >
+      {props.children}
+    </button>
+  );
+};
+
+export const Reiniciar = (props: JSX.IntrinsicElements["button"]) => {
+  const { estado, datos, datosIniciales } = useContext(contextoFormulario);
+
+  return (
+    <button
+      {...props}
+      class={`btn btn-secundario ${props.class || ""}`}
+      disabled={estado.value === "subiendo"}
+      type="reset"
+      onClick={() => (datos.value = datosIniciales.current)}
+    >
+      {props.children}
+    </button>
+  );
+};
+
 export const MensajeExito = (props: { texto: string }) => {
   const { estado } = useContext(contextoFormulario);
   return (
