@@ -24,7 +24,7 @@ export default (props: InputProps) => (
 );
 
 export const Input = (
-  props: JSX.IntrinsicElements["input"] & {
+  props: Omit<JSX.IntrinsicElements["input"], "value"> & {
     descripcion?: string;
     campo: string;
   }
@@ -59,6 +59,7 @@ export const Input = (
   return (
     <input
       {...props}
+      value={datos.value[props.campo] as string}
       class="w-full p-0.5 px-2 rounded border border-neutral-300 bg-neutral-100 aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500"
       aria-invalid={Boolean(error)}
       aria-describedby={
