@@ -25,7 +25,7 @@ def iniciar_flask(evento_listo):
         # Señal que el backend se ha iniciado
         evento_listo.set()
         # Se inicia el servidor
-        app.run(host="localhost", port=1144)
+        app.run(host="0.0.0.0", port=1144)
     except Exception as e:
         print(f"Configuración del backend fallida: {str(e)}")
         evento_listo.set()
@@ -59,4 +59,4 @@ if __name__ == "__main__":
         start(debug=DEBUG)
     # se inicia el servidor normalmente, para desarrollo
     else:
-        app.run(host="localhost", debug=DEBUG, port=1144)
+        app.run(host="0.0.0.0", debug=DEBUG, port=1144)
