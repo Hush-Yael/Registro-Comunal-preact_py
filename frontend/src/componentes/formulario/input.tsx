@@ -2,18 +2,18 @@ import type { JSX } from "preact/jsx-runtime";
 import { contextoFormulario } from ".";
 import { useContext, useRef } from "preact/hooks";
 import { TargetedEvent } from "preact/compat";
-import { useSignalEffect } from "@preact/signals";
 
 export type InputProps = JSX.IntrinsicElements["input"] & {
   label: string;
   campo: string;
+  inputClass?: string;
   id?: string;
   descripcion?: string;
   error?: string;
 };
 
 export default (props: InputProps) => (
-  <div class="col gap-1.5">
+  <div class={`col gap-1.5 ${props.class || ""}`}>
     <label htmlFor={props.id}>
       <p class="text-neutral-700">{props.label}</p>
       <Input {...props} />
@@ -26,6 +26,7 @@ export default (props: InputProps) => (
 export const Input = (
   props: Omit<JSX.IntrinsicElements["input"], "value"> & {
     descripcion?: string;
+    inputClass?: string;
     campo: string;
   }
 ) => {
@@ -60,7 +61,9 @@ export const Input = (
     <input
       {...props}
       value={datos.value[props.campo] as string}
-      class="w-full p-0.5 px-2 rounded border border-neutral-300 bg-neutral-100 aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500"
+      class={`w-full p-0.5 px-2 rounded border border-neutral-300 bg-neutral-100 aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500 ${
+        props.inputClass || ""
+      }`}
       aria-invalid={Boolean(error)}
       aria-describedby={
         props.id && props.descripcion ? props.id + "-desc" : null
