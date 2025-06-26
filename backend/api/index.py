@@ -5,24 +5,21 @@ from constantes import DatosUsuario, ErrorDeValidacion
 api = Blueprint("api", __name__)
 
 
-@api.route("/api/login", methods=["POST"])
-def login():
+def fetch(func, datos):
     try:
-        return jsonify(iniciar_sesion(DatosUsuario(request.json)))  # type: ignore
+        return jsonify(func(datos))
     except Exception as e:
         if isinstance(e, ErrorDeValidacion):
             return jsonify(e.args[0]), 400
         print(f"Ocurrió un error inesperado: {e}")
         return abort(500)
+
+
+@api.route("/api/login", methods=["POST"])
+def login():
+    return fetch(iniciar_sesion, DatosUsuario(request.json))  # type: ignore
 
 
 @api.route("/api/registro", methods=["POST"])
 def registro():
-    try:
-        registrar_usuario(DatosUsuario(request.json))  # type: ignore
-        return jsonify({"status": "ok"})
-    except Exception as e:
-        if isinstance(e, ErrorDeValidacion):
-            return jsonify(e.args[0]), 400
-        print(f"Ocurrió un error inesperado: {e}")
-        return abort(500)
+    return fetch(registrar_usuario, DatosUsuario(request.json))  # type: ignore
