@@ -19,8 +19,9 @@ export function App() {
 	return (
 		<LocationProvider>
 			<ErrorBoundary>
-					<main>
-						{!sesion.value.usuario ?
+        <main class="col p-4 m-auto py-5 px-6 rounded-xl border border-neutral-200 bg-white shadow-lg">
+          {!sesion.value.usuario ? (
+            // @ts-expect-error
 							<Router>
 								<Route path="/registro" component={RegistroUsuarios} />
 								<Route path="*" component={Login} />
