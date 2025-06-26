@@ -1,5 +1,9 @@
 from flask import Blueprint, abort, jsonify, request
-from api.db.subida import iniciar_sesion, registrar_usuario
+from api.db.subida import (
+    iniciar_sesion,
+    registrar_usuario,
+    verificar_cedula_existente,
+)
 from constantes import DatosUsuario, ErrorDeValidacion
 
 api = Blueprint("api", __name__)
@@ -23,3 +27,9 @@ def login():
 @api.route("/api/registro", methods=["POST"])
 def registro():
     return fetch(registrar_usuario, DatosUsuario(request.json))  # type: ignore
+
+
+@api.route("/api/verificar-cedula-comunidad/<cedula>", methods=["HEAD"])
+def verificar_cedula(cedula: str):
+    existe = verificar_cedula_existente(int(cedula))
+    return ("", 404) if not existe else ("", 204)

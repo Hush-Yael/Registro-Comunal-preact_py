@@ -89,3 +89,18 @@ def iniciar_sesion(datos: DatosUsuario) -> str:
         )
 
     return datos_db[1]
+
+
+def verificar_cedula_existente(cedula: int):
+    conn, cursor = abrir_db()
+
+    cedula_db = (
+        cursor.execute(
+            "SELECT cedula FROM comunidad WHERE cedula = ? LIMIT 1",
+            (cedula,),
+        )
+    ).fetchone() or ()
+
+    conn.close()
+
+    return len(cedula_db) > 0
