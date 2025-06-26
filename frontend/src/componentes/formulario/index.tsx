@@ -124,7 +124,7 @@ export const MensajeExito = (props: { texto: string }) => {
   const { estado } = useContext(contextoFormulario);
   return (
     <Alerta
-      variante="exito"
+      variante="éxito"
       texto={props.texto}
       visible={estado.value === "exito"}
     />
