@@ -29,7 +29,7 @@ def abrir_db():
          fecha_nacimiento TEXT,
          patologia TEXT,
          direccion TEXT,
-         numero_casa INTEGER
+         numero_casa TEXT
       )
    """)
     return (conn, cursor)
