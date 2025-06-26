@@ -3,8 +3,9 @@ from api.db.subida import (
     iniciar_sesion,
     registrar_usuario,
     verificar_cedula_existente,
+    añadir_registro_comunidad,
 )
-from constantes import DatosUsuario, ErrorDeValidacion
+from constantes import DatosUsuario, ErrorDeValidacion, DatosComunidad
 
 api = Blueprint("api", __name__)
 
@@ -33,3 +34,8 @@ def registro():
 def verificar_cedula(cedula: str):
     existe = verificar_cedula_existente(int(cedula))
     return ("", 404) if not existe else ("", 204)
+
+
+@api.route("/api/registro-comunidad", methods=["POST"])
+def registro_comunidad():
+    return fetch(añadir_registro_comunidad, DatosComunidad(request.json))  # type: ignore

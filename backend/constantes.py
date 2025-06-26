@@ -19,6 +19,16 @@ class DatosUsuario(TypedDict):
     contraseña: str
 
 
+class DatosComunidad(TypedDict):
+    nombres: str
+    apellidos: str
+    cedula: int | str
+    fecha_nacimiento: str
+    patologia: str
+    direccion: str
+    numero_casa: int | str
+
+
 # para mostrar errores en los campos
 class ErrorDeValidacion(Exception):
     campo: str  # el identificador del campo ("id"), para mostrar el mensaje debajo

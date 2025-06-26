@@ -1,5 +1,5 @@
 from .apertura import abrir_db
-from constantes import DatosUsuario, ErrorDeValidacion
+from constantes import DatosComunidad, DatosUsuario, ErrorDeValidacion
 
 ERROR_UNICO = "UNIQUE constraint failed"
 ERROR_DE_VERIFICACIÓN = "CHECK constraint failed"
@@ -104,3 +104,60 @@ def verificar_cedula_existente(cedula: int):
     conn.close()
 
     return len(cedula_db) > 0
+
+
+def añadir_registro_comunidad(datos: DatosComunidad):
+    conn, cursor = abrir_db()
+
+    try:
+        cursor.execute(
+            "INSERT INTO comunidad (nombres, apellidos, cedula, fecha_nacimiento, patologia, direccion, numero_casa) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (
+                datos["nombres"],
+                datos["apellidos"],
+                datos["cedula"],
+                datos["fecha_nacimiento"],
+                datos["patologia"],
+                datos["direccion"],
+                datos["numero_casa"],
+            ),
+        )
+        conn.commit()
+    except Exception as e:
+        error = e.args[0]
+
+        # el único campo único es la cédula
+        if ERROR_UNICO in error:
+            raise ErrorDeValidacion(
+                {
+                    "campo": "cedula",
+                    "mensaje": "Ya existe un registro con esa cédula",
+                }
+            )
+
+        # errores de integridad de datos
+        elif ERROR_DE_VERIFICACIÓN in error:
+            if "nombres" in error or "apellidos" in error:
+                campo = "nombres" if "nombres" in error else "apellidos"
+
+                raise ErrorDeValidacion(
+                    {
+                        "campo": campo,
+                        "mensaje": f"Los {campo} deben tener al menos 3 caracteres, sin espacios a los lados",
+                    }
+                )
+            elif "cedula" in error:
+                raise ErrorDeValidacion(
+                    {
+                        "campo": "cedula",
+                        "mensaje": "La cédula debe ser mayor a 0",
+                    }
+                )
+            # error desconocido, no debería pasar
+            else:
+                raise e
+        # error desconocido, no debería pasar
+        else:
+            raise e
+    finally:
+        conn.close()
