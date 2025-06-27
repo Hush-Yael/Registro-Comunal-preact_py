@@ -4,6 +4,7 @@ import { useRef, MutableRef } from "preact/hooks";
 import { signal, Signal, useSignalEffect } from "@preact/signals";
 import Alerta from "../alerta";
 import { useContext } from "preact/hooks";
+import { rutaApi } from "../../../utilidades";
 
 export type ContextoFormulario<T extends Record<string, unknown>> = {
   datos: Signal<T>;
@@ -64,8 +65,7 @@ export default <T extends Record<string, unknown>>(
           try {
             const respuesta = await fetch(
               // se adapta la url dependiendo de si se usa el servidor local o el de área local
-              `${location.origin.replace(/:\d+/, ":1144")}/api/` +
-                props.rutaApi,
+              rutaApi(props.rutaApi),
               {
                 method: "POST",
                 headers: {
