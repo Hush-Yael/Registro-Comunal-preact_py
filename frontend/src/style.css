@@ -60,11 +60,11 @@ button:disabled {
 }
 
 .btn-primario {
-	@apply bg-neutral-900 hover:bg-neutral-800 text-white
+	@apply bg-neutral-900 not-disabled:hover:bg-neutral-800 text-white
 }
 
 .btn-secundario {
-	@apply bg-[#F2F2F2] hover:bg-neutral-300 text-neutral-500
+	@apply bg-[#F2F2F2] not-disabled:hover:bg-neutral-300 text-neutral-500
 }
 
 @keyframes aparecer {
