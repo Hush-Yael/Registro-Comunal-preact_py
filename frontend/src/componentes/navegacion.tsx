@@ -1,0 +1,36 @@
+import { JSX } from "preact";
+import { sesion } from "..";
+import Iconos from "./iconos";
+import { useLocation } from "preact-iso";
+
+export default () =>
+  sesion.value.usuario && (
+    <nav class="flex items-center gap-3 bg-white p-1.5 px-2 rounded-md border border-neutral-200 shadow-lg">
+      <A href="/">
+        <Iconos.Campo />
+        Formulario
+      </A>
+      <A href="/usuarios">
+        <Iconos.Personas class="size-6" />
+        Usuarios
+      </A>
+      <A href="/registros">
+        <Iconos.Registros />
+        Registros
+      </A>
+    </nav>
+  );
+
+const A = (props: JSX.IntrinsicElements["a"]) => {
+  const pathname = useLocation().path;
+
+  return (
+    <a
+      {...props}
+      class="flex items-center gap-2 aria-[current=page]:font-bold aria-[current=page]:bg-neutral-900 aria-[current=page]:text-white rounded-lg p-1 px-2.5"
+      aria-current={props.href === pathname ? "page" : null}
+    >
+      {props.children}
+    </a>
+  );
+};

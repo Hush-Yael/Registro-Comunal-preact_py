@@ -1,14 +1,20 @@
-import './style.css';
-import { render } from 'preact';
-import { signal } from '@preact/signals';
-import { LocationProvider, ErrorBoundary, Router, Route, useLocation } from 'preact-iso';
-import { ContextoSesion } from './contexto/sesion';
+import "./style.css";
+import { render } from "preact";
+import { signal } from "@preact/signals";
+import {
+  LocationProvider,
+  ErrorBoundary,
+  Router,
+  Route,
+  useLocation,
+} from "preact-iso";
 
+import Login_Registro from "./vistas/login-registro";
 import RegistroComunidad from "./vistas/registro-comunidad";
 import Login from "./vistas/login";
 import RegistroUsuarios from "./vistas/registro-usuarios";
 import RegistrosComunidad from "./vistas/registros-comunidad";
-import Usuarios from "./vistas/lista-usuarios";
+import Navegacion from "./componentes/navegacion";
 
 export const sesion = signal({
   usuario: "",
@@ -19,7 +25,8 @@ export function App() {
 	return (
 		<LocationProvider>
 			<ErrorBoundary>
-        <main class="col p-4 m-auto py-5 px-6 rounded-xl border border-neutral-200 bg-white shadow-lg">
+        <Navegacion />
+        <main class="col p-4 mx-auto py-5 px-6 rounded-xl border border-neutral-200 bg-white shadow-lg">
           {!sesion.value.usuario ? (
             // @ts-expect-error
 							<Router>
@@ -41,8 +48,8 @@ export function App() {
 						}
 					</main>
 			</ErrorBoundary>
-		</LocationProvider >
+    </LocationProvider>
 	);
 }
 
-render(<App />, document.getElementById('app'));
+render(<App />, document.getElementById("app"));
