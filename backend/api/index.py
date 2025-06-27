@@ -1,11 +1,13 @@
 from flask import Blueprint, abort, jsonify, request
-from api.db.subida import (
+from .db.obtencion import obtener_usuarios
+from .db.subida import (
     iniciar_sesion,
     registrar_usuario,
     verificar_cedula_existente,
     añadir_registro_comunidad,
 )
-from constantes import DatosUsuario, ErrorDeValidacion, DatosComunidad
+from constantes import DatosUsuario, ErrorDeValidacion, DatosComunidad, Sesion
+from .db.modificacion import cambiar_rol, eliminar_usuario
 
 api = Blueprint("api", __name__)
 
@@ -28,6 +30,23 @@ def login():
 @api.route("/api/registro", methods=["POST"])
 def registro():
     return fetch(registrar_usuario, DatosUsuario(request.json))  # type: ignore
+
+
+@api.route("/api/usuarios", methods=["GET"])
+def usuarios():
+    return obtener_usuarios()
+
+
+@api.route("/api/actualizar-rol", methods=["PUT"])
+def actualizar_rol():
+    cambiar_rol(Sesion(request.json))  # type: ignore
+    return ("", 200)
+
+
+@api.route("/api/eliminar-usuario/<nombre>", methods=["DELETE"])
+def _eliminar_usuario(nombre: str):
+    eliminar_usuario(nombre)
+    return ("", 200)
 
 
 @api.route("/api/verificar-cedula-comunidad/<cedula>", methods=["HEAD"])

@@ -33,3 +33,8 @@ class DatosComunidad(TypedDict):
 class ErrorDeValidacion(Exception):
     campo: str  # el identificador del campo ("id"), para mostrar el mensaje debajo
     mensaje: str
+
+
+class Sesion(TypedDict):
+    nombre: str
+    rol: str

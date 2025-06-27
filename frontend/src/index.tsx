@@ -11,9 +11,9 @@ import {
 
 import Login_Registro from "./vistas/login-registro";
 import RegistroComunidad from "./vistas/registro-comunidad";
-import Login from "./vistas/login";
 import RegistroUsuarios from "./vistas/registro-usuarios";
 import RegistrosComunidad from "./vistas/registros-comunidad";
+import ListaUsuarios from "./vistas/lista-usuarios";
 import Navegacion from "./componentes/navegacion";
 
 export const sesion = signal({
@@ -30,8 +30,7 @@ export function App() {
           {!sesion.value.usuario ? (
             // @ts-expect-error
 							<Router>
-								<Route path="/registro" component={RegistroUsuarios} />
-								<Route path="*" component={Login} />
+              <Route default component={Login_Registro} />
 							</Router>
 							:
 							<Router>
