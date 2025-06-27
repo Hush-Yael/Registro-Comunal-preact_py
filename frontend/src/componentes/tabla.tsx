@@ -4,7 +4,6 @@ import {
   type ColumnDef,
   getCoreRowModel,
   flexRender,
-  getPaginationRowModel,
   type TableOptions,
   type RowData,
 } from "@tanstack/react-table";
@@ -52,11 +51,10 @@ export default <
   }, []);
 
   const tabla = useReactTable({
+    ...props.options,
     columns: props.columnas,
     data: datos.value,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    ...props.options,
     meta: {
       datosSignal: datos,
     },
