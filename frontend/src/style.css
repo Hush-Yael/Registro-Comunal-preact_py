@@ -67,6 +67,10 @@ button:disabled {
 	@apply bg-[#F2F2F2] not-disabled:hover:bg-neutral-300 text-neutral-500
 }
 
+.btn-peligro {
+	@apply bg-red-500 not-disabled:hover:bg-red-600 text-white
+}
+
 @keyframes aparecer {
 	from {
 		opacity: 0;
