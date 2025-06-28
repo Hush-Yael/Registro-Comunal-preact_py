@@ -153,7 +153,7 @@ export default <
               onClick={() => tabla.firstPage()}
               disabled={!tabla.getCanPreviousPage()}
             >
-              <Iconos.DobleFlechaDer class="size-6 transform-[rotate(180deg)]" />
+                <Iconos.FlechaDerUltimo class="size-6 transform-[rotate(180deg)]" />
             </button>
             <button
               class="rounded bg-neutral-200"
@@ -174,7 +174,7 @@ export default <
               onClick={() => tabla.lastPage()}
               disabled={!tabla.getCanNextPage()}
             >
-              <Iconos.DobleFlechaDer class="size-6" />
+                <Iconos.FlechaDerUltimo class="size-6" />
             </button>
           </fieldset>
           <label htmlFor="page" class="flex items-center gap-2">

@@ -89,20 +89,6 @@ export default {
     </svg>
   ),
 
-  FlechaAtras: (props: JSX.IntrinsicElements["svg"]) => (
-    <svg
-      {...props}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <path d="M9 14 4 9l5-5" />
-      <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11" />
-    </svg>
-  ),
-
   Salir: (props: JSX.IntrinsicElements["svg"]) => (
     <svg
       {...props}
@@ -211,6 +197,33 @@ export default {
       <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />{" "}
       <path d="M12 11v6" />
       <path d="M9.5 13.5l2.5 -2.5l2.5 2.5" />
+    </svg>
+  ),
+
+  FlechaDer: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  ),
+
+  FlechaDerUltimo: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="m7 18 6-6-6-6" />
+      <path d="M17 6v12" />
     </svg>
   ),
 };
