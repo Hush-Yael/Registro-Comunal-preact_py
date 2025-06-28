@@ -100,7 +100,7 @@ export default <
             tabla.getRowModel().rows.map((row) => (
               <Fila key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} class="p-1.5 px-2">
+                  <td key={cell.id} class="p-1.5 px-2.5">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
