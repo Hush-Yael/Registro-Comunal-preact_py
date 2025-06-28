@@ -12,6 +12,7 @@ import { DatosComunidad } from "../tipos";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Iconos from "../componentes/iconos";
 import type { Signal } from "@preact/signals";
+import { Link } from "wouter-preact";
 
 export default () => {
   const [paginacion, setPaginacion] = useLocalStorage({
@@ -68,12 +69,12 @@ export default () => {
             size: 10,
             cell: (info) => (
               <fieldset class="flex gap-1">
-                <a
+                <Link
                   href={`/?editar=${info.row.original.cedula}`}
                   class="btn btn-primario"
                 >
                   <Iconos.Editar />
-                </a>
+                </Link>
                 <button
                   onClick={() =>
                     eliminarRegistro(

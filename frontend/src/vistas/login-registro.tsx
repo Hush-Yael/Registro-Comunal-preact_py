@@ -6,7 +6,7 @@ import Formulario, {
   Mensaje,
 } from "../componentes/formulario";
 import Contraseña from "../componentes/formulario/contraseña";
-import { useLocation } from "wouter-preact";
+import { Link, useLocation } from "wouter-preact";
 import { sesion } from "..";
 
 export default () => {
@@ -58,9 +58,9 @@ const Datos = () => {
         <button class="btn btn-primario" disabled={estado.value == "subiendo"}>
           {LOGIN ? "Entrar" : "Registrar"}
         </button>
-        <a href={LOGIN ? "/registro" : "/login"} class="btn btn-secundario">
+        <Link href={LOGIN ? "/registro" : "/login"} class="btn btn-secundario">
           Ir al {LOGIN ? "registro" : "inicio de sesión"}
-        </a>
+        </Link>
       </div>
     </div>
   );
