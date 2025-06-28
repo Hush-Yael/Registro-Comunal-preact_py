@@ -27,6 +27,7 @@ type TablaProps<
   class?: string;
   columnas: ColumnDef<T, any>[];
   fetchValues?: F;
+  filasNombre?: string;
 } & (F extends undefined ? { datos: T[] } : {});
 
 export default <
@@ -110,11 +111,14 @@ export default <
         <div class="flex items-center justify-between gap-5 w-full mt-4 *:flex *:items-center">
           <div class="gap-3">
             <span class="s-auto" role="status">
-              {tabla.getRowCount().toLocaleString()} filas
+              {tabla.getRowCount().toLocaleString()}{" "}
+              {props.filasNombre || "filas"}
             </span>
             <span class="text-neutral-500">/</span>
             <label class="flex items-center gap-2" htmlFor="page-size">
-              <span className="min-w-max">Filas por página:</span>
+              <span className="min-w-max">
+                {props.filasNombre || "filas"} por página:
+              </span>
               <select
                 id="page-size"
                 class="w-full p-0.5 px-1 rounded bg-neutral-200 text-neutral-700"
