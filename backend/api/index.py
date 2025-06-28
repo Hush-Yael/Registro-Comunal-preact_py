@@ -22,6 +22,22 @@ def fetch(func, datos):
         return abort(500)
 
 
+@api.route("/api/usuarios", methods=["GET"])
+def usuarios():
+    return obtener_usuarios()
+
+
+@api.route("/api/lista-comunidad", methods=["GET"])
+def lista_comunidad():
+    return obtener_datos_comunidad()
+
+
+@api.route("/api/verificar-cedula-comunidad/<cedula>", methods=["HEAD"])
+def verificar_cedula(cedula: str):
+    existe = verificar_cedula_existente(int(cedula))
+    return ("", 404) if not existe else ("", 204)
+
+
 @api.route("/api/login", methods=["POST"])
 def login():
     return fetch(iniciar_sesion, DatosUsuario(request.json))  # type: ignore
@@ -32,9 +48,9 @@ def registro():
     return fetch(registrar_usuario, DatosUsuario(request.json))  # type: ignore
 
 
-@api.route("/api/usuarios", methods=["GET"])
-def usuarios():
-    return obtener_usuarios()
+@api.route("/api/registro-comunidad", methods=["POST"])
+def registro_comunidad():
+    return fetch(añadir_registro_comunidad, DatosComunidad(request.json))  # type: ignore
 
 
 @api.route("/api/actualizar-rol", methods=["PUT"])
@@ -53,19 +69,3 @@ def _eliminar_usuario(nombre: str):
 def eliminar_registro(cedula: int):
     eliminar_registro_comunidad(cedula)
     return ("", 200)
-
-
-@api.route("/api/verificar-cedula-comunidad/<cedula>", methods=["HEAD"])
-def verificar_cedula(cedula: str):
-    existe = verificar_cedula_existente(int(cedula))
-    return ("", 404) if not existe else ("", 204)
-
-
-@api.route("/api/registro-comunidad", methods=["POST"])
-def registro_comunidad():
-    return fetch(añadir_registro_comunidad, DatosComunidad(request.json))  # type: ignore
-
-
-@api.route("/api/lista-comunidad", methods=["GET"])
-def lista_comunidad():
-    return obtener_datos_comunidad()
