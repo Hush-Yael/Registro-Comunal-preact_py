@@ -1,7 +1,7 @@
 import type { JSX } from "preact/jsx-runtime";
 import { createContext } from "preact";
 import { useRef, MutableRef } from "preact/hooks";
-import { signal, Signal, useSignalEffect } from "@preact/signals";
+import { Signal, useSignal, useSignalEffect } from "@preact/signals";
 import Alerta from "../alerta";
 import { useContext } from "preact/hooks";
 import { rutaApi } from "../../../utilidades";
@@ -35,10 +35,10 @@ export const contextoFormulario =
 export default <T extends Record<string, unknown>>(
   props: FormularioProps<T>
 ) => {
-  const estado = signal(""),
-    datos = signal(props.datos),
+  const estado = useSignal(""),
+    datos = useSignal(props.datos),
     datosIniciales = useRef(props.datos),
-    errores = signal(
+    errores = useSignal(
       Object.fromEntries(Object.keys(props.datos).map((k) => [k, ""]))
     );
 
