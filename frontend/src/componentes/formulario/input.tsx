@@ -32,7 +32,7 @@ export const Input = (
 ) => {
   const { datos, errores } = useContext(contextoFormulario);
   const error = errores.value[props.campo];
-  let valorAnterior = useRef(datos.value[props.campo]);
+  const valorAnterior = useRef(datos.value[props.campo]);
 
   // se guarda el último valor ingresado para compararlo al cambiarlo
   const focus = (evento) => {
@@ -46,8 +46,7 @@ export const Input = (
   };
 
   const change = (evento: TargetedEvent<HTMLInputElement>) => {
-    // @ts-expect-error
-    const valor = evento.target.value;
+    const valor = (evento.target as HTMLInputElement).value;
 
     // se eliminan los errores cuando se cambia el valor que provoca el error
     if (errores.value[props.campo] && valor != valorAnterior.current)
