@@ -1,7 +1,6 @@
-import { JSX } from "preact";
 import { sesion } from "..";
 import Iconos from "./iconos";
-import { useLocation } from "preact-iso";
+import { Link, type LinkProps, useLocation } from "wouter-preact";
 
 export default () =>
   sesion.value.usuario && (
@@ -21,16 +20,17 @@ export default () =>
     </nav>
   );
 
-const A = (props: JSX.IntrinsicElements["a"]) => {
-  const pathname = useLocation().path;
+const A = (props: LinkProps) => {
+  const [pathname] = useLocation();
 
   return (
-    <a
+    <Link
       {...props}
+      // @ts-expect-error: sí existe
       class="flex items-center gap-2 aria-[current=page]:font-bold aria-[current=page]:bg-neutral-900 aria-[current=page]:text-white rounded-lg p-1 px-2.5"
       aria-current={props.href === pathname ? "page" : null}
     >
       {props.children}
-    </a>
+    </Link>
   );
 };
