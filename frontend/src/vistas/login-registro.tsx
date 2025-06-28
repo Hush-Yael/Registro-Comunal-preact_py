@@ -7,11 +7,11 @@ import Formulario, {
   MensajeExito,
 } from "../componentes/formulario";
 import Contraseña from "../componentes/formulario/contraseña";
-import { useLocation } from "preact-iso";
+import { useLocation } from "wouter-preact";
 import { sesion } from "..";
 
 export default () => {
-  const path = useLocation().path;
+  const [path] = useLocation();
   const LOGIN = path == "/login";
 
   return (
@@ -38,7 +38,7 @@ export default () => {
 };
 
 const Datos = () => {
-  const path = useLocation().path;
+  const [path] = useLocation();
   const LOGIN = path == "/login";
   const { estado } = useContext(contextoFormulario);
 
