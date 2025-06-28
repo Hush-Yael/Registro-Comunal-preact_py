@@ -30,7 +30,7 @@ export const Input = (
     campo: string;
   }
 ) => {
-  const { datos, errores } = useContext(contextoFormulario);
+  const { datos, errores, estado } = useContext(contextoFormulario);
   const error = errores.value[props.campo];
   const valorAnterior = useRef(datos.value[props.campo]);
 
@@ -60,7 +60,12 @@ export const Input = (
     <input
       {...props}
       value={datos.value[props.campo] as string}
-      class={`w-full p-0.5 px-2 rounded border border-neutral-300 bg-neutral-100 aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500 ${
+      disabled={
+        props.disabled ||
+        estado.value === "subiendo" ||
+        estado.value === "fetching"
+      }
+      class={`w-full p-0.5 px-2 rounded border border-neutral-300 bg-neutral-100 aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500 disabled:cursor-not-allowed disabled:text-neutral-400 transition-colors ${
         props.inputClass || ""
       }`}
       aria-invalid={Boolean(error)}
