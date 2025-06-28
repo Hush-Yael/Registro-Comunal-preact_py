@@ -1,8 +1,7 @@
 import Cabecera from "../componentes/cabecera";
 import Formulario, {
   contextoFormulario,
-  MensajeCarga,
-  MensajeExito,
+  Mensaje,
   Reiniciar,
   Subir,
 } from "../componentes/formulario";
@@ -33,13 +32,12 @@ export default () => {
           setTimeout(() => (contexto.estado.value = ""), 800);
         }}
       >
-        <div class="col gap-13 mt-13 max-w-[700px]">
+        <div class="col gap-5 mt-10 max-w-[700px]">
+          <Mensaje estado="subiendo" texto="Guardando..." />
+          <Mensaje estado="fetching" texto="Recuperando datos..." />
+          <Mensaje estado="exito" texto="Registro guardado correctamente" />
+          <div class="col gap-10">
           <Campos />
-          <div className="col gap-4 m-auto">
-            <div>
-              <MensajeCarga texto="Guardando..." />
-              <MensajeExito texto="Registro guardado correctamente" />
-            </div>
             <Botones />
           </div>
         </div>

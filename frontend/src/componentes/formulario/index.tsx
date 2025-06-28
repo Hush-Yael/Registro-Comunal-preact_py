@@ -24,6 +24,8 @@ type WithFetch<T extends Record<string, unknown>> = FormularioProps<
   () => Promise<Response>
 >;
 
+type FormEstado = "subiendo" | "exito" | "error" | "fetching" | "";
+
 type FormularioProps<
   T extends Record<string, unknown>,
   F extends (() => Promise<Response>) | undefined = undefined
@@ -57,9 +59,7 @@ export default <
 >(
   props: FormularioProps<T, F>
 ) => {
-  const estado = useSignal<"subiendo" | "exito" | "error" | "fetching" | "">(
-      props.fetchValues ? "fetching" : ""
-    ),
+  const estado = useSignal<FormEstado>(props.fetchValues ? "fetching" : ""),
     datos = useSignal(props.datos),
     datosIniciales = useRef(props.datos),
     errores = useSignal(
@@ -75,7 +75,6 @@ export default <
 
   useEffect(() => {
     if (props.fetchValues)
-      setTimeout(() => {
         props
           .fetchValues()
           .then((r) => (props as WithFetch<T>).onFetchSuccess(r, contexto))
@@ -85,7 +84,6 @@ export default <
               : console.error
           )
           .finally(() => (estado.value = ""));
-      }, 500);
   }, []);
 
   return (
@@ -190,35 +188,20 @@ export const Reiniciar = (props: JSX.IntrinsicElements["button"]) => {
   );
 };
 
-export const MensajeFetching = (props: { texto: string }) => {
+export const Mensaje = (props: { estado: FormEstado; texto: string }) => {
   const { estado } = useContext(contextoFormulario);
-  return (
-    <Alerta
-      variante="carga"
-      texto={props.texto}
-      visible={estado.value === "fetching"}
-    />
-  );
-};
+  const variante =
+    props.estado === "subiendo" || props.estado === "fetching"
+      ? "carga"
+      : props.estado === "exito"
+      ? "éxito"
+      : "";
 
-export const MensajeExito = (props: { texto: string }) => {
-  const { estado } = useContext(contextoFormulario);
   return (
     <Alerta
-      variante="éxito"
+      variante={variante}
       texto={props.texto}
-      visible={estado.value === "exito"}
-    />
-  );
-};
-
-export const MensajeCarga = (props: { texto: string }) => {
-  const { estado } = useContext(contextoFormulario);
-  return (
-    <Alerta
-      variante="carga"
-      texto={props.texto}
-      visible={estado.value === "subiendo"}
+      visible={estado.value === props.estado}
     />
   );
 };

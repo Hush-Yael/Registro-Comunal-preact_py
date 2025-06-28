@@ -3,8 +3,7 @@ import Cabecera from "../componentes/cabecera";
 import Input from "../componentes/formulario/input";
 import Formulario, {
   contextoFormulario,
-  MensajeCarga,
-  MensajeExito,
+  Mensaje,
 } from "../componentes/formulario";
 import Contraseña from "../componentes/formulario/contraseña";
 import { useLocation } from "wouter-preact";
@@ -47,8 +46,13 @@ const Datos = () => {
       <Input campo="nombre" id="nombre-de-usuario" label="Nombre de usuario" />
       <Contraseña />
 
-      <MensajeCarga texto={LOGIN ? "Verificando datos..." : "Registrando..."} />
-      {!LOGIN && <MensajeExito texto="Usuario registrado con éxito" />}
+      <Mensaje
+        estado="subiendo"
+        texto={LOGIN ? "Verificando datos..." : "Registrando..."}
+      />
+      {!LOGIN && (
+        <Mensaje estado="exito" texto="Usuario registrado con éxito" />
+      )}
 
       <div class="col gap-1.5">
         <button class="btn btn-primario" disabled={estado.value == "subiendo"}>
