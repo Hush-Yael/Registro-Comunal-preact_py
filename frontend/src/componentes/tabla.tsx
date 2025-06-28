@@ -107,7 +107,35 @@ export default <
         </tbody>
       </Tabla>
       {props.options?.getPaginationRowModel && (
-        <div class="flex items-center justify-end gap-5 w-full mt-4">
+        <div class="flex items-center justify-between gap-5 w-full mt-4 *:flex *:items-center">
+          <div class="gap-3">
+            <span class="s-auto" role="status">
+              {tabla.getRowCount().toLocaleString()} filas
+            </span>
+            <span class="text-neutral-500">/</span>
+            <label class="flex items-center gap-2" htmlFor="page-size">
+              <span className="min-w-max">Filas por página:</span>
+              <select
+                id="page-size"
+                class="w-full p-0.5 px-1 rounded bg-neutral-200 text-neutral-700"
+                value={tabla.getState().pagination.pageSize}
+                onChange={(e) => {
+                  tabla.setPageSize(
+                    Number((e.target as HTMLInputElement).value)
+                  );
+                }}
+              >
+                {Array.from({ length: 10 }, (_, i) => (i + 1) * 10)
+                  .concat([200, 500, 1000])
+                  .map((pageSize) => (
+                    <option key={pageSize} value={pageSize}>
+                      {pageSize}
+                    </option>
+                  ))}
+              </select>
+            </label>
+          </div>
+          <div class="gap-5">
           <span role="status" class="flex items-center gap-1">
             <div>Página</div>
             <strong>
@@ -145,25 +173,6 @@ export default <
               <Iconos.DobleFlechaDer class="size-6" />
             </button>
           </fieldset>
-          <label class="flex items-center gap-2" htmlFor="page-size">
-            <span className="min-w-max">Filas por página:</span>
-            <select
-              id="page-size"
-              class="w-full p-0.5 px-1 rounded bg-neutral-200 text-neutral-700"
-              value={tabla.getState().pagination.pageSize}
-              onChange={(e) => {
-                tabla.setPageSize(Number((e.target as HTMLInputElement).value));
-              }}
-            >
-              {Array.from({ length: 10 }, (_, i) => (i + 1) * 10)
-                .concat([200, 500, 1000])
-                .map((pageSize) => (
-                  <option key={pageSize} value={pageSize}>
-                    {pageSize}
-                  </option>
-                ))}
-            </select>
-          </label>
           <label htmlFor="page" class="flex items-center gap-2">
             <span className="min-w-max">Ir a la página:</span>
             <input
@@ -181,6 +190,7 @@ export default <
               }}
             />
           </label>
+          </div>
         </div>
       )}
     </>
