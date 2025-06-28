@@ -6,6 +6,8 @@ import {
   flexRender,
   type TableOptions,
   type RowData,
+  type Column,
+  type Table,
 } from "@tanstack/react-table";
 import { useEffect } from "preact/hooks";
 import type { JSX } from "preact/jsx-runtime";
@@ -14,7 +16,12 @@ import Iconos from "./iconos";
 
 declare module "@tanstack/react-table" {
   interface TableMeta<TData extends RowData> {
-    datosSignal: Signal<TData[]>;
+    datosSignal?: Signal<TData[]>;
+  }
+
+  interface ColumnMeta<TData extends RowData, TValue> {
+    filterInputValuePattern?: RegExp;
+    filterVariant?: "number" | "date" | "time" | "datetime" | "range";
   }
 }
 
@@ -71,13 +78,25 @@ export default <
           {tabla.getHeaderGroups().map((headerGroup) => (
             <tr class="sticky top-0" key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <Cabecera key={header.id} style={{ width: header.getSize() }}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
+                <Cabecera
+                  key={header.id}
+                  data-id={header.id}
+                  style={{ width: header.getSize() }}
+                >
+                  <div class="col gap-1.5">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                    {props.options?.getFilteredRowModel &&
+                      header.column.getCanFilter() && (
+                        <div class="w-full">
+                          <Filtro column={header.column} />
+                        </div>
                       )}
+                  </div>
                 </Cabecera>
               ))}
             </tr>
@@ -142,64 +161,99 @@ export default <
             </label>
           </div>
           <div class="gap-5">
-          <span role="status" class="flex items-center gap-1">
-            <div>Página</div>
-            <strong>
-              {tabla.getState().pagination.pageIndex + 1} de{" "}
-              {tabla.getPageCount().toLocaleString()}
-            </strong>
-          </span>
-          <fieldset class="flex items-center gap-1.5">
-            <button
-              class="rounded bg-neutral-200"
-              onClick={() => tabla.firstPage()}
-              disabled={!tabla.getCanPreviousPage()}
-            >
+            <span role="status" class="flex items-center gap-1">
+              <div>Página</div>
+              <strong>
+                {tabla.getState().pagination.pageIndex + 1} de{" "}
+                {tabla.getPageCount().toLocaleString()}
+              </strong>
+            </span>
+            <fieldset class="flex items-center gap-1.5">
+              <button
+                class="rounded bg-neutral-200"
+                onClick={() => tabla.firstPage()}
+                disabled={!tabla.getCanPreviousPage()}
+              >
                 <Iconos.FlechaDerUltimo class="size-6 transform-[rotate(180deg)]" />
-            </button>
-            <button
-              class="rounded bg-neutral-200"
-              onClick={() => tabla.previousPage()}
-              disabled={!tabla.getCanPreviousPage()}
-            >
-              <Iconos.FlechaDer class="size-6 transform-[rotate(180deg)]" />
-            </button>
-            <button
-              class="rounded bg-neutral-200"
-              onClick={() => tabla.nextPage()}
-              disabled={!tabla.getCanNextPage()}
-            >
-              <Iconos.FlechaDer class="size-6" />
-            </button>
-            <button
-              class="rounded bg-neutral-200"
-              onClick={() => tabla.lastPage()}
-              disabled={!tabla.getCanNextPage()}
-            >
+              </button>
+              <button
+                class="rounded bg-neutral-200"
+                onClick={() => tabla.previousPage()}
+                disabled={!tabla.getCanPreviousPage()}
+              >
+                <Iconos.FlechaDer class="size-6 transform-[rotate(180deg)]" />
+              </button>
+              <button
+                class="rounded bg-neutral-200"
+                onClick={() => tabla.nextPage()}
+                disabled={!tabla.getCanNextPage()}
+              >
+                <Iconos.FlechaDer class="size-6" />
+              </button>
+              <button
+                class="rounded bg-neutral-200"
+                onClick={() => tabla.lastPage()}
+                disabled={!tabla.getCanNextPage()}
+              >
                 <Iconos.FlechaDerUltimo class="size-6" />
-            </button>
-          </fieldset>
-          <label htmlFor="page" class="flex items-center gap-2">
-            <span className="min-w-max">Ir a la página:</span>
-            <input
-              class="w-full p-0.5 px-1 rounded bg-neutral-200 text-neutral-700"
-              type="number"
-              min="1"
-              id="page"
-              max={tabla.getPageCount()}
-              value={tabla.getState().pagination.pageIndex + 1}
-              onChange={(e) => {
-                const page = (e.target as HTMLInputElement).value
-                  ? Number((e.target as HTMLInputElement).value) - 1
-                  : 0;
-                tabla.setPageIndex(page);
-              }}
-            />
-          </label>
+              </button>
+            </fieldset>
+            <label htmlFor="page" class="flex items-center gap-2">
+              <span className="min-w-max">Ir a la página:</span>
+              <input
+                class="w-full p-0.5 px-1 rounded bg-neutral-200 text-neutral-700"
+                type="number"
+                min="1"
+                id="page"
+                max={tabla.getPageCount()}
+                value={tabla.getState().pagination.pageIndex + 1}
+                onChange={(e) => {
+                  const page = (e.target as HTMLInputElement).value
+                    ? Number((e.target as HTMLInputElement).value) - 1
+                    : 0;
+                  tabla.setPageIndex(page);
+                }}
+              />
+            </label>
           </div>
         </div>
       )}
     </>
+  );
+};
+
+const Filtro = <T extends Record<string, unknown>>({
+  column,
+}: {
+  column: Column<T, unknown>;
+}) => {
+  const columnFilterValue = column.getFilterValue();
+  const { filterVariant, filterInputValuePattern } =
+    column.columnDef.meta ?? {};
+  let timeout: number;
+
+  const change = (value: string) => {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      column.setFilterValue(value);
+    }, 500);
+  };
+
+  const beforeInput = (e: InputEvent) => {
+    if (e.data && !filterInputValuePattern.test(e.data)) e.preventDefault();
+  };
+
+  return (
+    <input
+      class="w-full p-0.25 px-1 mb-1 rounded outline outline-offset-2 outline-neutral-600 hover:outline-neutral-500 focus:outline-white bg-neutral-800 focus:bg-neutral-700 transition-colors"
+      type={filterVariant}
+      name="filtro"
+      // @ts-expect-error: el tipo del valor es correcto
+      value={columnFilterValue || ""}
+      onBeforeInput={filterInputValuePattern ? beforeInput : undefined}
+      onChange={(e) => change((e.target as HTMLInputElement).value)}
+    />
   );
 };
 
