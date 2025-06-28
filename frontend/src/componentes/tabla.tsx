@@ -27,6 +27,7 @@ type TablaProps<
   class?: string;
   columnas: ColumnDef<T, any>[];
   fetchValues?: F;
+  header?: (tabla: Table<T>) => JSX.Element;
   filasNombre?: string;
 } & (F extends undefined ? { datos: T[] } : {});
 
@@ -64,6 +65,7 @@ export default <
 
   return (
     <>
+      {props.header && props.header(tabla)}
       <Tabla wrapperClass={props.wrapperClass} class={props.class}>
         <thead>
           {tabla.getHeaderGroups().map((headerGroup) => (
