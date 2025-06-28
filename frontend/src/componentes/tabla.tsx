@@ -66,7 +66,7 @@ export default <
       <Tabla wrapperClass={props.wrapperClass} class={props.class}>
         <thead>
           {tabla.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr class="sticky top-0" key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <Cabecera key={header.id} style={{ width: header.getSize() }}>
                   {header.isPlaceholder
@@ -207,7 +207,7 @@ export const Tabla = (
 export const Cabecera = (props: JSX.IntrinsicElements["th"]) => (
   <th
     {...props}
-    class={`sticky top-0 p-1.5 px-2 bg-neutral-900 text-white first:rounded-tl-md last:rounded-tr-md text-nowrap ${
+    class={`p-1.5 px-2.5 bg-neutral-900 text-white first:rounded-tl-md last:rounded-tr-md text-nowrap ${
       props.class || ""
     }`}
   >
