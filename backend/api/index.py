@@ -1,5 +1,5 @@
 from flask import Blueprint, abort, jsonify, request
-from .db.obtencion import obtener_usuarios
+from .db.obtencion import obtener_usuarios, obtener_datos_comunidad
 from .db.subida import (
     iniciar_sesion,
     registrar_usuario,
@@ -7,7 +7,7 @@ from .db.subida import (
     añadir_registro_comunidad,
 )
 from constantes import DatosUsuario, ErrorDeValidacion, DatosComunidad, Sesion
-from .db.modificacion import cambiar_rol, eliminar_usuario
+from .db.modificacion import cambiar_rol, eliminar_registro_comunidad, eliminar_usuario
 
 api = Blueprint("api", __name__)
 
@@ -49,6 +49,12 @@ def _eliminar_usuario(nombre: str):
     return ("", 200)
 
 
+@api.route("/api/eliminar-registro-comunidad/<cedula>", methods=["DELETE"])
+def eliminar_registro(cedula: int):
+    eliminar_registro_comunidad(cedula)
+    return ("", 200)
+
+
 @api.route("/api/verificar-cedula-comunidad/<cedula>", methods=["HEAD"])
 def verificar_cedula(cedula: str):
     existe = verificar_cedula_existente(int(cedula))
@@ -58,3 +64,8 @@ def verificar_cedula(cedula: str):
 @api.route("/api/registro-comunidad", methods=["POST"])
 def registro_comunidad():
     return fetch(añadir_registro_comunidad, DatosComunidad(request.json))  # type: ignore
+
+
+@api.route("/api/lista-comunidad", methods=["GET"])
+def lista_comunidad():
+    return obtener_datos_comunidad()
