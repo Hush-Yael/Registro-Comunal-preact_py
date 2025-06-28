@@ -1,7 +1,7 @@
 import type { JSX } from "preact/jsx-runtime";
 import { createContext } from "preact";
-import { useRef, MutableRef } from "preact/hooks";
-import { Signal, useSignal, useSignalEffect } from "@preact/signals";
+import { useRef, MutableRef, useEffect } from "preact/hooks";
+import { Signal, useSignal } from "@preact/signals";
 import Alerta from "../alerta";
 import { useContext } from "preact/hooks";
 import { rutaApi } from "../../../utilidades";
@@ -19,23 +19,47 @@ type HandlerEvent<T extends Record<string, unknown>> = {
   json: any;
 };
 
-type FormularioProps<T extends Record<string, unknown>> = Omit<
-  JSX.IntrinsicElements["form"],
-  "onSubmit" | "onError"
-> & {
+type WithFetch<T extends Record<string, unknown>> = FormularioProps<
+  T,
+  () => Promise<Response>
+>;
+
+type FormularioProps<
+  T extends Record<string, unknown>,
+  F extends (() => Promise<Response>) | undefined = undefined
+> = Omit<JSX.IntrinsicElements["form"], "onSubmit" | "onError"> & {
+  /*eslint-disable-next-line no-unused-vars*/
   onSuccess?: (props: HandlerEvent<T>) => any | Promise<any>;
+  /*eslint-disable-next-line no-unused-vars*/
   onError?: (props: HandlerEvent<T>) => any | Promise<any>;
   datos: T;
   rutaApi: string;
-};
+  fetchValues?: F;
+} & (F extends undefined
+    ? {}
+    : {
+        /*eslint-disable-next-line no-unused-vars*/
+        onFetchSuccess: (json: any, contexto: ContextoFormulario<T>) => any;
+        onFetchError?: (
+          /*eslint-disable-next-line no-unused-vars*/
+          error: Error,
+          /*eslint-disable-next-line no-unused-vars*/
+          contexto: ContextoFormulario<T>
+        ) => any | Promise<any>;
+      });
 
 export const contextoFormulario =
   createContext<ContextoFormulario<Record<string, unknown>>>(undefined);
 
-export default <T extends Record<string, unknown>>(
-  props: FormularioProps<T>
+export default <
+  T extends Record<string, unknown>,
+  F extends (() => Promise<Response>) | undefined = undefined
+>(
+  props: FormularioProps<T, F>
 ) => {
-  const estado = useSignal(""),
+  const estado = useSignal<"subiendo" | "exito" | "error" | "fetching" | "">(
+      props.fetchValues ? "fetching" : ""
+    ),
     datos = useSignal(props.datos),
     datosIniciales = useRef(props.datos),
     errores = useSignal(
@@ -49,9 +73,20 @@ export default <T extends Record<string, unknown>>(
     estado,
   };
 
-  useSignalEffect(() => {
-    console.log(datos.value);
-  });
+  useEffect(() => {
+    if (props.fetchValues)
+      setTimeout(() => {
+        props
+          .fetchValues()
+          .then((r) => (props as WithFetch<T>).onFetchSuccess(r, contexto))
+          .catch(
+            (props as WithFetch<T>).onFetchError
+              ? (e) => (props as WithFetch<T>).onFetchError(e, contexto)
+              : console.error
+          )
+          .finally(() => (estado.value = ""));
+      }, 500);
+  }, []);
 
   return (
     <contextoFormulario.Provider value={contexto}>
@@ -67,7 +102,7 @@ export default <T extends Record<string, unknown>>(
               // se adapta la url dependiendo de si se usa el servidor local o el de área local
               rutaApi(props.rutaApi),
               {
-                method: "POST",
+                method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
                 },
@@ -127,7 +162,7 @@ export const Subir = (props: JSX.IntrinsicElements["button"]) => {
     <button
       {...props}
       class={`btn btn-primario ${props.class || ""}`}
-      disabled={estado.value === "subiendo"}
+      disabled={estado.value === "subiendo" || estado.value === "fetching"}
       type="submit"
     >
       {props.children}
@@ -142,12 +177,27 @@ export const Reiniciar = (props: JSX.IntrinsicElements["button"]) => {
     <button
       {...props}
       class={`btn btn-secundario ${props.class || ""}`}
-      disabled={estado.value === "subiendo"}
+      disabled={estado.value === "subiendo" || estado.value === "fetching"}
       type="reset"
-      onClick={() => (datos.value = datosIniciales.current)}
+      onClick={(e) => {
+        datos.value = datosIniciales.current;
+        estado.value = "";
+        props.onClick && props.onClick(e);
+      }}
     >
       {props.children}
     </button>
+  );
+};
+
+export const MensajeFetching = (props: { texto: string }) => {
+  const { estado } = useContext(contextoFormulario);
+  return (
+    <Alerta
+      variante="carga"
+      texto={props.texto}
+      visible={estado.value === "fetching"}
+    />
   );
 };
 
