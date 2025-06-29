@@ -15,46 +15,34 @@ import Carga from "./carga";
 import Iconos from "./iconos";
 
 declare module "@tanstack/react-table" {
-  interface TableMeta<TData extends RowData> {
-    datosSignal?: Signal<TData[]>;
-  }
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   interface ColumnMeta<TData extends RowData, TValue> {
     filterInputValuePattern?: RegExp;
     filterVariant?: "number" | "date" | "time" | "datetime" | "range";
   }
 }
 
-type TablaProps<
-  T extends Record<string, unknown>,
-  F extends undefined | (() => Promise<T[]>)
-> = {
+type TablaProps<T extends Record<string, unknown>> = {
   wrapperClass?: string;
   options?: Omit<TableOptions<T>, "columns" | "data" | "getCoreRowModel">;
   class?: string;
   columnas: ColumnDef<T, any>[];
-  fetchValues?: F;
-  header?: (tabla: Table<T>) => JSX.Element;
+  datos: Signal<T[]>;
   filasNombre?: string;
-} & (F extends undefined ? { datos: T[] } : {});
+  fetchValues?: () => Promise<T[]>;
+  // eslint-disable-next-line no-unused-vars
+  header?: (tabla: Table<T>) => JSX.Element;
+};
 
-export default <
-  T extends Record<string, unknown>,
-  F extends undefined | (() => Promise<T[]>)
->(
-  props: TablaProps<T, F>
-) => {
-  const datos = useSignal(
-    props.fetchValues ? [] : (props as TablaProps<T, undefined>).datos
-  );
-  const cargado = useSignal(false);
+export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
+  const cargado = props.fetchValues ? useSignal(false) : null;
 
   useEffect(() => {
     if (props.fetchValues)
       props
         .fetchValues()
         .then((r) => {
-          datos.value = r;
+          props.datos.value = r;
         })
         .catch(console.error)
         .finally(() => (cargado.value = true));
@@ -63,11 +51,8 @@ export default <
   const tabla = useReactTable({
     ...props.options,
     columns: props.columnas,
-    data: datos.value,
+    data: props.datos.value,
     getCoreRowModel: getCoreRowModel(),
-    meta: {
-      datosSignal: datos,
-    },
   });
 
   return (

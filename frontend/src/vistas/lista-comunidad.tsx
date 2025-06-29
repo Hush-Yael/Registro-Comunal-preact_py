@@ -14,6 +14,8 @@ import Iconos from "../componentes/iconos";
 import type { Signal } from "@preact/signals";
 import { Link } from "wouter-preact";
 
+const datos = signal<DatosComunidad[]>([]);
+
 export default () => {
   const [paginacion, setPaginacion] = useLocalStorage({
     key: "paginacion-comunidad",
@@ -76,12 +78,7 @@ export default () => {
                   <Iconos.Editar />
                 </Link>
                 <button
-                  onClick={() =>
-                    eliminarRegistro(
-                      info.table.options.meta.datosSignal,
-                      info.row.original.id
-                    )
-                  }
+                  onClick={() => eliminarRegistro(info.row.original.id)}
                   class="btn btn-peligro"
                 >
                   <Iconos.Eliminar />
@@ -97,6 +94,7 @@ export default () => {
     <Tabla
       class="h-full w-[500px] [&_td]:nth-3:text-right [&_td]:nth-4:text-right [&_td]:nth-7:text-right"
       wrapperClass="h-[60vh] mt-6"
+      datos={datos}
       header={(tabla: Table<DatosComunidad>) => (
         <Cabecera titulo="Lista de registros de la comunidad">
           <button
@@ -129,10 +127,7 @@ export default () => {
   );
 };
 
-const eliminarRegistro = async <T extends DatosComunidad>(
-  datos: Signal<T[]>,
-  id: number
-) => {
+const eliminarRegistro = async (id: number) => {
   if (confirm("¿Realmente desea eliminar el registro?")) {
     const r = await fetch(rutaApi(`eliminar-registro-comunidad/${id}`), {
       method: "DELETE",

@@ -1,5 +1,5 @@
 import Tabla from "../componentes/tabla";
-import { Signal } from "@preact/signals";
+import { signal } from "@preact/signals";
 import Cabecera from "../componentes/cabecera";
 import TerminarSesion from "../componentes/terminar-sesion";
 import { sesion } from "..";
@@ -7,6 +7,8 @@ import Iconos from "../componentes/iconos";
 import type { Usuario } from "../tipos";
 import { rutaApi } from "../../utilidades";
 import { ColumnDef } from "@tanstack/react-table";
+
+const datos = signal<Usuario[]>([]);
 
 const cambiarRol = async (datos: Usuario) => {
   const r = await fetch(rutaApi("actualizar-rol"), {
@@ -23,10 +25,7 @@ const cambiarRol = async (datos: Usuario) => {
   if (!r.ok) console.error("No se pudo cambiar el rol");
 };
 
-const eliminarUsuario = async <T extends Usuario>(
-  datos: Signal<T[]>,
-  nombre: string
-) => {
+const eliminarUsuario = async <T extends Usuario>(nombre: string) => {
   if (confirm("¿Realmente desea eliminar el usuario?")) {
     const r = await fetch(rutaApi(`eliminar-usuario/${nombre}`), {
       method: "DELETE",
@@ -90,10 +89,7 @@ export default () => {
                       <button
                         class="btn btn-peligro ml-auto"
                         onClick={() =>
-                          eliminarUsuario(
-                            info.table.options.meta.datosSignal,
-                            info.row.original.nombre
-                          )
+                          eliminarUsuario(info.row.original.nombre)
                         }
                       >
                         <Iconos.Eliminar class="size-4" />
@@ -103,6 +99,7 @@ export default () => {
               ]
             : []),
         ]}
+        datos={datos}
         fetchValues={() => fetch(rutaApi("usuarios")).then((r) => r.json())}
       />
     </>
