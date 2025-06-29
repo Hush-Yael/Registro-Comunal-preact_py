@@ -93,7 +93,9 @@ export default () => {
 
   return (
     <Tabla
-      class="max-h-full w-[500px] [&_td]:nth-3:text-right [&_td]:nth-4:text-right [&_td]:nth-7:text-right"
+      class={`${
+        cargar.value ? "h-full" : "max-h-full"
+      } w-[500px] [&_td]:nth-3:text-right [&_td]:nth-4:text-right [&_td]:nth-7:text-right`}
       wrapperClass="h-[60vh] mt-6"
       datos={datos}
       header={(tabla: Table<DatosComunidad>) => (
