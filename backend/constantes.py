@@ -20,6 +20,7 @@ class DatosUsuario(TypedDict):
 
 
 class DatosComunidad(TypedDict):
+    id: int
     nombres: str
     apellidos: str
     cedula: int | str

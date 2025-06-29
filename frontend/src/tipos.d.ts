@@ -4,6 +4,7 @@ export type Usuario = {
 };
 
 export type DatosComunidad = {
+  id: number;
   nombres: string;
   apellidos: string;
   cedula: number | string;

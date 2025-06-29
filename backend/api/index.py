@@ -65,7 +65,7 @@ def _eliminar_usuario(nombre: str):
     return ("", 200)
 
 
-@api.route("/api/eliminar-registro-comunidad/<cedula>", methods=["DELETE"])
-def eliminar_registro(cedula: int):
-    eliminar_registro_comunidad(cedula)
+@api.route("/api/eliminar-registro-comunidad/<id>", methods=["DELETE"])
+def eliminar_registro(id: int):
+    eliminar_registro_comunidad(id)
     return ("", 200)

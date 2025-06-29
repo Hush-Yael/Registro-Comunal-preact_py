@@ -28,12 +28,12 @@ def eliminar_usuario(nombre: str):
     return True
 
 
-def eliminar_registro_comunidad(cedula: int):
+def eliminar_registro_comunidad(id: int):
     conn, cursor = abrir_db()
 
     cursor.execute(
-        "DELETE FROM comunidad WHERE cedula = ?",
-        (cedula,),
+        "DELETE FROM comunidad WHERE id = ?",
+        (id,),
     )
 
     conn.commit()

@@ -70,7 +70,7 @@ export default () => {
             cell: (info) => (
               <fieldset class="flex gap-1">
                 <Link
-                  href={`/?editar=${info.row.original.cedula}`}
+                  href={`/?editar=${info.row.original.id}`}
                   class="btn btn-primario"
                 >
                   <Iconos.Editar />
@@ -79,7 +79,7 @@ export default () => {
                   onClick={() =>
                     eliminarRegistro(
                       info.table.options.meta.datosSignal,
-                      info.row.original.cedula as number
+                      info.row.original.id
                     )
                   }
                   class="btn btn-peligro"
@@ -131,12 +131,12 @@ export default () => {
 
 const eliminarRegistro = async <T extends DatosComunidad>(
   datos: Signal<T[]>,
-  cedula: number
+  id: number
 ) => {
   if (confirm("¿Realmente desea eliminar el registro?")) {
-    const r = await fetch(rutaApi(`eliminar-registro-comunidad/${cedula}`), {
+    const r = await fetch(rutaApi(`eliminar-registro-comunidad/${id}`), {
       method: "DELETE",
     });
-    if (r.ok) datos.value = datos.value.filter((u) => u.cedula !== cedula);
+    if (r.ok) datos.value = datos.value.filter((u) => u.id !== id);
   }
 };
