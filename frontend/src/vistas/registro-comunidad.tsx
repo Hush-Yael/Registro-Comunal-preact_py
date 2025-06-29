@@ -12,6 +12,18 @@ import { useContext } from "preact/compat";
 import { useSearchParams } from "wouter-preact";
 import { rutaApi } from "../../utilidades";
 import { DatosComunidad } from "../tipos";
+import { signal } from "@preact/signals";
+
+const datos = signal<DatosComunidad>({
+  nombres: "",
+  apellidos: "",
+  cedula: "",
+  fecha_nacimiento: "",
+  patologia: "",
+  direccion: "",
+  numero_casa: "",
+  id: 0,
+});
 
 export default () => {
   const [params, setParams] = useSearchParams();
@@ -25,17 +37,7 @@ export default () => {
       <Formulario
         rutaApi="registro-comunidad"
         method={editar ? "PUT" : "POST"}
-        datos={
-          {
-            nombres: "",
-            apellidos: "",
-            cedula: "",
-            fecha_nacimiento: "",
-            patologia: "",
-            direccion: "",
-            numero_casa: "",
-          } as DatosComunidad
-        }
+        datos={datos}
         fetchValues={
           editar
             ? () => fetch(rutaApi(`obtener-datos-comunidad/${editar}`))

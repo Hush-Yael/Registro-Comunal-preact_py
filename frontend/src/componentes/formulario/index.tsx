@@ -35,7 +35,7 @@ type FormularioProps<
   /*eslint-disable-next-line no-unused-vars*/
   onError?: (props: HandlerEvent<T>) => any | Promise<any>;
   method?: string;
-  datos: T;
+  datos: Signal<T>;
   rutaApi: string;
   fetchValues?: F;
 } & (F extends undefined
@@ -61,13 +61,13 @@ export default <
   props: FormularioProps<T, F>
 ) => {
   const estado = useSignal<FormEstado>(props.fetchValues ? "fetching" : ""),
-    datos = useSignal(props.datos),
-    datosIniciales = useRef(props.datos),
+    datos = props.datos,
+    datosIniciales = useRef(props.datos.value),
     errores = useSignal(
       Object.fromEntries(Object.keys(props.datos).map((k) => [k, ""]))
     );
 
-  const contexto = {
+  const contexto: ContextoFormulario<T> = {
     datos,
     datosIniciales,
     errores,

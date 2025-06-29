@@ -8,6 +8,9 @@ import Formulario, {
 import Contraseña from "../componentes/formulario/contraseña";
 import { Link, useLocation } from "wouter-preact";
 import { sesion } from "..";
+import { signal } from "@preact/signals";
+
+const datos = signal({ nombre: "", contraseña: "" });
 
 export default () => {
   const [path] = useLocation();
@@ -20,7 +23,7 @@ export default () => {
       />
       <Formulario
         rutaApi={LOGIN ? "login" : "registro"}
-        datos={{ nombre: "", contraseña: "" }}
+        datos={datos}
         onSuccess={({ contexto, json }) => {
           if (LOGIN) {
             sesion.value = {
