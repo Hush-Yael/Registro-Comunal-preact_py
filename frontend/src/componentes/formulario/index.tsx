@@ -34,6 +34,7 @@ type FormularioProps<
   onSuccess?: (props: HandlerEvent<T>) => any | Promise<any>;
   /*eslint-disable-next-line no-unused-vars*/
   onError?: (props: HandlerEvent<T>) => any | Promise<any>;
+  method?: string;
   datos: T;
   rutaApi: string;
   fetchValues?: F;
@@ -100,7 +101,7 @@ export default <
               // se adapta la url dependiendo de si se usa el servidor local o el de área local
               rutaApi(props.rutaApi),
               {
-                method: "PUT",
+                method: props.method || "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
