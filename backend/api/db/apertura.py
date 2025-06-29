@@ -25,7 +25,7 @@ def abrir_db():
          id INTEGER PRIMARY KEY AUTOINCREMENT,
          nombres TEXT NOT NULL {nombres_check("nombres")},
          apellidos TEXT NOT NULL {nombres_check("apellidos")},
-         cedula INTEGER NOT NULL UNIQUE CHECK(cedula > 0),
+         cedula TEXT NOT NULL UNIQUE CHECK(CAST(cedula AS INTEGER) > 0),
          fecha_nacimiento TEXT,
          patologia TEXT,
          direccion TEXT,
