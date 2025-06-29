@@ -8,7 +8,8 @@ import type { Usuario } from "../tipos";
 import { rutaApi } from "../../utilidades";
 import { ColumnDef } from "@tanstack/react-table";
 
-const datos = signal<Usuario[]>([]);
+const datos = signal<Usuario[]>([]),
+  carga = signal(true);
 
 const cambiarRol = async (datos: Usuario) => {
   const r = await fetch(rutaApi("actualizar-rol"), {
@@ -25,7 +26,7 @@ const cambiarRol = async (datos: Usuario) => {
   if (!r.ok) console.error("No se pudo cambiar el rol");
 };
 
-const eliminarUsuario = async <T extends Usuario>(nombre: string) => {
+const eliminarUsuario = async (nombre: string) => {
   if (confirm("¿Realmente desea eliminar el usuario?")) {
     const r = await fetch(rutaApi(`eliminar-usuario/${nombre}`), {
       method: "DELETE",
@@ -100,7 +101,8 @@ export default () => {
             : []),
         ]}
         datos={datos}
-        fetchValues={() => fetch(rutaApi("usuarios")).then((r) => r.json())}
+        shouldFetch={carga}
+        valuesFetcher={() => fetch(rutaApi("usuarios")).then((r) => r.json())}
       />
     </>
   );

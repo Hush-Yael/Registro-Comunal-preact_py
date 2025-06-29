@@ -11,10 +11,11 @@ import { sesion } from "..";
 import { DatosComunidad } from "../tipos";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Iconos from "../componentes/iconos";
-import type { Signal } from "@preact/signals";
+import { signal } from "@preact/signals";
 import { Link } from "wouter-preact";
 
-const datos = signal<DatosComunidad[]>([]);
+const datos = signal<DatosComunidad[]>([]),
+  cargar = signal(true);
 
 export default () => {
   const [paginacion, setPaginacion] = useLocalStorage({
@@ -118,7 +119,8 @@ export default () => {
         getFilteredRowModel: getFilteredRowModel(),
       }}
       columnas={columnas}
-      fetchValues={() =>
+      shouldFetch={cargar}
+      valuesFetcher={() =>
         fetch(rutaApi("lista-comunidad")).then((r) => r.json()) as Promise<
           DatosComunidad[]
         >

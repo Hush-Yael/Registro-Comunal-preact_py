@@ -1,4 +1,4 @@
-import { type Signal, useSignal } from "@preact/signals";
+import { type Signal, useSignalEffect } from "@preact/signals";
 import {
   useReactTable,
   type ColumnDef,
@@ -9,7 +9,6 @@ import {
   type Column,
   type Table,
 } from "@tanstack/react-table";
-import { useEffect } from "preact/hooks";
 import type { JSX } from "preact/jsx-runtime";
 import Carga from "./carga";
 import Iconos from "./iconos";
@@ -29,24 +28,23 @@ type TablaProps<T extends Record<string, unknown>> = {
   columnas: ColumnDef<T, any>[];
   datos: Signal<T[]>;
   filasNombre?: string;
-  fetchValues?: () => Promise<T[]>;
+  shouldFetch?: Signal<boolean>;
+  valuesFetcher?: () => Promise<T[]>;
   // eslint-disable-next-line no-unused-vars
   header?: (tabla: Table<T>) => JSX.Element;
 };
 
 export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
-  const cargado = props.fetchValues ? useSignal(false) : null;
-
-  useEffect(() => {
-    if (props.fetchValues)
+  useSignalEffect(() => {
+    if (props.shouldFetch && props.shouldFetch.value)
       props
-        .fetchValues()
+        .valuesFetcher()
         .then((r) => {
           props.datos.value = r;
         })
         .catch(console.error)
-        .finally(() => (cargado.value = true));
-  }, []);
+        .finally(() => (props.shouldFetch.value = false));
+  });
 
   const tabla = useReactTable({
     ...props.options,
@@ -88,7 +86,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
           ))}
         </thead>
         <tbody>
-          {props.fetchValues && !cargado.value ? (
+          {props.valuesFetcher && props.shouldFetch.value ? (
             <tr class="bg-neutral-200">
               <td class="p-4" colSpan={props.columnas.length}>
                 <span
