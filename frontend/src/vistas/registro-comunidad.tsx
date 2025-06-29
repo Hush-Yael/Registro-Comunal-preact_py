@@ -8,7 +8,7 @@ import Formulario, {
 import Input from "../componentes/formulario/input";
 import TerminarSesion from "../componentes/terminar-sesion";
 import Iconos from "../componentes/iconos";
-import { useContext } from "preact/compat";
+import { useContext, useEffect } from "preact/compat";
 import { useSearchParams } from "wouter-preact";
 import { rutaApi } from "../../utilidades";
 import { DatosComunidad } from "../tipos";
@@ -25,9 +25,23 @@ const datos = signal<DatosComunidad>({
   id: 0,
 });
 
+let ultimoId: string | null;
+
 export default () => {
   const [params, setParams] = useSearchParams();
   const editar = params.get("editar");
+
+  useEffect(() => {
+    if (ultimoId)
+      setParams((p) => {
+        p.set("editar", ultimoId);
+        return p;
+      });
+  }, []);
+
+  useEffect(() => {
+    ultimoId = editar;
+  }, [params]);
 
   return (
     <>
