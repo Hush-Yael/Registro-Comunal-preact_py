@@ -106,21 +106,43 @@ def verificar_cedula_existente(cedula: int):
     return len(cedula_db) > 0
 
 
-def añadir_registro_comunidad(datos: DatosComunidad):
+def añadir_registro_comunidad(datos: DatosComunidad, modificar: bool = False):
     conn, cursor = abrir_db()
 
     try:
+        if modificar:
+            if cursor.execute(
+                "SELECT cedula FROM comunidad WHERE cedula = ? AND id != ? LIMIT 1",
+                (datos["cedula"], datos["id"]),
+            ).fetchone():
+                raise ErrorDeValidacion(
+                    {
+                        "campo": "cedula",
+                        "mensaje": "Ya existe un registro con esa cédula",
+                    }
+                )
+
+            sql = "UPDATE comunidad SET nombres = ?, apellidos = ?, cedula = ?, fecha_nacimiento = ?, patologia = ?, direccion = ?, numero_casa = ? WHERE id = ?"
+
+        else:
+            sql = "INSERT INTO comunidad (nombres, apellidos, cedula, fecha_nacimiento, patologia, direccion, numero_casa) VALUES (?, ?, ?, ?, ?, ?, ?)"
+
+        _datos = [
+            datos["nombres"],
+            datos["apellidos"],
+            datos["cedula"],
+            datos["fecha_nacimiento"],
+            datos["patologia"],
+            datos["direccion"],
+            datos["numero_casa"],
+        ]
+
+        if modificar:
+            _datos.append(datos["id"])
+
         cursor.execute(
-            "INSERT INTO comunidad (nombres, apellidos, cedula, fecha_nacimiento, patologia, direccion, numero_casa) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (
-                datos["nombres"],
-                datos["apellidos"],
-                datos["cedula"],
-                datos["fecha_nacimiento"],
-                datos["patologia"],
-                datos["direccion"],
-                datos["numero_casa"],
-            ),
+            sql,
+            _datos,
         )
         conn.commit()
     except Exception as e:

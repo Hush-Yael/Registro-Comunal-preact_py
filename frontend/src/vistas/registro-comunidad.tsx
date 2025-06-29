@@ -9,8 +9,14 @@ import Input from "../componentes/formulario/input";
 import TerminarSesion from "../componentes/terminar-sesion";
 import Iconos from "../componentes/iconos";
 import { useContext } from "preact/compat";
+import { useSearchParams } from "wouter-preact";
+import { rutaApi } from "../../utilidades";
+import { DatosComunidad } from "../tipos";
 
 export default () => {
+  const [params, setParams] = useSearchParams();
+  const editar = params.get("editar");
+
   return (
     <>
       <Cabecera titulo="Registro de la comunidad">
@@ -18,14 +24,30 @@ export default () => {
       </Cabecera>
       <Formulario
         rutaApi="registro-comunidad"
-        datos={{
-          nombres: "",
-          apellidos: "",
-          cedula: "",
-          fecha_nacimiento: "",
-          patologia: "",
-          direccion: "",
-          numero_casa: "",
+        method={editar ? "PUT" : "POST"}
+        datos={
+          {
+            nombres: "",
+            apellidos: "",
+            cedula: "",
+            fecha_nacimiento: "",
+            patologia: "",
+            direccion: "",
+            numero_casa: "",
+          } as DatosComunidad
+        }
+        fetchValues={
+          editar
+            ? () => fetch(rutaApi(`obtener-datos-comunidad/${editar}`))
+            : undefined
+        }
+        onFetchSuccess={async (r, { datos }) => {
+          if (r.ok) return (datos.value = await r.json());
+          else
+            setParams((p) => {
+              p.delete("editar");
+              return p;
+            });
         }}
         onSuccess={({ contexto }) => {
           contexto.datos.value = contexto.datosIniciales.current;
@@ -35,9 +57,14 @@ export default () => {
         <div class="col gap-5 mt-10 max-w-[700px]">
           <Mensaje estado="subiendo" texto="Guardando..." />
           <Mensaje estado="fetching" texto="Recuperando datos..." />
-          <Mensaje estado="exito" texto="Registro guardado correctamente" />
+          <Mensaje
+            estado="exito"
+            texto={`Registro ${
+              editar ? "actualizado" : "guardado"
+            } correctamente`}
+          />
           <div class="col gap-10">
-          <Campos />
+            <Campos />
             <Botones />
           </div>
         </div>
@@ -49,13 +76,16 @@ export default () => {
 let timeout: number;
 
 const Campos = () => {
+  const [params] = useSearchParams();
+
   const { errores } = useContext(contextoFormulario);
 
   const cambiarCedula = (e: Event) => {
     clearTimeout(timeout);
 
     const cedula = (e.target as HTMLInputElement).value;
-    if (!cedula) return (errores.value = { ...errores.value, cedula: "" });
+    if (!cedula || cedula == params.get("editar"))
+      return (errores.value = { ...errores.value, cedula: "" });
 
     timeout = setTimeout(async () => {
       const respuesta = await fetch(
@@ -139,14 +169,32 @@ const Campos = () => {
 };
 
 const Botones = () => {
+  const [params, setParams] = useSearchParams();
+  const editar = params.get("editar");
+
   return (
-    <fieldset class="grid grid-cols-2 gap-2 m-auto">
-      <Reiniciar>
-        <Iconos.Borrar /> Limpiar campos
-      </Reiniciar>
-      <Subir>
-        <Iconos.Añadir /> Registrar
-      </Subir>
-    </fieldset>
+    <div class="col gap-4">
+      {editar && (
+        <small class="m-auto italic text-neutral-500" role="status">
+          <Iconos.Editar /> Editando el registro: <b class="mx-1">{editar}</b>
+        </small>
+      )}
+      <fieldset class="grid grid-cols-2 gap-2 m-auto">
+        <Reiniciar
+          onClick={() =>
+            setParams((p) => {
+              p.delete("editar");
+              return p;
+            })
+          }
+        >
+          <Iconos.Borrar /> {editar ? "Descartar cambios" : "Limpiar campos"}
+        </Reiniciar>
+        <Subir>
+          <Iconos.Añadir />
+          {editar ? "Guardar cambios" : "Registrar"}
+        </Subir>
+      </fieldset>
+    </div>
   );
 };

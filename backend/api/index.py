@@ -1,5 +1,9 @@
 from flask import Blueprint, abort, jsonify, request
-from .db.obtencion import obtener_usuarios, obtener_datos_comunidad
+from .db.obtencion import (
+    obtener_usuarios,
+    obtener_datos_comunidad,
+    obtener_datos_registro_comunidad,
+)
 from .db.subida import (
     iniciar_sesion,
     registrar_usuario,
@@ -12,11 +16,14 @@ from .db.modificacion import cambiar_rol, eliminar_registro_comunidad, eliminar_
 api = Blueprint("api", __name__)
 
 
-def fetch(func, datos):
+def fetch(func, *datos):
     try:
-        return jsonify(func(datos))
+        return jsonify(func(*datos))
     except Exception as e:
         if isinstance(e, ErrorDeValidacion):
+            return jsonify(e.args[0]), 400
+        elif isinstance(e, KeyError):
+            print(f"Ocurrió un error de validación: {e}")
             return jsonify(e.args[0]), 400
         print(f"Ocurrió un error inesperado: {e}")
         return abort(500)
@@ -48,9 +55,13 @@ def registro():
     return fetch(registrar_usuario, DatosUsuario(request.json))  # type: ignore
 
 
-@api.route("/api/registro-comunidad", methods=["POST"])
+@api.route("/api/registro-comunidad", methods=["POST", "PUT"])
 def registro_comunidad():
-    return fetch(añadir_registro_comunidad, DatosComunidad(request.json))  # type: ignore
+    return fetch(
+        añadir_registro_comunidad,
+        DatosComunidad(request.json),  # type: ignore
+        request.method == "PUT",
+    )
 
 
 @api.route("/api/actualizar-rol", methods=["PUT"])
@@ -69,3 +80,9 @@ def _eliminar_usuario(nombre: str):
 def eliminar_registro(id: int):
     eliminar_registro_comunidad(id)
     return ("", 200)
+
+
+@api.route("/api/obtener-datos-comunidad/<id>", methods=["GET"])
+def datos_registro_comunidad(id: int):
+    datos = obtener_datos_registro_comunidad(id)
+    return abort(404) if not datos else datos

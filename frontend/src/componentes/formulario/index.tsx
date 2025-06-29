@@ -76,15 +76,15 @@ export default <
 
   useEffect(() => {
     if (props.fetchValues)
-        props
-          .fetchValues()
-          .then((r) => (props as WithFetch<T>).onFetchSuccess(r, contexto))
-          .catch(
-            (props as WithFetch<T>).onFetchError
-              ? (e) => (props as WithFetch<T>).onFetchError(e, contexto)
-              : console.error
-          )
-          .finally(() => (estado.value = ""));
+      props
+        .fetchValues()
+        .then((r) => (props as WithFetch<T>).onFetchSuccess(r, contexto))
+        .catch(
+          (props as WithFetch<T>).onFetchError
+            ? (e) => (props as WithFetch<T>).onFetchError(e, contexto)
+            : console.error
+        )
+        .finally(() => (estado.value = ""));
   }, []);
 
   return (

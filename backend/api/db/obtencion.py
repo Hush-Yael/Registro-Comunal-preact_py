@@ -15,3 +15,15 @@ def obtener_datos_comunidad():
 
     conn.close()
     return [dict(row) for row in datos]
+
+
+def obtener_datos_registro_comunidad(id: int):
+    conn, cursor = abrir_db()
+    datos = (
+        cursor.execute("SELECT * FROM comunidad WHERE id = ? LIMIT 1", (id,))
+    ).fetchone()
+
+    conn.close()
+
+    if datos:
+        return dict(datos)
