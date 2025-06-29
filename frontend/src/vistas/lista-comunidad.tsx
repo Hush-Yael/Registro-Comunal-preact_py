@@ -41,7 +41,7 @@ export default () => {
     },
     {
       header: "Cédula",
-      accessorKey: "cedula",
+      accessorFn: (row) => row.cedula.toLocaleString("es-VE"),
       maxSize: 125,
       meta: { filterVariant: "number" },
     },
@@ -93,7 +93,7 @@ export default () => {
 
   return (
     <Tabla
-      class="h-full w-[500px] [&_td]:nth-3:text-right [&_td]:nth-4:text-right [&_td]:nth-7:text-right"
+      class="max-h-full w-[500px] [&_td]:nth-3:text-right [&_td]:nth-4:text-right [&_td]:nth-7:text-right"
       wrapperClass="h-[60vh] mt-6"
       datos={datos}
       header={(tabla: Table<DatosComunidad>) => (
