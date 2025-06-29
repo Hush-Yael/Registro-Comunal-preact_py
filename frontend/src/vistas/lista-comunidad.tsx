@@ -57,7 +57,7 @@ export default () => {
       accessorKey: "patologia",
       size: 15,
     },
-    { header: "Dirección", accessorKey: "direccion", size: 25 },
+    { header: "Dirección", accessorKey: "direccion", size: 100 },
     {
       header: "N° casa",
       accessorKey: "numero_casa",
