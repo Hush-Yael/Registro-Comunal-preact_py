@@ -124,8 +124,12 @@ export default () => {
               accept=".csv"
               id="exportar"
             />
-            <label class="btn btn-primario" htmlFor="exportar">
-              <Iconos.Importar /> Importar datos
+            <label
+              class="btn btn-primario"
+              htmlFor="exportar"
+              title="Importar datos"
+            >
+              <Iconos.Importar />
             </label>
           </fieldset>
         </Cabecera>
