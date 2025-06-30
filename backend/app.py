@@ -1,6 +1,6 @@
 import sys
 import os
-from webview import create_window, start
+from webview import create_window, start, settings
 from threading import Thread, Event
 from flask import Flask
 from flask_cors import CORS
@@ -31,6 +31,9 @@ def iniciar_flask(evento_listo):
         evento_listo.set()
         sys.exit(1)
 
+
+# Permitir descargar archivos
+settings["ALLOW_DOWNLOADS"] = True
 
 if __name__ == "__main__":
     # se corre con la webview al usar el ejecutable o al usar el argumento --preview
