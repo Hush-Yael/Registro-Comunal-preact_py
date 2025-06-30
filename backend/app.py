@@ -50,8 +50,11 @@ if __name__ == "__main__":
         )
 
         create_window(
-            "Flask example",
-            url=os.path.join(RUTA_BASE, "estatico", "index.html"),
+            "Registro Comunal",
+            # La app compilada busca el index.html en la carpeta estática, en modo debug se usa el servidor de Vite
+            url=os.path.join(RUTA_BASE, "estatico", "index.html")
+            if not DEBUG
+            else "http://localhost:5173",
             text_select=True,
             zoomable=True,
         )
