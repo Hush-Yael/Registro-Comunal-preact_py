@@ -13,6 +13,7 @@ import { useSearchParams } from "wouter-preact";
 import { rutaApi } from "../../utilidades";
 import { DatosComunidad } from "../tipos";
 import { signal } from "@preact/signals";
+import { datosComunidad } from "./lista-comunidad";
 
 const datos = signal<DatosComunidad>({
   nombres: "",
@@ -80,6 +81,17 @@ export default () => {
             });
         }}
         onSuccess={({ contexto }) => {
+          if (editar) {
+            datosComunidad.value = datosComunidad.value.map((d) => {
+              if (d.id === Number(editar)) return datos.value;
+              else return d;
+            });
+          } else
+            datosComunidad.value.push({
+              ...datos.value,
+              id: datosComunidad.value[datosComunidad.value.length - 1].id + 1,
+            });
+
           contexto.datos.value = contexto.datosIniciales;
           setTimeout(() => (contexto.estado.value = ""), 800);
         }}

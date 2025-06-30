@@ -8,8 +8,8 @@ import type { Usuario } from "../tipos";
 import { rutaApi } from "../../utilidades";
 import { ColumnDef } from "@tanstack/react-table";
 
-const datos = signal<Usuario[]>([]),
-  carga = signal(true);
+export const listaUsuarios = signal<Usuario[]>([]);
+const carga = signal(true);
 
 const cambiarRol = async (datos: Usuario) => {
   const r = await fetch(rutaApi("actualizar-rol"), {
@@ -32,7 +32,10 @@ const eliminarUsuario = async (nombre: string) => {
       method: "DELETE",
     });
 
-    if (r.ok) datos.value = datos.value.filter((u) => u.nombre !== nombre);
+    if (r.ok)
+      listaUsuarios.value = listaUsuarios.value.filter(
+        (u) => u.nombre !== nombre
+      );
   }
 };
 
@@ -100,7 +103,7 @@ export default () => {
               ]
             : []),
         ]}
-        datos={datos}
+        datos={listaUsuarios}
         shouldFetch={carga}
         valuesFetcher={() => fetch(rutaApi("usuarios")).then((r) => r.json())}
       />

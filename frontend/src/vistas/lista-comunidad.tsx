@@ -14,8 +14,8 @@ import Iconos from "../componentes/iconos";
 import { signal } from "@preact/signals";
 import { Link } from "wouter-preact";
 
-const datos = signal<DatosComunidad[]>([]),
-  cargar = signal(true);
+export const datosComunidad = signal<DatosComunidad[]>([]);
+const cargar = signal(true);
 
 export default () => {
   const [paginacion, setPaginacion] = useLocalStorage({
@@ -97,7 +97,7 @@ export default () => {
         cargar.value ? "h-full" : "max-h-full"
       } w-[500px] [&_td]:nth-3:text-right [&_td]:nth-4:text-right [&_td]:nth-7:text-right`}
       wrapperClass="h-[60vh] mt-6"
-      datos={datos}
+      datos={datosComunidad}
       header={(tabla: Table<DatosComunidad>) => (
         <Cabecera titulo="Lista de registros de la comunidad">
           <fieldset class="flex items-center gap-2 text-sm *:py-1!">
@@ -156,7 +156,8 @@ const eliminarRegistro = async (id: number) => {
     const r = await fetch(rutaApi(`eliminar-registro-comunidad/${id}`), {
       method: "DELETE",
     });
-    if (r.ok) datos.value = datos.value.filter((u) => u.id !== id);
+    if (r.ok)
+      datosComunidad.value = datosComunidad.value.filter((u) => u.id !== id);
   }
 };
 

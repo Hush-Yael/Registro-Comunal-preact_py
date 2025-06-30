@@ -9,6 +9,7 @@ import Contraseña from "../componentes/formulario/contraseña";
 import { Link, useLocation } from "wouter-preact";
 import { sesion } from "..";
 import { signal } from "@preact/signals";
+import { listaUsuarios } from "./lista-usuarios";
 
 const datos = signal({ nombre: "", contraseña: "" });
 
@@ -25,12 +26,16 @@ export default () => {
         rutaApi={LOGIN ? "login" : "registro"}
         datos={datos}
         onSuccess={({ contexto, json }) => {
-          if (LOGIN) {
-            sesion.value = {
+          if (LOGIN)
+            return (sesion.value = {
               usuario: contexto.datos.value.nombre,
               rol: json,
-            };
-          }
+            });
+
+          listaUsuarios.value.push({
+            nombre: contexto.datos.value.nombre,
+            rol: "supervisor",
+          });
         }}
       >
         <Datos />
