@@ -43,7 +43,7 @@ export default () => {
       header: "Cédula",
       accessorFn: (row) => row.cedula.toLocaleString("es-VE"),
       maxSize: 125,
-      meta: { filterVariant: "number" },
+      meta: { filterInputValuePattern: /\d|\./ },
     },
     {
       header: "F. nacimiento",
