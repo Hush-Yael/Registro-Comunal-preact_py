@@ -20,12 +20,16 @@ app.config["CORS_HEADERS"] = "Content-Type"
 app.register_blueprint(api)
 
 
+def correr_backend():
+    app.run(host="0.0.0.0" if DEV else "localhost", debug=DEV, port=1144)
+
+
 def iniciar_flask(evento_listo):
     try:
         # Señal que el backend se ha iniciado
         evento_listo.set()
         # Se inicia el servidor
-        app.run(host="0.0.0.0", debug=DEV, port=1144)
+        correr_backend()
     except Exception as e:
         print(f"Configuracion del backend fallida: {str(e)}")
         evento_listo.set()
@@ -65,4 +69,4 @@ if __name__ == "__main__":
         start(debug=DEV, private_mode=False)
     # se inicia el servidor normalmente, para desarrollo
     else:
-        app.run(host="0.0.0.0", debug=DEV, port=1144)
+        correr_backend()
