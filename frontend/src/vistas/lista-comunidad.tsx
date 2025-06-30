@@ -100,21 +100,22 @@ export default () => {
       datos={datosComunidad}
       header={(tabla: Table<DatosComunidad>) => (
         <Cabecera titulo="Lista de registros de la comunidad">
-          <fieldset class="flex items-center gap-2 text-sm *:py-1!">
+          <fieldset class="flex items-center gap-3 pr-1 *:p-1! [&_svg]:size-4.5!">
             <button
               class="btn btn-secundario col-span-2 m-auto"
               // @ts-expect-error: no importa
               onClick={tabla.resetColumnFilters}
+              title="Limpiar filtros"
             >
-              <Iconos.Borrar class="size-6" />
-              Limpiar filtros
+              <Iconos.LimpiarFiltros />
             </button>
             <button
               onClick={exportar}
               disabled={_portando.value}
               class="btn btn-primario"
+              title="Exportar datos"
             >
-              <Iconos.Exportar /> Exportar datos
+              <Iconos.Exportar />
             </button>
             <input
               class="peer/input sr-only"
