@@ -121,7 +121,7 @@ export default () => {
             </button>
             <button
               onClick={exportar}
-              disabled={_portando.value}
+              disabled={_portando.value || datosComunidad.value.length < 1}
               class="btn btn-primario"
               title="Exportar datos"
             >
@@ -219,6 +219,8 @@ const importar = async (e: Event) => {
 };
 
 const exportar = async () => {
+  if (datosComunidad.value.length < 1) return;
+
   _portando.value = true;
   const r = await fetch(rutaApi("exportar-comunidad"));
   const blob = await r.blob();
