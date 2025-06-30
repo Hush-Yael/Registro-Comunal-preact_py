@@ -110,6 +110,16 @@ export default () => {
               <Iconos.LimpiarFiltros />
             </button>
             <button
+              onClick={() => {
+                cargar.value = true;
+              }}
+              disabled={cargar.value === true || _portando.value}
+              class="btn btn-secundario"
+              title="Recargar datos"
+            >
+              <Iconos.Recargar />
+            </button>
+            <button
               onClick={exportar}
               disabled={_portando.value}
               class="btn btn-primario"
