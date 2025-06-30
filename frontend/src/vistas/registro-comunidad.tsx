@@ -52,6 +52,16 @@ export default () => {
         rutaApi="registro-comunidad"
         method={editar ? "PUT" : "POST"}
         datos={datos}
+        datosIniciales={{
+          nombres: "",
+          apellidos: "",
+          cedula: "",
+          fecha_nacimiento: "",
+          patologia: "",
+          direccion: "",
+          numero_casa: "",
+          id: 0,
+        }}
         fetchValues={
           editar
             ? () => fetch(rutaApi(`obtener-datos-comunidad/${editar}`))

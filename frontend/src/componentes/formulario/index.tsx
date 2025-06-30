@@ -1,6 +1,6 @@
 import type { JSX } from "preact/jsx-runtime";
 import { createContext } from "preact";
-import { useRef, MutableRef, useEffect } from "preact/hooks";
+import { useEffect } from "preact/hooks";
 import { Signal, useSignal } from "@preact/signals";
 import Alerta from "../alerta";
 import { useContext } from "preact/hooks";
@@ -8,7 +8,7 @@ import { rutaApi } from "../../../utilidades";
 
 export type ContextoFormulario<T extends Record<string, unknown>> = {
   datos: Signal<T>;
-  datosIniciales: MutableRef<T>;
+  datosIniciales: T;
   errores: Signal<Record<string, string>>;
   estado: Signal<string>;
 };
@@ -38,6 +38,7 @@ type FormularioProps<
   modifyBodyValues?: (values: T) => T;
   method?: string;
   datos: Signal<T>;
+  datosIniciales?: T;
   rutaApi: string;
   fetchValues?: F;
 } & (F extends undefined
@@ -64,14 +65,13 @@ export default <
 ) => {
   const estado = useSignal<FormEstado>(props.fetchValues ? "fetching" : ""),
     datos = props.datos,
-    datosIniciales = useRef(props.datos.value),
     errores = useSignal(
       Object.fromEntries(Object.keys(props.datos).map((k) => [k, ""]))
     );
 
   const contexto: ContextoFormulario<T> = {
     datos,
-    datosIniciales,
+    datosIniciales: props.datosIniciales || { ...props.datos.value },
     errores,
     estado,
   };
@@ -185,7 +185,7 @@ export const Reiniciar = (props: JSX.IntrinsicElements["button"]) => {
       disabled={estado.value === "subiendo" || estado.value === "fetching"}
       type="reset"
       onClick={(e) => {
-        datos.value = datosIniciales.current;
+        datos.value = datosIniciales;
         estado.value = "";
         props.onClick && props.onClick(e);
       }}
