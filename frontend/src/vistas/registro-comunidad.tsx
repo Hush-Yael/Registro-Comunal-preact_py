@@ -62,6 +62,10 @@ export default () => {
           numero_casa: "",
           id: 0,
         }}
+        modifyBodyValues={(d) => ({
+          ...d,
+          cedula: (d.cedula as string).replace(/\D/g, ""),
+        })}
         fetchValues={
           editar
             ? () => fetch(rutaApi(`obtener-datos-comunidad/${editar}`))
@@ -76,7 +80,7 @@ export default () => {
             });
         }}
         onSuccess={({ contexto }) => {
-          contexto.datos.value = contexto.datosIniciales.current;
+          contexto.datos.value = contexto.datosIniciales;
           setTimeout(() => (contexto.estado.value = ""), 800);
         }}
       >
@@ -102,38 +106,38 @@ export default () => {
 let timeout: number;
 
 const Campos = () => {
-  const [params] = useSearchParams();
-
   const { errores } = useContext(contextoFormulario);
 
-  const cambiarCedula = (e: Event) => {
-    clearTimeout(timeout);
+  const buscarCedula = async (valor: number) => {
+    if (!valor) return (errores.value = { ...errores.value, cedula: "" });
 
-    const cedula = (e.target as HTMLInputElement).value;
-    if (!cedula || cedula == params.get("editar"))
-      return (errores.value = { ...errores.value, cedula: "" });
-
-    timeout = setTimeout(async () => {
-      const respuesta = await fetch(
-        `${location.origin.replace(
-          /:\d+/,
-          ":1144"
-        )}/api/verificar-cedula-comunidad/${cedula}`,
-        {
-          method: "HEAD",
-        }
-      );
-
-      if (respuesta.ok) {
-        errores.value = {
-          ...errores.value,
-          cedula:
-            respuesta.status === 404
-              ? ""
-              : "Ya existe un registro con esa cédula",
-        };
+    const respuesta = await fetch(
+      `${location.origin.replace(
+        /:\d+/,
+        ":1144"
+      )}/api/verificar-cedula-comunidad/${valor}`,
+      {
+        method: "HEAD",
       }
-    }, 500);
+    );
+
+    if (respuesta.ok) {
+      errores.value = {
+        ...errores.value,
+        cedula:
+          respuesta.status === 404
+            ? ""
+            : "Ya existe un registro con esa cédula",
+      };
+    }
+  };
+
+  const localizar = (e: Event) => {
+    const v = Number.parseInt(
+      (e.target as HTMLInputElement).value.replace(/\D/g, "")
+    );
+
+    if (v) (e.target as HTMLInputElement).value = v.toLocaleString("es-VE");
   };
 
   return (
@@ -158,10 +162,38 @@ const Campos = () => {
         label="Cédula"
         campo="cedula"
         id="cedula"
-        type="number"
         required
-        onChange={cambiarCedula}
-        min={1}
+        minlength={1}
+        onChange={(e) => {
+          clearTimeout(timeout);
+          timeout = setTimeout(
+            () =>
+              buscarCedula(
+                parseInt(
+                  (e.target as HTMLInputElement).value.replace(/\D/g, "")
+                )
+              ),
+            500
+          );
+        }}
+        onPaste={(e) => {
+          e.preventDefault();
+          const numero = parseInt(
+            e.clipboardData.getData("text/plain").replace(/\D/g, "")
+          );
+          const texto = (numero || "").toLocaleString("es-VE");
+
+          datos.value = {
+            ...datos.value,
+            cedula: texto,
+          };
+
+          numero && buscarCedula(numero);
+        }}
+        onBeforeInput={(e) => {
+          if (e.data && !/^\d+$/.test(e.data)) e.preventDefault();
+        }}
+        onInput={localizar}
       />
       <Input
         label="Fecha de nacimiento"
