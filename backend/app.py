@@ -62,7 +62,7 @@ if __name__ == "__main__":
             zoomable=True,
         )
 
-        start(debug=DEBUG)
+        start(debug=True, private_mode=False)
     # se inicia el servidor normalmente, para desarrollo
     else:
         app.run(host="0.0.0.0", debug=DEBUG, port=1144)
