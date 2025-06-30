@@ -30,10 +30,12 @@ type FormularioProps<
   T extends Record<string, unknown>,
   F extends (() => Promise<Response>) | undefined = undefined
 > = Omit<JSX.IntrinsicElements["form"], "onSubmit" | "onError"> & {
-  /*eslint-disable-next-line no-unused-vars*/
+  // eslint-disable-next-line no-unused-vars
   onSuccess?: (props: HandlerEvent<T>) => any | Promise<any>;
-  /*eslint-disable-next-line no-unused-vars*/
+  // eslint-disable-next-line no-unused-vars
   onError?: (props: HandlerEvent<T>) => any | Promise<any>;
+  // eslint-disable-next-line no-unused-vars
+  modifyBodyValues?: (values: T) => T;
   method?: string;
   datos: Signal<T>;
   rutaApi: string;
@@ -105,7 +107,11 @@ export default <
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify(datos.value),
+                body: JSON.stringify(
+                  props.modifyBodyValues
+                    ? props.modifyBodyValues(datos.value)
+                    : datos.value
+                ),
               }
             );
 
