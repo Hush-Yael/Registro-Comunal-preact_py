@@ -1,4 +1,6 @@
+from csv import DictWriter
 from .apertura import abrir_db
+from io import BytesIO, StringIO
 
 
 def obtener_usuarios():
@@ -31,3 +33,23 @@ def obtener_datos_registro_comunidad(id: int):
 
     if datos:
         return dict(datos)
+
+
+def exportar_comunidad():
+    datos = obtener_datos_comunidad()
+    datos[0].pop("id", None)
+
+    proxy = StringIO()
+    writer = DictWriter(proxy, fieldnames=datos[0].keys(), delimiter=";")
+    writer.writeheader()
+
+    for row in datos:
+        row.pop("id", None)
+        writer.writerow(row)
+
+    mem = BytesIO()
+    mem.write(proxy.getvalue().encode())
+    mem.seek(0)
+    proxy.close()
+
+    return mem

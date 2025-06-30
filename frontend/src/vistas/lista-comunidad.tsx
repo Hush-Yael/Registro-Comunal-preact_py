@@ -100,14 +100,34 @@ export default () => {
       datos={datos}
       header={(tabla: Table<DatosComunidad>) => (
         <Cabecera titulo="Lista de registros de la comunidad">
-          <button
-            class="btn btn-secundario"
-            // @ts-expect-error: no importa
-            onClick={tabla.resetColumnFilters}
-          >
-            <Iconos.Borrar class="size-6" />
-            Limpiar filtros
-          </button>
+          <fieldset class="flex items-center gap-2 text-sm *:py-1!">
+            <button
+              class="btn btn-secundario col-span-2 m-auto"
+              // @ts-expect-error: no importa
+              onClick={tabla.resetColumnFilters}
+            >
+              <Iconos.Borrar class="size-6" />
+              Limpiar filtros
+            </button>
+            <button
+              onClick={exportar}
+              disabled={_portando.value}
+              class="btn btn-primario"
+            >
+              <Iconos.Exportar /> Exportar datos
+            </button>
+            <input
+              class="peer/input sr-only"
+              onChange={importar}
+              disabled={sesion.value.rol !== "admin" || _portando.value}
+              type="file"
+              accept=".csv"
+              id="exportar"
+            />
+            <label class="btn btn-primario" htmlFor="exportar">
+              <Iconos.Importar /> Importar datos
+            </label>
+          </fieldset>
         </Cabecera>
       )}
       filasNombre="registros"
@@ -138,4 +158,59 @@ const eliminarRegistro = async (id: number) => {
     });
     if (r.ok) datos.value = datos.value.filter((u) => u.id !== id);
   }
+};
+
+const _portando = signal(false);
+
+const importar = async (e: Event) => {
+  if (sesion.value.rol !== "admin") return;
+
+  if (
+    confirm(
+      "¿Realmente desea importar los registros?\nAl hacerlo, se BORRARÁN TODOS LOS REGISTROS ACTUALES y se REEMPLAZARÁN por los nuevos."
+    )
+  ) {
+    const contraseña = prompt(
+      "Por favor, ingrese la contraseña para confirmar la operación:"
+    );
+
+    if (!contraseña || !contraseña.trim()) {
+      alert("Por favor, ingrese una contraseña válida");
+      return ((e.target as HTMLInputElement).value = "");
+    }
+
+    _portando.value = true;
+
+    const file = (e.target as HTMLInputElement).files[0];
+
+    const formData = new FormData();
+    formData.append("usuario", sesion.value.usuario);
+    formData.append("contraseña", contraseña);
+    formData.append("archivo", file);
+
+    const r = await fetch(rutaApi("importar-comunidad"), {
+      method: "POST",
+      body: formData,
+    });
+
+    (e.target as HTMLInputElement).value = "";
+    _portando.value = false;
+
+    alert(await r.text());
+
+    if (r.ok) cargar.value = true;
+  }
+};
+
+const exportar = async () => {
+  _portando.value = true;
+  const r = await fetch(rutaApi("exportar-comunidad"));
+  const blob = await r.blob();
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "Registros de la comunidad Santo Domingo De Guzmán.csv";
+  link.click();
+  URL.revokeObjectURL(url);
+  _portando.value = false;
 };

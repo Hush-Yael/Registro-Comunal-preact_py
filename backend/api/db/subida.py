@@ -1,3 +1,5 @@
+from csv import DictReader
+from io import StringIO
 from .apertura import abrir_db
 from constantes import DatosComunidad, DatosUsuario, ErrorDeValidacion
 
@@ -183,3 +185,36 @@ def añadir_registro_comunidad(datos: DatosComunidad, modificar: bool = False):
             raise e
     finally:
         conn.close()
+
+
+def importar_comunidad(archivo: StringIO):
+    reader = DictReader(archivo, delimiter=";")
+    next(reader)
+    añadidos = 0
+    fallos = 0
+
+    conn, cursor = abrir_db()
+
+    cursor.execute(
+        "DELETE FROM comunidad",
+    )
+
+    for row in reader:
+        try:
+            cursor.execute(
+                """--sql
+                INSERT INTO comunidad
+                    (nombres, apellidos, cedula, fecha_nacimiento, patologia, direccion, numero_casa)
+                VALUES
+                    (:nombres, :apellidos, :cedula, :fecha_nacimiento, :patologia, :direccion, :numero_casa)
+                """,
+                row,
+            )
+            añadidos += 1
+        except Exception as e:
+            fallos += 1
+            print(f"Ocurrió un error al importar el registro: {e}")
+
+    conn.commit()
+    conn.close()
+    return {"fallos": fallos, "añadidos": añadidos}
