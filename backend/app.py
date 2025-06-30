@@ -9,8 +9,8 @@ from api.index import api
 
 
 ARGS = sys.argv[1:]
-PREVIEW = "--preview" in ARGS
-DEBUG = "--debug" in ARGS
+PREVIEW = "--preview" in ARGS or "-P" in ARGS
+DEBUG = "--debug" in ARGS or "-D" in ARGS
 
 
 app = Flask(__name__)
