@@ -27,7 +27,7 @@ def iniciar_flask(evento_listo):
         # Se inicia el servidor
         app.run(host="0.0.0.0", port=1144)
     except Exception as e:
-        print(f"Configuración del backend fallida: {str(e)}")
+        print(f"Configuracion del backend fallida: {str(e)}")
         evento_listo.set()
         sys.exit(1)
 
@@ -43,10 +43,10 @@ if __name__ == "__main__":
         hilo_de_flask.daemon = True
         hilo_de_flask.start()
 
-        print("Esperando a que se complete la configuración del backend...")
+        print("Esperando a que se complete la configuracion del backend...")
         backend_listo.wait()
         print(
-            "Configuración del backend completada, iniciando la interfaz de usuario..."
+            "Configuracion del backend completada, iniciando la interfaz de usuario..."
         )
 
         create_window(
