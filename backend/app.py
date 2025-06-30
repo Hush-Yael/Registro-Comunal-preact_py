@@ -10,7 +10,7 @@ from api.index import api
 
 ARGS = sys.argv[1:]
 PREVIEW = "--preview" in ARGS or "-P" in ARGS
-DEBUG = "--debug" in ARGS or "-D" in ARGS
+DEV = "--dev" in ARGS or "-D" in ARGS
 
 
 app = Flask(__name__)
@@ -25,7 +25,7 @@ def iniciar_flask(evento_listo):
         # Señal que el backend se ha iniciado
         evento_listo.set()
         # Se inicia el servidor
-        app.run(host="0.0.0.0", port=1144)
+        app.run(host="0.0.0.0", debug=DEV, port=1144)
     except Exception as e:
         print(f"Configuracion del backend fallida: {str(e)}")
         evento_listo.set()
@@ -56,13 +56,13 @@ if __name__ == "__main__":
             "Registro Comunal",
             # La app compilada busca el index.html en la carpeta estática, en modo debug se usa el servidor de Vite
             url=os.path.join(RUTA_BASE, "estatico", "index.html")
-            if not DEBUG
+            if not DEV
             else "http://localhost:5173",
             text_select=True,
             zoomable=True,
         )
 
-        start(debug=True, private_mode=False)
+        start(debug=DEV, private_mode=False)
     # se inicia el servidor normalmente, para desarrollo
     else:
-        app.run(host="0.0.0.0", debug=DEBUG, port=1144)
+        app.run(host="0.0.0.0", debug=DEV, port=1144)
