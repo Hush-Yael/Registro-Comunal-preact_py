@@ -12,6 +12,7 @@ export default (props: Omit<InputProps, "label" | "campo" | "id">) => {
           <p class="text-neutral-700">Contraseña</p>
           <Input
             {...props}
+            id="contraseña"
             campo="contraseña"
             type={visible.value ? "text" : "password"}
           />
