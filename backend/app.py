@@ -8,7 +8,7 @@ from api.index import api
 ARGS = sys.argv[1:]
 PREVIEW = "--preview" in ARGS or "-P" in ARGS
 DEV = "--dev" in ARGS or "-D" in ARGS
-
+PROD = getattr(sys, "frozen", False)
 
 app = Flask(
     __name__,
@@ -59,7 +59,7 @@ settings["ALLOW_DOWNLOADS"] = True
 
 if __name__ == "__main__":
     # se corre con la webview al usar el ejecutable o al usar estar en el modo PREVIEW
-    if PREVIEW or getattr(sys, "frozen", False):
+    if PREVIEW or PROD:
         # Se crea un evento para indicar que el inicio del backend se ha completado
         backend_listo = Event()
 
@@ -83,7 +83,7 @@ if __name__ == "__main__":
             zoomable=True,
         )
 
-        start(debug=True, private_mode=False)
+        start(debug=DEV, private_mode=False)
     # se inicia el servidor normalmente, para desarrollo
     else:
         correr_servidor()
