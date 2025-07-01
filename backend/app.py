@@ -13,8 +13,8 @@ PROD = getattr(sys, "frozen", False)
 
 app = Flask(
     __name__,
-    static_folder="estatico",
-    template_folder="estatico",
+    static_folder="estatico" if PROD else "../frontend/dist",
+    template_folder="estatico" if PROD else "../frontend/dist",
     static_url_path="/",
 )
 CORS(app)
@@ -23,25 +23,30 @@ app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
 app.register_blueprint(api)
 
+if PROD or PREVIEW:
 
-@app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
-def catch_all(path):
-    return app.send_static_file("index.html")
-
-
-# se evita el error 404 cuando se intenta acceder a un archivo no existente, ya que siempre se debería mostrar el index.html
-@app.errorhandler(404)
-def handle_404(e):
-    # no es una petición de api
-    if request.method == "GET" and not request.url.startswith("/api"):
+    @app.route("/", defaults={"path": ""})
+    @app.route("/<path:path>")
+    def catch_all(path):
         return app.send_static_file("index.html")
-    # es una petición que debe fallar al no existir el recurso realmente
-    return e
+
+    # se evita el error 404 cuando se intenta acceder a un archivo no existente, ya que siempre se debería mostrar el index.html
+    @app.errorhandler(404)
+    def handle_404(e):
+        print(e)
+        # no es una petición de api
+        if request.method == "GET" and not request.url.startswith("/api"):
+            return app.send_static_file("index.html")
+        # es una petición que debe fallar al no existir el recurso realmente
+        return e
 
 
 def correr_servidor():
-    app.run(host="0.0.0.0" if DEV else "localhost", debug=DEV, port=1144)
+    app.run(
+        host="0.0.0.0" if DEV else "localhost",
+        debug=DEV and not PREVIEW and not PROD,
+        port=1144,
+    )
 
 
 def iniciar_flask(evento_listo):
@@ -79,7 +84,7 @@ if __name__ == "__main__":
         create_window(
             "Registro Comunal",
             # La app compilada usa la url de Flask que sirve el html desde la carpeta estática, en modo desarrollo se usa la del servidor de Vite
-            server=app,  # type: ignore
+            server=app if PROD else None,  # type: ignore
             url="http://localhost:1144" if not DEV else "http://localhost:5173",
             text_select=True,
             zoomable=True,
