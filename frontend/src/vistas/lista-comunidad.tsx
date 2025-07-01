@@ -71,7 +71,7 @@ export default () => {
             header: "Acciones",
             size: 10,
             cell: (info) => (
-              <fieldset class="flex gap-1">
+              <div role="group" class="flex gap-1">
                 <Link
                   href={`/?editar=${info.row.original.id}`}
                   class="btn btn-primario"
@@ -84,7 +84,7 @@ export default () => {
                 >
                   <Iconos.Eliminar />
                 </button>
-              </fieldset>
+              </div>
             ),
           } as ColumnDef<DatosComunidad>,
         ]
@@ -100,7 +100,10 @@ export default () => {
       datos={datosComunidad}
       header={(tabla: Table<DatosComunidad>) => (
         <Cabecera titulo="Lista de registros de la comunidad">
-          <fieldset class="flex items-center gap-3 pr-1 *:p-1! [&_svg]:size-4.5!">
+          <div
+            role="group"
+            class="flex items-center gap-3 pr-1 *:p-1! [&_svg]:size-4.5!"
+          >
             <button
               class="btn btn-secundario col-span-2 m-auto"
               // @ts-expect-error: no importa
@@ -142,7 +145,7 @@ export default () => {
             >
               <Iconos.Importar />
             </label>
-          </fieldset>
+          </div>
         </Cabecera>
       )}
       filasNombre="registros"

@@ -246,7 +246,7 @@ const Botones = () => {
           <Iconos.Editar /> Editando el registro: <b class="mx-1">{editar}</b>
         </small>
       )}
-      <fieldset class="grid grid-cols-2 gap-2 m-auto">
+      <div role="group" class="grid grid-cols-2 gap-2 m-auto">
         <Reiniciar
           onClick={() =>
             setParams((p) => {
@@ -261,7 +261,7 @@ const Botones = () => {
           <Iconos.Añadir />
           {editar ? "Guardar cambios" : "Registrar"}
         </Subir>
-      </fieldset>
+      </div>
     </div>
   );
 };

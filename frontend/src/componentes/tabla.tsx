@@ -151,7 +151,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
                 {tabla.getPageCount().toLocaleString()}
               </strong>
             </span>
-            <fieldset class="flex items-center gap-1.5">
+            <div role="group" class="flex items-center gap-1.5">
               <button
                 class="rounded bg-neutral-200"
                 onClick={() => tabla.firstPage()}
@@ -180,7 +180,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
               >
                 <Iconos.FlechaDerUltimo class="size-6" />
               </button>
-            </fieldset>
+            </div>
             <label htmlFor="page" class="flex items-center gap-2">
               <span className="min-w-max">Ir a la página:</span>
               <input
