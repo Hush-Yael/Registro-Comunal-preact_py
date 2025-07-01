@@ -4,6 +4,7 @@ from webview import create_window, start, settings
 from threading import Thread, Event
 from flask import Flask, request
 from api.index import api
+from waitress import serve
 
 
 ARGS = sys.argv[1:]
@@ -42,11 +43,14 @@ if PROD or PREVIEW:
 
 
 def correr_servidor():
-    app.run(
-        host="0.0.0.0" if DEV else "127.0.0.1",
-        debug=DEV and not PREVIEW and not PROD,
-        port=1144,
-    )
+    if PROD:
+        serve(app, host="0.0.0.0", port=1144)
+    else:
+        app.run(
+            host="0.0.0.0" if DEV else "127.0.0.1",
+            debug=DEV and not PREVIEW and not PROD,
+            port=1144,
+        )
 
 
 def iniciar_flask(evento_listo):
