@@ -124,10 +124,7 @@ const Campos = () => {
     if (!valor) return (errores.value = { ...errores.value, cedula: "" });
 
     const respuesta = await fetch(
-      `${location.origin.replace(
-        /:\d+/,
-        ":1144"
-      )}/api/verificar-cedula-comunidad/${valor}`,
+      rutaApi(`verificar-cedula-comunidad/${valor}`),
       {
         method: "HEAD",
       }
