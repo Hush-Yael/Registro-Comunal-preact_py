@@ -2,9 +2,9 @@
   "name": "registro-comunal",
   "version": "0.1.0",
   "scripts": {
+    "build": "node --run build-frontend && node --run build-backend",
     "build-frontend": "cd frontend && node --run build",
-    "build": "node --run clean && node --run build-frontend && .\\backend\\.venv\\Scripts\\pyinstaller build-windows.spec",
-    "clean": "if exist dist rd /S /Q dist & if exist build rd /S /Q build & if exist gui rd /S /Q gui",
+    "build-backend": "cd backend && .\\.venv\\Scripts\\pyinstaller build.spec",
     "dev": "concurrently --kill-others \"node --run dev-frontend\" \"node --run dev-backend\"",
     "dev-frontend": "cd frontend && node --run dev",
     "dev-backend": ".\\backend\\.venv\\Scripts\\python backend\\app.py -D",
