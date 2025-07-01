@@ -1,4 +1,5 @@
 import sys
+from flask_cors import CORS
 from webview import create_window, start, settings
 from threading import Thread, Event
 from flask import Flask, request
@@ -16,6 +17,7 @@ app = Flask(
     template_folder="estatico",
     static_url_path="/",
 )
+CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
