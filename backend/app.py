@@ -43,7 +43,7 @@ if PROD or PREVIEW:
 
 def correr_servidor():
     app.run(
-        host="0.0.0.0" if DEV else "localhost",
+        host="0.0.0.0" if DEV else "127.0.0.1",
         debug=DEV and not PREVIEW and not PROD,
         port=1144,
     )
@@ -85,7 +85,7 @@ if __name__ == "__main__":
             "Registro Comunal",
             # La app compilada usa la url de Flask que sirve el html desde la carpeta estática, en modo desarrollo se usa la del servidor de Vite
             server=app if PROD else None,  # type: ignore
-            url="http://localhost:1144" if not DEV else "http://localhost:5173",
+            url="http://127.0.0.1:1144" if not DEV else "http://localhost:5173",
             text_select=True,
             zoomable=True,
         )
