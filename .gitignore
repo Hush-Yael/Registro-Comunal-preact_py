@@ -1,5 +1,5 @@
 # Ignore virtual environment files
-.venv/
+.venv*/
 # Ignore node packages
 node_modules/
 # Ignore compiled Python files
@@ -41,3 +41,7 @@ backend/estatico/
 
 # things to be discarded or reused
 draft/
+*random.*
+*.log
+pdf/
+docx/
