@@ -5,6 +5,9 @@ from threading import Thread, Event
 from flask import Flask, request
 from api.index import api
 from waitress import serve
+import locale
+
+locale.setlocale(locale.LC_ALL, "es_VE")
 
 
 ARGS = sys.argv[1:]
