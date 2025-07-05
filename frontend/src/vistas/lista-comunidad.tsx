@@ -4,7 +4,7 @@ import {
   type Table,
   type ColumnDef,
 } from "@tanstack/react-table";
-import { rutaApi } from "../../utilidades";
+import { descarga, rutaApi } from "../../utilidades";
 import Cabecera from "../componentes/cabecera";
 import Tabla from "../componentes/tabla";
 import { sesion } from "..";
@@ -226,12 +226,6 @@ const exportar = async () => {
 
   _portando.value = true;
   const r = await fetch(rutaApi("exportar-comunidad"));
-  const blob = await r.blob();
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "Registros de la comunidad Santo Domingo De Guzmán.csv";
-  link.click();
-  URL.revokeObjectURL(url);
+  descarga(r, "Registros de la comunidad Santo Domingo De Guzmán.csv");
   _portando.value = false;
 };
