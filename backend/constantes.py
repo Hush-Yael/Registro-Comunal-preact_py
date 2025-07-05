@@ -23,11 +23,11 @@ class DatosComunidad(TypedDict):
     id: int
     nombres: str
     apellidos: str
-    cedula: int | str
+    cedula: int
     fecha_nacimiento: str
     patologia: str
     direccion: str
-    numero_casa: int | str
+    numero_casa: str
 
 
 # para mostrar errores en los campos
