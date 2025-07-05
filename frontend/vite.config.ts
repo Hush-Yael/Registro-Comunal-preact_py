@@ -5,7 +5,11 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [preact(), tailwindcss()],
   server: { host: true },
+  css: {
+    postcss: ".postcss.config.js",
+  },
   build: {
     target: "es2020",
-  },
+    cssTarget: "chrome66",
+  }
 });
