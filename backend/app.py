@@ -18,7 +18,7 @@ PROD = getattr(sys, "frozen", False)
 app = Flask(
     __name__,
     static_folder="estatico" if PROD else "../frontend/dist",
-    template_folder="estatico" if PROD else "../frontend/dist",
+    template_folder="plantillas",
     static_url_path="/",
 )
 CORS(app)
