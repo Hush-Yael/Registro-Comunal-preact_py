@@ -1,15 +1,29 @@
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
+import legacy from "@vitejs/plugin-legacy";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  plugins: [preact(), tailwindcss()],
+  plugins: [
+    preact(),
+    tailwindcss(),
+    legacy({
+      modernPolyfills: true,
+    }),
+  ],
   server: { host: true },
   css: {
     postcss: ".postcss.config.js",
   },
   build: {
-    target: "es2020",
     cssTarget: "chrome66",
-  }
+  },
+  esbuild: {
+    target: "chrome66",
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: "chrome66",
+    },
+  },
 });
