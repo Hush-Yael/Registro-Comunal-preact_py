@@ -1,12 +1,6 @@
 import type { JSX } from "preact/jsx-runtime";
 
 export default {
-  Casa: (props: JSX.IntrinsicElements["svg"]) => (
-    <svg {...props} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-      <path d="M30.85416.548C30.52317.4329.7031828.76418H28v11c00.552-0.4481-11h-6v-7c0-2.757-2.243-5-5-5  s-52.243-55v7H5c-0.5520-1-0.448-1-1V18H3.235c-0.9390-1.759-0.569-2.09-1.451c-0.331-0.882-0.088-1.8520.62-2.47L13.4443.019  c1.434-1.3573.679-1.3575.1120l11.70711.086C30.94114.69631.18515.66630.85416.548z" />
-    </svg>
-  ),
-
   Personas: (props: JSX.IntrinsicElements["svg"]) => (
     <svg {...props} viewBox="0 0 96 96">
       <circle cx="24" cy="30.8" r="9" />
