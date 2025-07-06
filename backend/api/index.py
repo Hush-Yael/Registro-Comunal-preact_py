@@ -1,5 +1,13 @@
 import io
-from flask import Blueprint, abort, jsonify, request, send_file
+import os
+from flask import (
+    Blueprint,
+    abort,
+    jsonify,
+    request,
+    send_file,
+    render_template,
+)
 from .db.obtencion import (
     obtener_usuarios,
     obtener_datos_comunidad,
@@ -13,8 +21,17 @@ from .db.subida import (
     añadir_registro_comunidad,
     importar_comunidad,
 )
-from constantes import DatosUsuario, ErrorDeValidacion, DatosComunidad, Sesion
+from constantes import (
+    RUTA_BASE,
+    DatosUsuario,
+    ErrorDeValidacion,
+    DatosComunidad,
+    Sesion,
+)
 from .db.modificacion import cambiar_rol, eliminar_registro_comunidad, eliminar_usuario
+from locale import format_string
+from .utilidades import fecha_a_años, generar_documento
+
 
 api = Blueprint("api", __name__)
 
@@ -50,6 +67,66 @@ def exportar():
         mimetype="text/csv",
         as_attachment=True,
         download_name="comunidad.csv",
+    )
+
+
+@api.route("/api/generar-carta", methods=["POST"])
+def retornar_carta():
+    try:
+        json = request.json
+    except Exception:
+        return "No se proporcionaron datos", 400
+
+    if not json:
+        return "No se proporcionaron datos", 400
+
+    id = json.get("id", "")
+    if not id:
+        return "No se proporcionó un id", 400
+
+    tipo_carta = json.get("tipo_carta", "")
+    if not tipo_carta:
+        return "No se proporcionó un tipo de carta", 400
+
+    tipo_documento = json.get("tipo_documento", "")
+    if not tipo_documento:
+        return "No se proporcionó un tipo de carta", 400
+
+    hoy = json.get("hoy", "")
+    tiempo_ = json.get("tiempo_", "")
+
+    datos = obtener_datos_registro_comunidad(id)
+    if not datos:
+        return "No se encontraron datos relacionados al id ingresado", 404
+
+    plantilla = render_template(
+        "constancia.html" if tipo_carta != "plantilla" else "plantilla.html",
+        tipo_carta=tipo_carta,
+        nombres=f"{datos['nombres']} {datos['apellidos']}".upper(),
+        edad=fecha_a_años(datos.get("fecha_nacimiento", "")),
+        cedula=format_string("%d", int(datos["cedula"]), True),
+        direccion=datos.get("direccion", "").upper(),
+        numero_casa=datos.get("numero_casa", "").upper(),
+        hoy=hoy,
+        tiempo_=tiempo_,
+    )
+
+    generar_documento(id, tipo_carta, tipo_documento, plantilla)
+
+    return (
+        send_file(
+            os.path.join(
+                RUTA_BASE, f"documento.{'pdf' if tipo_documento != 'docx' else 'docx'}"
+            ),
+            download_name=f"documento.{'pdf' if tipo_documento != 'docx' else 'docx'}"
+            if tipo_documento != "docx"
+            else "test.docx",
+            mimetype="application/pdf"
+            if tipo_documento != "docx"
+            else "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            as_attachment=True,
+        ),
+        200,
     )
 
 

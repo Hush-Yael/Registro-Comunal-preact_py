@@ -43,5 +43,5 @@ backend/estatico/
 draft/
 *random.*
 *.log
-pdf/
-docx/
+*.pdf
+*.docx

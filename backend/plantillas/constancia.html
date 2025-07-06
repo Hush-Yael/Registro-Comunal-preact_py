@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+   CONSTANCIA {% if tipo_carta == "residencia" %} DE RESIDENCIA {% else %} POST MORTEM {% endif %}
+   <pdf:spacer height="10"></pdf:spacer>
+{% endblock %}
+
+{% block continuacion %}
+    el/la Ciudadano(a): <b>{{ nombres }}</b>
+   
+   {% if edad %}
+      ,
+      {% if edad > 18 %} MAYOR {% else %} MENOR {% endif %} DE EDAD,
+   {% endif %}
+   
+   Venezolano(a), titular de la cédula de identidad N° <b> V-{{ cedula }}</b>,
+   {% if edad and tipo_carta == "residencia" %}
+      de {{ edad }} años de edad,
+   {% endif %}
+
+   {% if direccion or numero_casa %} que {% endif %}
+
+   {% if tiempo_ or direccion or numero_casa %}
+      {% if tipo_carta == "residencia" %} reside {% else %} residió {% endif %}
+      en esta comunidad
+   {% endif %}
+   
+   {% if tiempo_ %}
+      {% if tipo_carta == "residencia" %} desde hace {% else %} durante {% endif %}
+      {{ tiempo_ }}
+   {% endif %}
+   
+   {% if direccion %}
+      {% if direccion.lower().startswith("calle") or direccion.lower().startswith("avenida") or
+      direccion.lower().startswith("av.") %}
+         en la
+      {% else %}
+         {% if not direccion.lower().startswith("entre") %}
+            en
+         {% endif %}
+      {% endif %}
+
+      <b>{{ direccion }}</b>
+   {% endif %}
+   
+   {% if numero_casa %}
+      {% if not direccion %}
+         en la
+      {% endif %}
+      <b>CASA NRO. {{ numero_casa }}</b>
+   {% endif %}
+
+   {% if not tiempo_ and not direccion and not numero_casa %}
+      {% if tipo_carta == "residencia" %} es {% else %} fue {% endif %}
+      residente de esta comunidad.
+   {% else %}
+      {% if not tiempo_ %}
+         , correspondiente a este ámbito geográfico.
+      {% endif %}
+   {% endif %}
+{% endblock %}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+   <meta charset="UTF-8">
+   <link rel="stylesheet" href="./recursos/style.css">
+</head>
+
+<body>
+   <div id="header" class="center" style="line-height: 100%;">
+      <img src="./recursos/header.png">
+      <pdf:spacer height="15"></pdf:spacer>
+
+      <b class="block" style="padding-top: 10px;">REPÚBLICA BOLIVARIANA DE VENEZUELA</b>
+      <b class="block">CONSEJO COMUNAL SANTO DOMINGO DE GUSMÁN</b>
+      <b class="block">RIF: J-29926775-9</b>
+      <b class="block">ESTADO BARINAS</b>
+      <b class="block">CIUDAD BOLIVIA - PEDRAZA</b>
+   </div>
+
+   <img id="logo1" src="./recursos/consejos.png" style="height: 75px;">
+   <img id="logo2" src="./recursos/poder.jpg" style="height: 75px;">
+
+   <h1 class="center" style="text-decoration: 2px solid underline;">
+      {% block titulo %} Título del documento {% endblock %}
+   </h1>
+
+   <p>
+      Quienes suscribimos, Comité Electoral Permanente <b>“Santo Domingo de Gusmán”</b>, ubicado en la Parroquia <b>“CIUDAD
+         BOLIVIA – SECTOR SANTO DOMINGO DE GUZMÁN”</b>,
+      del Municipio Pedraza del Estado Barinas, por medio de la presente hacemos
+      constar que {% block continuacion %} {% endblock %}
+   </p>
+   {% block content %} {% endblock %}
+   <p>
+      Constancia que se expide a solicitud de parte interesada, en Ciudad Bolivia, el día <b>{{ hoy }}</b>
+   </p>
+   
+   <pdf:spacer height="15"></pdf:spacer>
+   <h2 class="center" style="font-weight: 400;">POR LA COMISIÓN ELECTORAL</h2>
+   <b class="block center">“SANTO DOMINGO DE GUSMÁN”</b>
+   <b class="block center">RIF: J-29926775-9</b>
+   <pdf:spacer height="10"></pdf:spacer>
+   
+   <table>
+      <tr>
+         <th class="tal" style="width: 10%;">Firma</th>
+   
+         <td>_________________________</td>
+         <td style="width: 14%;"></td>
+         <td>_________________________</td>
+         <td style="width: 14%;"></td>
+         <td>_________________________</td>
+      </tr>
+      <tr>
+         <th class="tal" style="width: 10%;">Cédula</th>
+   
+         <td>_________________________</td>
+         <td style="width: 14%;"></td>
+         <td>_________________________</td>
+         <td style="width: 14%;"></td>
+         <td>_________________________</td>
+      </tr>
+      <tr>
+         <th class="tal" style="width: 10%;">Teléfono</th>
+   
+         <td>_________________________</td>
+         <td style="width: 14%;"></td>
+         <td>_________________________</td>
+         <td style="width: 14%;"></td>
+         <td>_________________________</td>
+      </tr>
+   </table>
+
+   <pdf:spacer height="10"></pdf:spacer>
+   <small style="font-weight: 500;">
+      NOTA: DEBE CONTENER LAS TRES FIRMAS Y EL SELLO ORIGINAL
+   </small>
+</body>
+
+</html>

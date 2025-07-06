@@ -1,0 +1,70 @@
+@page {
+   size: letter portrait;
+
+   @frame header_frame {
+      -pdf-frame-content: header;
+      left: 3cm;
+      right: 3cm;
+      top: 1.5cm;
+   }
+
+   @frame logo1 {
+      -pdf-frame-content: logo1;
+      left: 1.5cm;
+      top: 3.5cm;
+      height: 2.3cm;
+      width: 2.3cm;
+   }
+
+   @frame logo2 {
+      -pdf-frame-content: logo2;
+      top: 3.5cm;
+      right: 1cm;
+      height: 2.3cm;
+      width: 2.3cm;
+   }
+
+   @frame content_frame {
+      left: 3cm;
+      right: 3cm;
+      top: 6cm;
+      bottom: 3cm;
+   }
+}
+
+html {
+   display: block;
+   line-height: 200%;
+   font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre,
+hr {
+   margin: 0;
+}
+
+.block {
+   display: block;
+}
+
+.center {
+   text-align: center;
+}
+
+p {
+   text-align: justify;
+   text-justify: inter-word;
+   tab-size: 4;
+   text-indent: 1.27cm;
+}
+
+.tal {
+   text-align: left;
+}
