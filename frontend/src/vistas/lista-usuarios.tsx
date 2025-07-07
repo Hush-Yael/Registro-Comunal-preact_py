@@ -46,8 +46,8 @@ export default () => {
         <TerminarSesion />
       </Cabecera>
       <Tabla
-        wrapperClass="max-h-[60vh] mt-8"
-        class="[&_th]:text-left [&_th]:nth-[1]:text-center [&_td]:nth-[1]:text-center [&_th]:nth-[4]:text-right"
+        wrapperClass="max-h-[60vh] min-w-[600px] mt-8"
+        class="[&_th]:text-left [&_th]:nth-[1]:text-center [&_td]:nth-[1]:text-center [&_th]:nth-[4]:text-right [&_thead>tr]:z-5"
         columnas={[
           {
             header: "#",
