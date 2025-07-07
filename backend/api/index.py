@@ -59,6 +59,12 @@ def lista_comunidad():
     return obtener_datos_comunidad()
 
 
+@api.route("/api/obtener-datos-comunidad/<id>", methods=["GET"])
+def datos_registro_comunidad(id: int):
+    datos = obtener_datos_registro_comunidad(id)
+    return abort(404) if not datos else datos
+
+
 @api.route("/api/exportar-comunidad", methods=["GET"])
 def exportar():
     archivo = exportar_comunidad()
@@ -211,9 +217,3 @@ def _eliminar_usuario(nombre: str):
 def eliminar_registro(id: int):
     eliminar_registro_comunidad(id)
     return ("", 200)
-
-
-@api.route("/api/obtener-datos-comunidad/<id>", methods=["GET"])
-def datos_registro_comunidad(id: int):
-    datos = obtener_datos_registro_comunidad(id)
-    return abort(404) if not datos else datos
