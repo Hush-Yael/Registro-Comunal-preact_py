@@ -26,6 +26,7 @@ export default (props: ModalProps) => {
       {...props}
       ref={modal}
       class="m-auto bg-white shadow-xl rounded-md open:animate-[aparecer_0.150s_ease-in-out] backdrop:bg-[#0002] open:backdrop:animate-[aparecer_0.150s_ease-in-out]"
+      onClose={() => props.abierto && (props.abierto.value = false)}
       //   @ts-expect-error: no se debe pasar submitProps
       submitProps={null}
     >

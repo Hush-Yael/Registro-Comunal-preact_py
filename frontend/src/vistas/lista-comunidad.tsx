@@ -259,7 +259,6 @@ const ModalGenerar = () => {
       titulo="Generar carta"
       class="max-w-[700px]"
       abierto={abierto}
-      onClose={() => (abierto.value = false)}
       submitProps={{
         onClick: generarReporte,
         children: "Generar",
