@@ -82,6 +82,11 @@ export default () => {
         }}
         onSuccess={({ contexto }) => {
           if (editar) {
+            setParams((p) => {
+              p.delete("editar");
+              return p;
+            });
+
             datosComunidad.value = datosComunidad.value.map((d) => {
               if (d.id === Number(editar)) return datos.value;
               else return d;
