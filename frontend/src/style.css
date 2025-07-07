@@ -1,6 +1,29 @@
 @import "tailwindcss";
 @import "../estatico/fuentes/index.css";
 
+@utility gap-* {
+	&>* {
+		--multiplier: --value(number);
+	}
+}
+
+/* Bug de Chrome 66, no funciona gap */
+@supports not (font-size: clamp(1rem, 2.5vw, 2rem)) {
+
+	.flex:not(.col)>*:not(:last-child),
+	.flex>*.gap:not(.col)>*:not(:last-child),
+	.col>*.gap:not(.col)>*:not(:last-child),
+	.btn:not(.col)>*:not(:last-child),
+	.grid>*:not(:last-child) {
+		margin-right: calc(var(--spacing) * var(--multiplier));
+	}
+
+	.col>*:not(:last-child),
+	.col>*.col>*:not(:last-child) {
+		margin-bottom: calc(var(--spacing) * var(--multiplier));
+	}
+}
+
 html,
 body,
 #app {

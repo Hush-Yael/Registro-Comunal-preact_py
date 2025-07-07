@@ -8,7 +8,7 @@ export default () => {
       onClick={() => (sesion.value = { usuario: "", rol: "" })}
     >
       <Iconos.Salir class="size-6" />
-      Terminar sesión
+      <span>Terminar sesión</span>
     </button>
   );
 };

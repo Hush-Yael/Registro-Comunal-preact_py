@@ -255,11 +255,12 @@ const Botones = () => {
             })
           }
         >
-          <Iconos.Borrar /> {editar ? "Descartar cambios" : "Limpiar campos"}
+          <Iconos.Borrar />
+          <span>{editar ? "Descartar cambios" : "Limpiar campos"}</span>
         </Reiniciar>
         <Subir>
           <Iconos.Añadir />
-          {editar ? "Guardar cambios" : "Registrar"}
+          <span>{editar ? "Guardar cambios" : "Registrar"}</span>
         </Subir>
       </div>
     </div>
