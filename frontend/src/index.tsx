@@ -16,35 +16,35 @@ export const sesion = signal({
 });
 
 export function App() {
-	return (
+  return (
     <>
-        <Navegacion />
-        <main class="col p-4 mx-auto py-5 px-6 rounded-xl border border-neutral-200 bg-white shadow-lg">
-          {!sesion.value.usuario ? (
-							<Router>
+      <Navegacion />
+      <main class="col p-4 mx-auto py-5 px-6 rounded-xl border border-neutral-200 bg-white shadow-lg">
+        {!sesion.value.usuario ? (
+          <Router>
             <Switch>
-              <Route path="/registro" component={RegistroUsuarios} />
+              <Route path="/registro" component={RegistroUsuarios as any} />
               <Route component={Login} />
             </Switch>
-							</Router>
+          </Router>
         ) : (
-							<Router>
+          <Router>
             <Switch>
-								<Route path="/" component={RegistroComunidad} />
+              <Route path="/" component={RegistroComunidad} />
               <Route
                 path="/login"
                 component={() => <Redirect to="/" replace />}
               />
-              <Route path="/registro" component={RegistroUsuarios} />
+              <Route path="/registro" component={RegistroUsuarios as any} />
               <Route path="/usuarios" component={ListaUsuarios} />
               <Route path="/registros" component={ListaComunidad} />
               <Route component={() => <Redirect to="/ " replace />} />
             </Switch>
-							</Router>
+          </Router>
         )}
-					</main>
+      </main>
     </>
-	);
+  );
 }
 
 render(<App />, document.getElementById("app"));
