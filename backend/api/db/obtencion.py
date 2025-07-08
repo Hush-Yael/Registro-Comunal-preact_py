@@ -5,7 +5,7 @@ from io import BytesIO, StringIO
 
 def obtener_usuarios():
     conn, cursor = abrir_db()
-    usuarios = (cursor.execute("SELECT nombre, rol FROM usuarios")).fetchall()
+    usuarios = (cursor.execute("SELECT id, nombre, rol FROM usuarios")).fetchall()
 
     conn.close()
     return [dict(row) for row in usuarios]
