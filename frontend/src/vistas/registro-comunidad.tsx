@@ -128,12 +128,13 @@ const Campos = () => {
   const buscarCedula = async (valor: number) => {
     if (!valor) return (errores.value = { ...errores.value, cedula: "" });
 
-    const respuesta = await fetch(
-      rutaApi(`verificar-cedula-comunidad/${valor}`),
-      {
-        method: "HEAD",
-      }
-    );
+    const respuesta = await fetch(rutaApi(`verificar-cedula-comunidad`), {
+      method: "POST",
+      body: JSON.stringify({ cedula: valor, id: datos.value.id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (respuesta.ok) {
       errores.value = {

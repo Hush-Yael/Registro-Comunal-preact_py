@@ -136,9 +136,20 @@ def retornar_carta():
     )
 
 
-@api.route("/api/verificar-cedula-comunidad/<cedula>", methods=["HEAD"])
-def verificar_cedula(cedula: str):
-    existe = verificar_cedula_existente(int(cedula))
+@api.route("/api/verificar-cedula-comunidad", methods=["POST"])
+def verificar_cedula():
+    json = request.json
+    if not json:
+        return "No se proporcionaron datos", 400
+
+    cedula = json.get("cedula", "")
+    if not cedula:
+        return "No se proporcionó una cedula", 400
+
+    id = json.get("id", "")
+
+    print(id)
+    existe = verificar_cedula_existente(int(cedula), id)
     return ("", 404) if not existe else ("", 204)
 
 
