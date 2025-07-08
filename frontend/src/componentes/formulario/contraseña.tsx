@@ -1,9 +1,9 @@
-import { signal } from "@preact/signals";
+import { useSignal } from "@preact/signals";
 import { Descripcion, Input, MensajeError, type InputProps } from "./input";
 import Iconos from "../../componentes/iconos";
 
 export default (props: Omit<InputProps, "label" | "campo" | "id">) => {
-  const visible = signal(false);
+  const visible = useSignal(false);
 
   return (
     <div class="col gap-1.5">
