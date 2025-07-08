@@ -8,11 +8,11 @@ export default (props: Omit<InputProps, "label" | "campo" | "id">) => {
   return (
     <div class="col gap-1.5">
       <div class="relative">
-        <label htmlFor="contraseña">
+        <label htmlFor="contrasena">
           <p class="text-neutral-700">Contraseña</p>
           <Input
             {...props}
-            id="contraseña"
+            id="contrasena"
             campo="contraseña"
             type={visible.value ? "text" : "password"}
           />
