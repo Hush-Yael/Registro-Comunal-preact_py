@@ -7,24 +7,35 @@ ERROR_UNICO = "UNIQUE constraint failed"
 ERROR_DE_VERIFICACIÓN = "CHECK constraint failed"
 
 
-def registrar_usuario(datos: DatosUsuario):
+def registrar_usuario(datos: DatosUsuario, modificar: bool = False):
     conn, cursor = abrir_db()
 
-    cantidad_usuarios = (
-        cursor.execute("SELECT COUNT(nombre) FROM usuarios LIMIT 1").fetchone() or []
-    )
-    cantidad_usuarios = cantidad_usuarios[0]
-
     try:
-        cursor.execute(
-            "INSERT INTO usuarios (nombre, contraseña, rol) VALUES (?, ?, ?)",
-            (
-                datos["nombre"],
-                datos["contraseña"],
-                # solo el primero usuario es admin, los demás son supervisores
-                "admin" if cantidad_usuarios < 1 else "supervisor",
-            ),
-        )
+        if not modificar:
+            cantidad_usuarios = (
+                cursor.execute("SELECT COUNT(nombre) FROM usuarios LIMIT 1").fetchone()
+                or []
+            )
+            cantidad_usuarios = cantidad_usuarios[0]
+
+            cursor.execute(
+                "INSERT INTO usuarios (nombre, contraseña, rol) VALUES (?, ?, ?)",
+                (
+                    datos["nombre"],
+                    datos["contraseña"],
+                    # solo el primero usuario es admin, los demás son supervisores
+                    "admin" if cantidad_usuarios < 1 else "supervisor",
+                ),
+            )
+        else:
+            cursor.execute(
+                "UPDATE usuarios SET nombre = ?, contraseña = ? WHERE id = ?",
+                (
+                    datos["nombre"],
+                    datos["contraseña"],
+                    datos["id"],
+                ),
+            )
 
         conn.commit()
     except Exception as e:
@@ -100,6 +111,21 @@ def verificar_cedula_existente(cedula: int, id: str):
         cursor.execute(
             "SELECT cedula FROM comunidad WHERE cedula = ? AND id != ? LIMIT 1",
             (cedula, id),
+        )
+    ).fetchone() or ()
+
+    conn.close()
+
+    return len(cedula_db) > 0
+
+
+def verificar_nombre_existente(nombre: str, id: str):
+    conn, cursor = abrir_db()
+
+    cedula_db = (
+        cursor.execute(
+            "SELECT rol FROM usuarios WHERE nombre = ? AND id != ? LIMIT 1",
+            (nombre, id),
         )
     ).fetchone() or ()
 

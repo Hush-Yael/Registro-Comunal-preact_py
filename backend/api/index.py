@@ -9,6 +9,7 @@ from flask import (
     render_template,
 )
 from .db.obtencion import (
+    obtener_datos_usuario,
     obtener_usuarios,
     obtener_datos_comunidad,
     obtener_datos_registro_comunidad,
@@ -20,6 +21,7 @@ from .db.subida import (
     verificar_cedula_existente,
     añadir_registro_comunidad,
     importar_comunidad,
+    verificar_nombre_existente,
 )
 from constantes import (
     RUTA_BASE,
@@ -62,6 +64,12 @@ def lista_comunidad():
 @api.route("/api/obtener-datos-comunidad/<id>", methods=["GET"])
 def datos_registro_comunidad(id: int):
     datos = obtener_datos_registro_comunidad(id)
+    return abort(404) if not datos else datos
+
+
+@api.route("/api/obtener-datos-usuario/<id>", methods=["GET"])
+def datos_registro_usuario(id: str):
+    datos = obtener_datos_usuario(int(id))
     return abort(404) if not datos else datos
 
 
@@ -153,14 +161,32 @@ def verificar_cedula():
     return ("", 404) if not existe else ("", 204)
 
 
+@api.route("/api/verificar-nombre-usuario", methods=["POST"])
+def verificar_nombre():
+    json = request.json
+    if not json:
+        return "No se proporcionaron datos", 400
+
+    nombre = json.get("nombre", "")
+    if not nombre:
+        return "No se proporcionó un nombre", 400
+
+    id = json.get("id", "")
+    if not id:
+        return "No se proporcionó un id", 400
+
+    existe = verificar_nombre_existente(nombre, id)
+    return ("", 404) if not existe else ("", 204)
+
+
 @api.route("/api/login", methods=["POST"])
 def login():
     return fetch(iniciar_sesion, DatosUsuario(request.json))  # type: ignore
 
 
-@api.route("/api/registro", methods=["POST"])
+@api.route("/api/registro", methods=["POST", "PUT"])
 def registro():
-    return fetch(registrar_usuario, DatosUsuario(request.json))  # type: ignore
+    return fetch(registrar_usuario, DatosUsuario(request.json), request.method == "PUT")  # type: ignore
 
 
 @api.route("/api/importar-comunidad", methods=["POST"])

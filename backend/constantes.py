@@ -15,6 +15,7 @@ CONTRASEÑA_MÍNIMA = 6
 
 
 class DatosUsuario(TypedDict):
+    id: int
     nombre: str
     contraseña: str
 

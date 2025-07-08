@@ -35,6 +35,22 @@ def obtener_datos_registro_comunidad(id: int):
         return dict(datos)
 
 
+def obtener_datos_usuario(id: int):
+    conn, cursor = abrir_db()
+
+    datos = (
+        cursor.execute(
+            "SELECT * FROM usuarios WHERE id = ? LIMIT 1",
+            (id,),
+        )
+    ).fetchone()
+
+    conn.close()
+
+    if datos:
+        return dict(datos)
+
+
 def exportar_comunidad():
     datos = obtener_datos_comunidad()
     datos[0].pop("id", None)

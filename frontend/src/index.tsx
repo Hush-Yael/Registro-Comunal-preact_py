@@ -35,10 +35,7 @@ export function App() {
                 path="/login"
                 component={() => <Redirect to="/" replace />}
               />
-              <Route
-                path="/registro"
-                component={() => <Redirect to="/" replace />}
-              />
+              <Route path="/registro" component={RegistroUsuarios} />
               <Route path="/usuarios" component={ListaUsuarios} />
               <Route path="/registros" component={ListaComunidad} />
               <Route component={() => <Redirect to="/ " replace />} />

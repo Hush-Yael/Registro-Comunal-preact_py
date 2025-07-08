@@ -6,7 +6,7 @@ import { sesion } from "..";
 import Iconos from "../componentes/iconos";
 import type { Usuario } from "../tipos";
 import { rutaApi } from "../../utilidades";
-import { ColumnDef } from "@tanstack/react-table";
+import { Link } from "wouter-preact";
 
 export const listaUsuarios = signal<Usuario[]>([]);
 const carga = signal(true);
@@ -79,29 +79,32 @@ export default () => {
                 </select>
               ),
           },
-          ...(sesion.value.rol === "admin"
-            ? [
-                {
-                  header: "Acciones",
-                  size: 30,
-                  cell: (info) =>
-                    info.row.original.nombre === sesion.value.usuario ? (
-                      <i class="inline-block w-full text-right text-neutral-600">
-                        Usuario actual
-                      </i>
-                    ) : (
-                      <button
-                        class="btn btn-peligro ml-auto"
-                        onClick={() =>
-                          eliminarUsuario(info.row.original.nombre)
-                        }
-                      >
-                        <Iconos.Eliminar class="size-4" />
-                      </button>
-                    ),
-                } as ColumnDef<Usuario, any>,
-              ]
-            : []),
+          {
+            header: "Acciones",
+            size: 30,
+            cell: (info) => (
+              <div className="flex justify-end gap-3">
+                {info.row.original.nombre !== sesion.value.usuario ? (
+                  <button
+                    class="btn btn-peligro ml-auto"
+                    disabled={sesion.value.rol !== "admin"}
+                    onClick={() => eliminarUsuario(info.row.original.nombre)}
+                  >
+                    <Iconos.Eliminar class="size-4" />
+                  </button>
+                ) : (
+                  <>
+                    <Link
+                      class="btn btn-primario px-1.5!"
+                      href={`/registro?id=${info.row.original.id}&nombre=${info.row.original.nombre}`}
+                    >
+                      <Iconos.EditarUsuario class="size-5" />
+                    </Link>
+                  </>
+                )}
+              </div>
+            ),
+          },
         ]}
         datos={listaUsuarios}
         shouldFetch={carga}
