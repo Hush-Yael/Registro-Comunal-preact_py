@@ -14,12 +14,13 @@ def abrir_db():
 
     cursor.execute(f"""--sql
       CREATE TABLE IF NOT EXISTS usuarios(
-         id INTEGER PRIMARY KEY AUTOINCREMENT,
-         nombre TEXT PRIMARY KEY NOT NULL UNIQUE {nombres_check("nombre")},
+         id INTEGER AUTOINCREMENT,
+         nombre TEXT NOT NULL UNIQUE {nombres_check("nombre")},
          rol TEXT NOT NULL CHECK(rol in ('admin', 'supervisor')),
-         contraseña TEXT NOT NULL CHECK(length(trim(contraseña)) >= {CONTRASEÑA_MÍNIMA})
-      )
-   """)
+         contraseña TEXT NOT NULL CHECK(length(trim(contraseña)) >= {CONTRASEÑA_MÍNIMA}),
+         PRIMARY KEY (id, nombre)
+         )
+      """)
 
     cursor.execute(f"""--sql
       CREATE TABLE IF NOT EXISTS comunidad (
