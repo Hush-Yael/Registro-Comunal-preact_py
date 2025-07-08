@@ -17,7 +17,7 @@ def abrir_db():
          id INTEGER PRIMARY KEY AUTOINCREMENT,
          nombre TEXT NOT NULL UNIQUE {nombres_check("nombre")},
          rol TEXT NOT NULL CHECK(rol in ('admin', 'supervisor')),
-         contraseña TEXT NOT NULL CHECK(length(trim(contraseña)) >= {CONTRASEÑA_MÍNIMA}),
+         contraseña TEXT NOT NULL CHECK(length(trim(contraseña)) >= {CONTRASEÑA_MÍNIMA})
          )
       """)
 
@@ -30,7 +30,7 @@ def abrir_db():
          fecha_nacimiento TEXT,
          patologia TEXT,
          direccion TEXT,
-         numero_casa TEXT,
+         numero_casa TEXT
       )
    """)
     return (conn, cursor)
