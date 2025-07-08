@@ -1,5 +1,6 @@
+import os
 import sqlite3
-from constantes import NOMBRE_MÍNIMO, CONTRASEÑA_MÍNIMA
+from constantes import RUTA_BASE, NOMBRE_MÍNIMO, CONTRASEÑA_MÍNIMA
 
 
 def nombres_check(nombre_columna: str):
@@ -7,7 +8,7 @@ def nombres_check(nombre_columna: str):
 
 
 def abrir_db():
-    conn = sqlite3.connect("comunidad.db")
+    conn = sqlite3.connect(os.path.join(RUTA_BASE, "comunidad.db"))
     conn.row_factory = sqlite3.Row
 
     cursor = conn.cursor()
