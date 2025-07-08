@@ -10,7 +10,7 @@ def fecha_a_años(fecha: str):
         return
 
     hoy = date.today()
-    birthdate = datetime.strptime(fecha, "%d/%m/%Y").date()
+    birthdate = datetime.strptime(fecha, "%Y-%m-%d").date()
     return (
         hoy.year
         - birthdate.year
