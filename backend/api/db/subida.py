@@ -239,7 +239,7 @@ def importar_comunidad(archivo: StringIO):
             añadidos += 1
         except Exception as e:
             fallos += 1
-            print(f"Ocurrió un error al importar el registro: {e}")
+            print(f"Ocurrio un error al importar el registro: {e}")
 
     conn.commit()
     conn.close()

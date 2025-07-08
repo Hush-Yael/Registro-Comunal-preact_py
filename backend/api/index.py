@@ -45,9 +45,9 @@ def fetch(func, *datos):
         if isinstance(e, ErrorDeValidacion):
             return jsonify(e.args[0]), 400
         elif isinstance(e, KeyError):
-            print(f"Ocurrió un error de validación: {e}")
+            print(f"Ocurrio un error de validación: {e}")
             return jsonify(e.args[0]), 400
-        print(f"Ocurrió un error inesperado: {e}")
+        print(f"Ocurrio un error inesperado: {e}")
         return abort(500)
 
 
