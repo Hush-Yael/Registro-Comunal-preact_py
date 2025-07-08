@@ -3,7 +3,8 @@ import { render } from "preact";
 import { signal } from "@preact/signals";
 import { Router, Route, Redirect, Switch } from "wouter-preact";
 
-import Login_Registro from "./vistas/login-registro";
+import Login from "./vistas/login";
+import RegistroUsuarios from "./vistas/registro-usuarios";
 import RegistroComunidad from "./vistas/registro-comunidad";
 import ListaComunidad from "./vistas/lista-comunidad";
 import ListaUsuarios from "./vistas/lista-usuarios";
@@ -21,7 +22,10 @@ export function App() {
         <main class="col p-4 mx-auto py-5 px-6 rounded-xl border border-neutral-200 bg-white shadow-lg">
           {!sesion.value.usuario ? (
 							<Router>
-            <Route component={Login_Registro} />
+            <Switch>
+              <Route path="/registro" component={RegistroUsuarios} />
+              <Route component={Login} />
+            </Switch>
 							</Router>
         ) : (
 							<Router>
