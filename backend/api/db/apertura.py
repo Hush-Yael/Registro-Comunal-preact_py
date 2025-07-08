@@ -24,7 +24,7 @@ def abrir_db():
 
     cursor.execute(f"""--sql
       CREATE TABLE IF NOT EXISTS comunidad (
-         id INTEGER PRIMARY KEY AUTOINCREMENT,
+         id INTEGER AUTOINCREMENT,
          nombres TEXT NOT NULL {nombres_check("nombres")},
          apellidos TEXT NOT NULL {nombres_check("apellidos")},
          cedula TEXT NOT NULL UNIQUE CHECK(CAST(cedula AS INTEGER) > 0),
