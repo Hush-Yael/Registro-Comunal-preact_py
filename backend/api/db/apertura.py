@@ -14,17 +14,16 @@ def abrir_db():
 
     cursor.execute(f"""--sql
       CREATE TABLE IF NOT EXISTS usuarios(
-         id INTEGER AUTOINCREMENT,
+         id INTEGER PRIMARY KEY AUTOINCREMENT,
          nombre TEXT NOT NULL UNIQUE {nombres_check("nombre")},
          rol TEXT NOT NULL CHECK(rol in ('admin', 'supervisor')),
          contraseña TEXT NOT NULL CHECK(length(trim(contraseña)) >= {CONTRASEÑA_MÍNIMA}),
-         PRIMARY KEY (id, nombre)
          )
       """)
 
     cursor.execute(f"""--sql
       CREATE TABLE IF NOT EXISTS comunidad (
-         id INTEGER AUTOINCREMENT,
+         id INTEGER PRIMARY KEY AUTOINCREMENT,
          nombres TEXT NOT NULL {nombres_check("nombres")},
          apellidos TEXT NOT NULL {nombres_check("apellidos")},
          cedula TEXT NOT NULL UNIQUE CHECK(CAST(cedula AS INTEGER) > 0),
@@ -32,7 +31,6 @@ def abrir_db():
          patologia TEXT,
          direccion TEXT,
          numero_casa TEXT,
-         PRIMARY KEY (id, cedula)
       )
    """)
     return (conn, cursor)
