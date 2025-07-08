@@ -31,7 +31,8 @@ def abrir_db():
          fecha_nacimiento TEXT,
          patologia TEXT,
          direccion TEXT,
-         numero_casa TEXT
+         numero_casa TEXT,
+         PRIMARY KEY (id, cedula)
       )
    """)
     return (conn, cursor)
