@@ -8,7 +8,7 @@
     "dev": "concurrently --kill-others \"node --run dev-frontend\" \"node --run dev-backend\"",
     "dev-frontend": "cd frontend && node --run dev",
     "dev-backend": ".\\backend\\.venv-32\\Scripts\\python backend\\app.py -D",
-    "dev-webview": "concurrently --kill-others \"node --run dev-frontend\" \"node --run open-webview-window\"",
+    "dev-webview": "concurrently --kill-others \"node --run dev-frontend\" \"node --run open-dev-webview-window\"",
     "open-webview-window": ".\\backend\\.venv-32\\Scripts\\python backend\\app.py -P",
     "open-dev-webview-window": ".\\backend\\.venv-32\\Scripts\\python backend\\app.py -P -D",
     "init-frontend": "cd frontend && pnpm install",
