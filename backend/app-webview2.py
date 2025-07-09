@@ -1,5 +1,5 @@
 from webview import create_window, start, settings
-from app import PORT, app, PROD, DEV, setup
+from main import PORT, app, PROD, DEV, setup
 
 # Permitir descargar archivos
 settings["ALLOW_DOWNLOADS"] = True

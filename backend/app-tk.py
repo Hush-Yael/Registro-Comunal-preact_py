@@ -1,5 +1,5 @@
 from tkinter import Tk, messagebox, ttk
-from app import PORT, setup
+from main import PORT, setup
 from webbrowser import open
 import socket
 
