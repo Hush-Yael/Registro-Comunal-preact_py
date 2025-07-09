@@ -1,23 +1,19 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-
 a = Analysis(
-    ['app.py'],
+    ["app-tk.py"],
     pathex=[],
     binaries=[],
-    datas=[
-        ('..\\frontend\\dist', 'estatico'),
-        ('plantillas', 'plantillas'),
-    ],
+    datas=[("..\\frontend\\dist", "estatico"), ("plantillas", "plantillas")],
     hiddenimports=[
-        'reportlab.graphics.barcode.common',
-        'reportlab.graphics.barcode.code128',
-        'reportlab.graphics.barcode.code93',
-        'reportlab.graphics.barcode.code39',
-        'reportlab.graphics.barcode.code93',
-        'reportlab.graphics.barcode.usps',
-        'reportlab.graphics.barcode.usps4s',
-        'reportlab.graphics.barcode.ecc200datamatrix',
+        "reportlab.graphics.barcode.common",
+        "reportlab.graphics.barcode.code128",
+        "reportlab.graphics.barcode.code93",
+        "reportlab.graphics.barcode.code39",
+        "reportlab.graphics.barcode.code93",
+        "reportlab.graphics.barcode.usps",
+        "reportlab.graphics.barcode.usps4s",
+        "reportlab.graphics.barcode.ecc200datamatrix",
     ],
     hookspath=[],
     hooksconfig={},
@@ -34,7 +30,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='registro-comunal',
+    name="registro-comunal.tk-x86",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

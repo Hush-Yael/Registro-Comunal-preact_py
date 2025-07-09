@@ -1,6 +1,6 @@
 import sys
+from typing import Callable
 from flask_cors import CORS
-from webview import create_window, start, settings
 from threading import Thread, Event
 from flask import Flask, request
 from api.index import api
@@ -10,6 +10,7 @@ import locale
 locale.setlocale(locale.LC_ALL, "es_VE")
 
 
+PORT = 1144
 ARGS = sys.argv[1:]
 PREVIEW = "--preview" in ARGS or "-P" in ARGS
 DEV = "--dev" in ARGS or "-D" in ARGS
@@ -47,16 +48,16 @@ if PROD or PREVIEW:
 
 def correr_servidor():
     if PROD:
-        serve(app, host="0.0.0.0", port=1144)
+        serve(app, host="0.0.0.0", port=PORT)
     else:
         app.run(
             host="0.0.0.0",
             debug=DEV and not PREVIEW and not PROD,
-            port=1144,
+            port=PORT,
         )
 
 
-def iniciar_flask(evento_listo):
+def iniciar_flask_en_hilo(evento_listo):
     try:
         # Señal que el backend se ha iniciado
         evento_listo.set()
@@ -68,17 +69,14 @@ def iniciar_flask(evento_listo):
         sys.exit(1)
 
 
-# Permitir descargar archivos
-settings["ALLOW_DOWNLOADS"] = True
-
-if __name__ == "__main__":
-    # se corre con la webview al usar el ejecutable o al usar estar en el modo PREVIEW
+def setup(gui_init: Callable[[], None]):
+    # se corre la interfaz, por lo que se necesita que el backend esté en otro hilo
     if PREVIEW or PROD:
         # Se crea un evento para indicar que el inicio del backend se ha completado
         backend_listo = Event()
 
         # Se inicia el backend en un hilo separado
-        hilo_de_flask = Thread(target=iniciar_flask, args=(backend_listo,))
+        hilo_de_flask = Thread(target=iniciar_flask_en_hilo, args=(backend_listo,))
         hilo_de_flask.daemon = True
         hilo_de_flask.start()
 
@@ -88,16 +86,8 @@ if __name__ == "__main__":
             "Configuracion del backend completada, iniciando la interfaz de usuario..."
         )
 
-        create_window(
-            "Registro Comunal",
-            # La app compilada usa la url de Flask que sirve el html desde la carpeta estática, en modo desarrollo se usa la del servidor de Vite
-            server=app if PROD else None,  # type: ignore
-            url="http://127.0.0.1:1144" if not DEV else "http://localhost:5173",
-            text_select=True,
-            zoomable=True,
-        )
-
-        start(debug=DEV, private_mode=False)
-    # se inicia el servidor normalmente, para desarrollo
+        # Se inicia la interfaz de usuario
+        gui_init()
+    # se inicia solo el servidor, para desarrollo sin implementar la interfaz
     else:
         correr_servidor()
