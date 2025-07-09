@@ -88,7 +88,11 @@ export default () => {
             });
 
             datosComunidad.value = datosComunidad.value.map((d) => {
-              if (d.id === Number(editar)) return datos.value;
+              if (d.id === Number(editar))
+                return {
+                  ...datos.value,
+                  cedula: parseInt(datos.value.cedula as string),
+                };
               else return d;
             });
           } else
