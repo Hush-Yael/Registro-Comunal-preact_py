@@ -50,7 +50,7 @@ def correr_servidor():
         serve(app, host="0.0.0.0", port=1144)
     else:
         app.run(
-            host="0.0.0.0" if DEV else "127.0.0.1",
+            host="0.0.0.0",
             debug=DEV and not PREVIEW and not PROD,
             port=1144,
         )
