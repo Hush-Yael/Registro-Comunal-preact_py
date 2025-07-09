@@ -125,7 +125,7 @@ def retornar_carta():
         tiempo_=tiempo_,
     )
 
-    generar_documento(id, tipo_carta, tipo_documento, plantilla)
+    generar_documento(tipo_carta, tipo_documento, plantilla)
 
     return (
         send_file(

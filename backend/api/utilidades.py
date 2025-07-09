@@ -23,7 +23,7 @@ def fecha_a_años(fecha: str):
     )
 
 
-def generar_documento(id: int, tipo_carta: str, tipo_documento: str, plantilla: str):
+def generar_documento(tipo_carta: str, tipo_documento: str, plantilla: str):
     with open(path.join(RUTA_BASE, "documento.pdf"), "w+b") as pdf:
         pisa.CreatePDF(
             plantilla,
