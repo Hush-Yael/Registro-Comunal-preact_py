@@ -73,8 +73,14 @@ export default () => {
             : undefined
         }
         onFetchSuccess={async (r, { datos }) => {
-          if (r.ok) return (datos.value = await r.json());
-          else
+          if (r.ok) {
+            const _datos = await r.json();
+
+            return (datos.value = {
+              ..._datos,
+              cedula: parseInt(_datos.cedula).toLocaleString("es-VE"),
+            });
+          } else
             setParams((p) => {
               p.delete("editar");
               return p;
