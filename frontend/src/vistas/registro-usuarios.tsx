@@ -132,12 +132,12 @@ const Datos = () => {
         } con éxito`}
       />
 
-      <div class="col gap-1.5">
+      <div class="col gap-2.5">
         <button class="btn btn-primario" disabled={estado.value == "subiendo"}>
           {PUEDE_EDITAR ? "Guardar cambios" : "Registrar"}
         </button>
         {!PUEDE_EDITAR && (
-          <Link href="/" class="btn btn-secundario">
+          <Link href="/" class="text-center underline underline-offset-2">
             Ir al inicio de sesión
           </Link>
         )}

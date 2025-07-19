@@ -27,7 +27,7 @@ const A = (props: LinkProps) => {
     <Link
       {...props}
       // @ts-expect-error: sí existe
-      class="flex items-center gap-2 aria-[current=page]:font-bold aria-[current=page]:bg-neutral-900 dark:aria-[current=page]:bg-neutral-100 aria-[current=page]:text-white aria-[current=page]:dark:text-neutral-900 rounded-lg p-1 px-2.5"
+      class="btn aria-[current=page]:font-bold"
       aria-current={props.href === pathname ? "page" : null}
     >
       {props.children}

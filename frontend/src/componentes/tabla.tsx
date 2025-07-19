@@ -125,7 +125,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
               </span>
               <select
                 id="page-size"
-                class="w-full p-0.5 px-1 rounded bg-neutral-200 dark:bg-neutral-600 text-neutral-700 dark:text-neutral-300"
+                class="input"
                 value={tabla.getState().pagination.pageSize}
                 onChange={(e) => {
                   tabla.setPageSize(
@@ -184,7 +184,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
             <label htmlFor="page" class="flex items-center gap-2">
               <span className="min-w-max">Ir a la página:</span>
               <input
-                class="w-full p-0.5 px-1 rounded bg-neutral-200 dark:bg-neutral-600 text-neutral-700 dark:text-neutral-300"
+                class="input"
                 type="number"
                 min="1"
                 id="page"

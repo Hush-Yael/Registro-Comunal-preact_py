@@ -65,9 +65,7 @@ export const Input = (
         estado.value === "subiendo" ||
         estado.value === "fetching"
       }
-      class={`w-full p-0.5 px-2 rounded border border-neutral-300 dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-700 aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500 disabled:cursor-not-allowed disabled:text-neutral-400 transition-colors ${
-        props.inputClass || ""
-      }`}
+      class={`w-full input ${props.inputClass || ""}`}
       aria-invalid={Boolean(error)}
       aria-describedby={
         props.id && props.descripcion ? props.id + "-desc" : null

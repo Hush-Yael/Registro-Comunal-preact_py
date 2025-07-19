@@ -42,11 +42,11 @@ const Datos = () => {
 
       <Mensaje estado="subiendo" texto="Verificando datos..." />
 
-      <div class="col gap-1.5">
+      <div class="col gap-2.5">
         <button class="btn btn-primario" disabled={estado.value == "subiendo"}>
           Entrar
         </button>
-        <Link href="/registro" class="btn btn-secundario">
+        <Link href="/registro" class="text-center underline underline-offset-2">
           Ir al registro
         </Link>
       </div>

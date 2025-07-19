@@ -24,7 +24,7 @@ export function App() {
       <Navegacion />
       <select
         id="tema"
-        class="absolute right-4 top-4 bg-white dark:bg-neutral-700 border border-neutral-400 dark:border-neutral-500 rounded p-1 px-2"
+        class="absolute right-4 top-4 input w-fit! shadow"
         value={tema}
         onChange={(e) => {
           const valor = (e.target as HTMLSelectElement).value;
