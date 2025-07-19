@@ -34,7 +34,13 @@ export default (props: ModalProps) => {
         <h1 class="font-bold text-xl">{props.titulo}</h1>
         <div>{props.children}</div>
         <div class="grid grid-cols-2 ml-auto gap-2">
-          <button class="btn btn-borde py-1! px-3!" onClick={props.onClose}>
+          <button
+            class="btn btn-borde py-1! px-3!"
+            onClick={() => {
+              props.abierto && (props.abierto.value = false);
+              props.onClose && props.onClose();
+            }}
+          >
             Cancelar
           </button>
           <button
