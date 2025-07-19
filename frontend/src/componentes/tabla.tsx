@@ -87,7 +87,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
         </thead>
         <tbody>
           {props.valuesFetcher && props.shouldFetch.value ? (
-            <tr class="bg-neutral-200">
+            <tr class="bg-neutral-200 dark:bg-neutral-700">
               <td class="p-4" colSpan={props.columnas.length}>
                 <span
                   role="status"
@@ -125,7 +125,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
               </span>
               <select
                 id="page-size"
-                class="w-full p-0.5 px-1 rounded bg-neutral-200 text-neutral-700"
+                class="w-full p-0.5 px-1 rounded bg-neutral-200 dark:bg-neutral-600 text-neutral-700 dark:text-neutral-300"
                 value={tabla.getState().pagination.pageSize}
                 onChange={(e) => {
                   tabla.setPageSize(
@@ -153,28 +153,28 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
             </span>
             <div role="group" class="flex items-center gap-1.5">
               <button
-                class="rounded bg-neutral-200"
+                class="rounded btn btn-secundario p-0!"
                 onClick={() => tabla.firstPage()}
                 disabled={!tabla.getCanPreviousPage()}
               >
                 <Iconos.FlechaDerUltimo class="size-6 transform-[rotate(180deg)]" />
               </button>
               <button
-                class="rounded bg-neutral-200"
+                class="rounded btn btn-secundario p-0!"
                 onClick={() => tabla.previousPage()}
                 disabled={!tabla.getCanPreviousPage()}
               >
                 <Iconos.FlechaDer class="size-6 transform-[rotate(180deg)]" />
               </button>
               <button
-                class="rounded bg-neutral-200"
+                class="rounded btn btn-secundario p-0!"
                 onClick={() => tabla.nextPage()}
                 disabled={!tabla.getCanNextPage()}
               >
                 <Iconos.FlechaDer class="size-6" />
               </button>
               <button
-                class="rounded bg-neutral-200"
+                class="rounded btn btn-secundario p-0!"
                 onClick={() => tabla.lastPage()}
                 disabled={!tabla.getCanNextPage()}
               >
@@ -184,7 +184,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
             <label htmlFor="page" class="flex items-center gap-2">
               <span className="min-w-max">Ir a la página:</span>
               <input
-                class="w-full p-0.5 px-1 rounded bg-neutral-200 text-neutral-700"
+                class="w-full p-0.5 px-1 rounded bg-neutral-200 dark:bg-neutral-600 text-neutral-700 dark:text-neutral-300"
                 type="number"
                 min="1"
                 id="page"
@@ -229,7 +229,7 @@ const Filtro = <T extends Record<string, unknown>>({
 
   return (
     <input
-      class="w-full p-0.25 px-1 mb-1 rounded outline outline-offset-2 outline-neutral-600 hover:outline-neutral-500 focus:outline-white bg-neutral-800 focus:bg-neutral-700 transition-colors"
+      class="w-full p-0.25 px-1 mb-1 rounded outline outline-offset-2 outline-neutral-600 dark:outline-neutral-400 hover:outline-neutral-500 focus:outline-white focus:dark:outline-neutral-900 bg-neutral-800 dark:bg-[#bababa] focus:bg-neutral-700 focus:dark:bg-neutral-400 transition-colors"
       type={filterVariant}
       name="filtro"
       // @ts-expect-error: el tipo del valor es correcto
@@ -260,7 +260,7 @@ export const Tabla = (
 export const Cabecera = (props: JSX.IntrinsicElements["th"]) => (
   <th
     {...props}
-    class={`p-1.5 px-2.5 bg-neutral-900 text-white first:rounded-tl-md last:rounded-tr-md text-nowrap ${
+    class={`p-1.5 px-2.5 bg-neutral-900 dark:bg-neutral-200 text-white dark:text-neutral-700 first:rounded-tl-md last:rounded-tr-md text-nowrap ${
       props.class || ""
     }`}
   >
@@ -271,7 +271,7 @@ export const Cabecera = (props: JSX.IntrinsicElements["th"]) => (
 export const Fila = (props: JSX.IntrinsicElements["tr"]) => (
   <tr
     {...props}
-    class={`group odd:bg-neutral-100 border-b border-neutral-200 ${
+    class={`group odd:bg-neutral-100 odd:dark:bg-neutral-700 border-b border-neutral-200 dark:border-neutral-600 ${
       props.class || ""
     }`}
   >

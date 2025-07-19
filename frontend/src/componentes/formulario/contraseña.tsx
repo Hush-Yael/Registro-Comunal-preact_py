@@ -9,7 +9,7 @@ export default (props: Omit<InputProps, "label" | "campo" | "id">) => {
     <div class="col gap-1.5">
       <div class="relative">
         <label htmlFor="contrasena">
-          <p class="text-neutral-700">Contraseña</p>
+          <p class="text-neutral-700 dark:text-neutral-300">Contraseña</p>
           <Input
             {...props}
             id="contrasena"

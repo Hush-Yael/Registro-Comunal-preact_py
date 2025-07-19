@@ -15,7 +15,7 @@ export type InputProps = JSX.IntrinsicElements["input"] & {
 export default (props: InputProps) => (
   <div class={`col gap-1.5 ${props.class || ""}`}>
     <label htmlFor={props.id}>
-      <p class="text-neutral-700">{props.label}</p>
+      <p class="text-neutral-700 dark:text-neutral-300">{props.label}</p>
       <Input {...props} />
     </label>
     <Descripcion texto={props.descripcion} id={props.id} />
@@ -65,7 +65,7 @@ export const Input = (
         estado.value === "subiendo" ||
         estado.value === "fetching"
       }
-      class={`w-full p-0.5 px-2 rounded border border-neutral-300 bg-neutral-100 aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500 disabled:cursor-not-allowed disabled:text-neutral-400 transition-colors ${
+      class={`w-full p-0.5 px-2 rounded border border-neutral-300 dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-700 aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500 disabled:cursor-not-allowed disabled:text-neutral-400 transition-colors ${
         props.inputClass || ""
       }`}
       aria-invalid={Boolean(error)}
