@@ -33,6 +33,22 @@ body,
 }
 
 html {
+	--bg-darkest: hsl(0 0% 95%);
+	--bg-dark: hsl(0 0% 97%);
+	--bg-base: hsl(0 50% 100%);
+
+	--radius-box: 0.75rem;
+	--radius-field: 0.25rem;
+	--radius-selector: 0.5rem;
+
+	--primary: hsl(0 0% 0%);
+	--text-base: hsl(0 0% 0%);
+	--text-muted: hsl(0 0% 40%);
+
+	--border-base: hsl(0 0% 85%);
+	--border-highlight: hsl(0 0% 70%);
+
+	color: var(--text-base);
 	color-scheme: light;
 
 	background: linear-gradient(-45deg, hsl(0, 0%, 96%) 20%, transparent 20% 80%, hsl(0, 0%, 96%) 80% 100%),
@@ -43,8 +59,18 @@ html {
 }
 
 html.oscuro {
+	--bg-darkest: hsl(0 0% 12%);
+	--bg-dark: hsl(0 0% 10%);
+	--bg-base: hsl(0 0% 8%);
+
+	--primary: hsl(0 0% 90%);
+	--text-base: hsl(0 0% 90%);
+	--text-muted: hsl(0 0% 70%);
+
+	--border-base: hsl(300 0% 22%);
+	--border-highlight: hsl(300 0% 32%);
+
 	color-scheme: dark;
-	color: hsl(0, 0%, 90%);
 
 	background: linear-gradient(-45deg, hsl(0, 0%, 9%) 20%, transparent 20% 80%, hsl(0, 0%, 9%) 80% 100%),
 		linear-gradient(45deg, hsl(0, 0%, 9%) 20%, transparent 20% 80%, hsl(0, 0%, 9%) 80% 100%),
@@ -52,6 +78,50 @@ html.oscuro {
 		linear-gradient(45deg, transparent 33%, hsl(0, 0%, 8%) 33% 66%, transparent 66%);
 	background-size: 3em 3em;
 	background-color: hsl(0, 0%, 7%)
+}
+
+@theme inline {
+	--color-primary: var(--primary);
+}
+
+@utility text-base {
+	color: var(--text-base);
+}
+
+@utility text-muted {
+	color: var(--text-muted);
+}
+
+@utility bg-base {
+	background-color: var(--bg-base);
+}
+
+@utility bg-darkest {
+	background-color: var(--bg-darkest);
+}
+
+@utility bg-dark {
+	background-color: var(--bg-dark);
+}
+
+@utility rounded-box {
+	border-radius: var(--radius-box);
+}
+
+@utility rounded-field {
+	border-radius: var(--radius-field);
+}
+
+@utility rounded-selector {
+	border-radius: var(--radius-selector);
+}
+
+@utility border-base {
+	border-color: var(--border-base);
+}
+
+@utility border-highlight {
+	border-color: var(--border-highlight);
 }
 
 svg {
@@ -100,20 +170,28 @@ label.btn {
 	@apply peer-disabled/input:cursor-not-allowed peer-disabled/input:opacity-50 cursor-pointer
 }
 
+.input, .btn-secundario {
+	@apply border-base not-disabled:hover:bg-dark not-disabled:focus-visible:bg-dark not-disabled:hover:border-highlight not-disabled:focus-visible:border-highlight
+}
+
 .input {
-	@apply w-full p-0.5 px-2 rounded border border-neutral-300 dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-700 aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500 disabled:cursor-not-allowed disabled:text-neutral-400 transition-colors
+	@apply w-full p-0.5 px-2 rounded border bg-darkest aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500 disabled:cursor-not-allowed disabled:text-neutral-400 transition-colors
+}
+
+.btn-primario, a[aria-current=page], .primario {
+	@apply bg-primary text-[var(--bg-base)]
 }
 
 .btn-primario, a[aria-current=page] {
-	@apply bg-neutral-900 not-disabled:hover:bg-neutral-800 text-white dark:bg-neutral-100 dark:text-black not-disabled:hover:dark:bg-neutral-300
+	@apply not-disabled:hover:bg-neutral-800 not-disabled:hover:dark:bg-neutral-300 outline-offset-2
 }
 
 .btn-borde {
-	@apply border-2 border-neutral-900 dark:border-neutral-100 not-disabled:hover:bg-neutral-100 not-disabled:focus:bg-neutral-100 -outline-offset-2 not-disabled:hover:dark:bg-neutral-700 not-disabled:focus:dark:bg-neutral-700
+	@apply border-2 border-primary not-disabled:hover:bg-dark not-disabled:focus:bg-dark -outline-offset-2
 }
 
 .btn-secundario {
-	@apply bg-[#F0F0F0] border border-neutral-300 dark:border-neutral-600 not-disabled:hover:bg-neutral-300 text-neutral-500 dark:bg-neutral-700 dark:text-neutral-300 not-disabled:hover:dark:bg-neutral-600
+	@apply border bg-darkest text-neutral-500 dark:text-neutral-300
 }
 
 .btn-peligro {

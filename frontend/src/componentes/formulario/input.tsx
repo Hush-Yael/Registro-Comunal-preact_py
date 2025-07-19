@@ -15,7 +15,7 @@ export type InputProps = JSX.IntrinsicElements["input"] & {
 export default (props: InputProps) => (
   <div class={`col gap-1.5 ${props.class || ""}`}>
     <label htmlFor={props.id}>
-      <p class="text-neutral-700 dark:text-neutral-300">{props.label}</p>
+      <p class="text-muted">{props.label}</p>
       <Input {...props} />
     </label>
     <Descripcion texto={props.descripcion} id={props.id} />
@@ -81,7 +81,7 @@ export const Input = (
 export const Descripcion = (props: { texto: string; id?: string }) =>
   props.texto && (
     <p
-      class="ml-0.5 text-xs text-neutral-500"
+      class="ml-0.5 text-xs text-muted"
       id={props.id ? props.id + "-desc" : null}
     >
       {props.texto}

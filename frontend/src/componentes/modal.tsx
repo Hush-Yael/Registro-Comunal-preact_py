@@ -25,7 +25,7 @@ export default (props: ModalProps) => {
     <dialog
       {...props}
       ref={modal}
-      class="m-auto bg-white dark:bg-neutral-800 shadow-xl rounded-md open:animate-[aparecer_0.150s_ease-in-out] backdrop:bg-[#0002] open:backdrop:animate-[aparecer_0.150s_ease-in-out]"
+      class="m-auto bg-base dark:border dark:border-base rounded-box open:animate-[aparecer_0.150s_ease-in-out] backdrop:bg-[#0002] dark:backdrop:bg-[#0009] open:backdrop:animate-[aparecer_0.150s_ease-in-out] shadow-xl dark:shadow-2xl"
       onClose={() => props.abierto && (props.abierto.value = false)}
       //   @ts-expect-error: no se debe pasar submitProps
       submitProps={null}

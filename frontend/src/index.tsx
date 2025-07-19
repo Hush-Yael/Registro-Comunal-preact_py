@@ -24,7 +24,7 @@ export function App() {
       <Navegacion />
       <select
         id="tema"
-        class="absolute right-4 top-4 input w-fit! shadow"
+        class="absolute right-4 top-4 input w-fit! shadow cursor-pointer"
         value={tema}
         onChange={(e) => {
           const valor = (e.target as HTMLSelectElement).value;
@@ -35,7 +35,7 @@ export function App() {
         <option value="claro">Tema claro</option>
         <option value="sistema">Tema del sistema</option>
       </select>
-      <main class="col p-4 mx-auto py-5 px-6 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800! shadow-lg dark:shadow-2xl">
+      <main class="col p-4 mx-auto py-5 px-6 rounded-box border border-base bg-base shadow-lg">
         {!sesion.value.usuario ? (
           <Router>
             <Switch>

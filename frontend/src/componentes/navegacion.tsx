@@ -4,7 +4,7 @@ import { Link, type LinkProps, useLocation } from "wouter-preact";
 
 export default () =>
   sesion.value.usuario && (
-    <nav class="flex items-center gap-3 bg-white dark:bg-neutral-700 p-1.5 px-2 rounded-md border border-neutral-200 dark:border-neutral-500 shadow-lg">
+    <nav class="flex items-center gap-3 bg-base p-2 px-3 rounded-box border border-base shadow-lg">
       <A href="/">
         <Iconos.Campo />
         Formulario

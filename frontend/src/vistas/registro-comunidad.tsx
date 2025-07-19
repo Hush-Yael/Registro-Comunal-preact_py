@@ -258,7 +258,7 @@ const Botones = () => {
   return (
     <div class="col gap-4">
       {editar && (
-        <small class="m-auto italic text-neutral-500" role="status">
+        <small class="m-auto italic text-muted" role="status">
           <Iconos.Editar /> Editando el registro: <b class="mx-1">{editar}</b>
         </small>
       )}

@@ -87,7 +87,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
         </thead>
         <tbody>
           {props.valuesFetcher && props.shouldFetch.value ? (
-            <tr class="bg-neutral-200 dark:bg-neutral-700">
+            <tr class="bg-darkest">
               <td class="p-4" colSpan={props.columnas.length}>
                 <span
                   role="status"
@@ -153,28 +153,28 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
             </span>
             <div role="group" class="flex items-center gap-1.5">
               <button
-                class="rounded btn btn-secundario p-0!"
+                class="btn btn-secundario p-0!"
                 onClick={() => tabla.firstPage()}
                 disabled={!tabla.getCanPreviousPage()}
               >
                 <Iconos.FlechaDerUltimo class="size-6 transform-[rotate(180deg)]" />
               </button>
               <button
-                class="rounded btn btn-secundario p-0!"
+                class="btn btn-secundario p-0!"
                 onClick={() => tabla.previousPage()}
                 disabled={!tabla.getCanPreviousPage()}
               >
                 <Iconos.FlechaDer class="size-6 transform-[rotate(180deg)]" />
               </button>
               <button
-                class="rounded btn btn-secundario p-0!"
+                class="btn btn-secundario p-0!"
                 onClick={() => tabla.nextPage()}
                 disabled={!tabla.getCanNextPage()}
               >
                 <Iconos.FlechaDer class="size-6" />
               </button>
               <button
-                class="rounded btn btn-secundario p-0!"
+                class="btn btn-secundario p-0!"
                 onClick={() => tabla.lastPage()}
                 disabled={!tabla.getCanNextPage()}
               >
@@ -229,7 +229,7 @@ const Filtro = <T extends Record<string, unknown>>({
 
   return (
     <input
-      class="w-full p-0.25 px-1 mb-1 rounded outline outline-offset-2 outline-neutral-600 dark:outline-neutral-400 hover:outline-neutral-500 focus:outline-white focus:dark:outline-neutral-900 bg-neutral-800 dark:bg-[#bababa] focus:bg-neutral-700 focus:dark:bg-neutral-400 transition-colors"
+      class="w-full p-0.25 px-1 mb-1 rounded-field outline outline-offset-2 outline-neutral-600 dark:outline-neutral-400 hover:outline-neutral-500 focus:outline-white focus:dark:outline-neutral-900 bg-neutral-800 dark:bg-[#bababa] focus:bg-neutral-700 focus:dark:bg-neutral-400 transition-colors"
       type={filterVariant}
       name="filtro"
       // @ts-expect-error: el tipo del valor es correcto
@@ -246,9 +246,7 @@ export const Tabla = (
   <div class={`${props.wrapperClass || ""} overflow-y-auto`}>
     <table
       {...props}
-      class={`w-full table-auto border-tools-table-outline rounded-md border-neutral-500 text-sm ${
-        props.class || ""
-      }`}
+      class={`w-full table-auto text-sm ${props.class || ""}`}
       // @ts-expect-error: no se debe pasar wrapperClass
       wrapperClass={null}
     >
@@ -260,7 +258,7 @@ export const Tabla = (
 export const Cabecera = (props: JSX.IntrinsicElements["th"]) => (
   <th
     {...props}
-    class={`p-1.5 px-2.5 bg-neutral-900 dark:bg-neutral-200 text-white dark:text-neutral-700 first:rounded-tl-md last:rounded-tr-md text-nowrap ${
+    class={`p-1.5 px-2.5 primario first:rounded-tl-lg last:rounded-tr-lg text-nowrap ${
       props.class || ""
     }`}
   >
@@ -271,9 +269,7 @@ export const Cabecera = (props: JSX.IntrinsicElements["th"]) => (
 export const Fila = (props: JSX.IntrinsicElements["tr"]) => (
   <tr
     {...props}
-    class={`group odd:bg-neutral-100 odd:dark:bg-neutral-700 border-b border-neutral-200 dark:border-neutral-600 ${
-      props.class || ""
-    }`}
+    class={`group odd:bg-darkest border-b border-base ${props.class || ""}`}
   >
     {props.children}
   </tr>
