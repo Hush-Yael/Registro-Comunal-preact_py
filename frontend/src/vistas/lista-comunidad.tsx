@@ -274,6 +274,7 @@ const ModalGenerar = () => {
               checked={
                 documento.tipo === "pdf" && documento.base !== "plantilla"
               }
+              name="tipo-documento"
               disabled={documento.base === "plantilla"}
               onChange={() => setDocumento((p) => ({ ...p, tipo: "pdf" }))}
               titulo={
@@ -310,7 +311,7 @@ const ModalGenerar = () => {
             <Opcion
               type="radio"
               id="plantilla"
-              name="tipo-documento"
+              name="base-documento"
               titulo={
                 <>
                   Plantilla con datos <Iconos.Plantilla />
@@ -328,6 +329,7 @@ const ModalGenerar = () => {
             <Opcion
               type="radio"
               id="residencia"
+              name="base-documento"
               titulo={
                 <>
                   Constancia de residencia <Iconos.Casa />
@@ -344,6 +346,7 @@ const ModalGenerar = () => {
             <Opcion
               type="radio"
               id="mortem"
+              name="base-documento"
               titulo={
                 <>
                   Constancia post-mortem <Iconos.Tumba />
