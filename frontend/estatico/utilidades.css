@@ -1,0 +1,50 @@
+@utility gap-* {
+  &>* {
+    --multiplier: --value(number);
+  }
+}
+
+@utility col {
+  display: flex;
+  flex-direction: column;
+}
+
+@utility text-base {
+  color: var(--text-base);
+}
+
+@utility text-muted {
+  color: var(--text-muted);
+}
+
+@utility bg-base {
+  background-color: var(--bg-base);
+}
+
+@utility bg-darkest {
+  background-color: var(--bg-darkest);
+}
+
+@utility bg-dark {
+  background-color: var(--bg-dark);
+}
+
+@utility rounded-box {
+  border-radius: var(--radius-box);
+}
+
+@utility rounded-field {
+  border-radius: var(--radius-field);
+}
+
+@utility rounded-selector {
+  border-radius: var(--radius-selector);
+}
+
+@utility border-base {
+  border-color: var(--border-base);
+}
+
+@utility border-highlight {
+  border-color: var(--border-highlight);
+}
