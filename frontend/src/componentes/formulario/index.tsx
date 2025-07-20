@@ -153,6 +153,10 @@ export default <
             console.error(e);
           }
         }}
+        // @ts-expect-error: no se debe pasar
+        datos={null}
+        rutaApi={null}
+        datosIniciales={null}
       >
         {props.children}
       </form>
