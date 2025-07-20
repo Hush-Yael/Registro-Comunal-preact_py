@@ -84,6 +84,11 @@ html.oscuro {
 	--color-primary: var(--primary);
 }
 
+@utility col {
+	display: flex;
+	flex-direction: column;
+}
+
 @utility text-base {
 	color: var(--text-base);
 }
@@ -155,11 +160,6 @@ button {
 button:disabled {
 	cursor: not-allowed;
 	opacity: 0.5;
-}
-
-.col {
-	display: flex;
-	flex-direction: column;
 }
 
 .btn {
