@@ -11,6 +11,7 @@ export default defineConfig({
       modernPolyfills: true,
     }),
   ],
+  publicDir: "estatico",
   server: { host: true },
   css: {
     postcss: ".postcss.config.js",
