@@ -21,7 +21,6 @@ export function App() {
 
   return (
     <>
-      <Navegacion />
       <select
         id="tema"
         class="absolute right-4 top-4 input w-fit! shadow cursor-pointer"
@@ -35,7 +34,8 @@ export function App() {
         <option value="claro">Tema claro</option>
         <option value="sistema">Tema del sistema</option>
       </select>
-      <main class="col p-4 mx-auto py-5 px-6 rounded-box border border-base bg-base shadow-lg">
+      <Navegacion />
+      <main class="col p-4 mx-auto py-5 px-6 rounded-box border border-base bg-base shadow-lg max-h-[85%] max-w-[95%]">
         {!sesion.value.usuario ? (
           <Router>
             <Switch>

@@ -112,16 +112,16 @@ export default () => {
         class={`${
           cargar.value ? "h-full" : "max-h-full"
         } w-[500px] [&_td]:nth-3:text-right [&_td]:nth-4:text-right [&_td]:nth-7:text-right`}
-        wrapperClass="h-[60vh] mt-6"
+        wrapperClass="mt-6"
         datos={datosComunidad}
         header={(tabla: Table<DatosComunidad>) => (
           <Cabecera titulo="Lista de registros de la comunidad">
             <div
               role="group"
-              class="flex items-center gap-3 pr-1 *:p-1! [&_svg]:size-4.5!"
+              class="flex items-center gap-3 pr-1 *:p-1! [&_svg]:size-4.5! [&_svg]:min-w-max [&_button]:min-w-max max-sm:grid grid-cols-2"
             >
               <button
-                class="btn btn-secundario col-span-2 m-auto"
+                class="btn btn-secundario m-auto"
                 // @ts-expect-error: no importa
                 onClick={tabla.resetColumnFilters}
                 title="Limpiar filtros"
@@ -264,10 +264,10 @@ const ModalGenerar = () => {
         children: "Generar",
       }}
     >
-      <div className="col gap-6">
+      <div className="col gap-6 overflow-auto max-sm:max-h-[60vh]">
         <form class="col gap-2">
           <h2>Seleccione el tipo de documento:</h2>
-          <div class="grid grid-cols-2 gap-3 *:h-full">
+          <div class="grid grid-cols-2 gap-3 *:h-full max-sm:col">
             <Opcion
               id="pdf"
               type="radio"
@@ -307,7 +307,7 @@ const ModalGenerar = () => {
         </form>
         <form class="col gap-2">
           <h2>Seleccione el tipo de carta:</h2>
-          <div class="grid grid-cols-2 gap-3 *:h-full">
+          <div class="grid grid-cols-2 gap-3 *:h-full max-sm:col">
             <Opcion
               type="radio"
               id="plantilla"

@@ -50,6 +50,7 @@ export default () => {
         <TerminarSesion />
       </Cabecera>
       <Formulario
+        class="h-full"
         rutaApi="registro-comunidad"
         method={editar ? "PUT" : "POST"}
         datos={datos}
@@ -111,7 +112,7 @@ export default () => {
           setTimeout(() => (contexto.estado.value = ""), 800);
         }}
       >
-        <div class="col gap-5 mt-10 max-w-[700px]">
+        <div class="col gap-5 mt-10 max-w-[700px] h-full overflow-hidden">
           <Mensaje estado="subiendo" texto="Guardando..." />
           <Mensaje estado="fetching" texto="Recuperando datos..." />
           <Mensaje
@@ -166,7 +167,7 @@ const Campos = () => {
   };
 
   return (
-    <div class="grid grid-cols-2 gap-5">
+    <div class="grid grid-cols-2 gap-5 h-full overflow-y-auto max-sm:col max-sm:max-h-[40vh]">
       <Input
         label="Nombres"
         campo="nombres"
@@ -262,7 +263,10 @@ const Botones = () => {
           <Iconos.Editar /> Editando el registro: <b class="mx-1">{editar}</b>
         </small>
       )}
-      <div role="group" class="grid grid-cols-2 gap-2 m-auto">
+      <div
+        role="group"
+        class="grid grid-cols-2 gap-2 min-[440px]:m-auto max-[440px]:flex max-[440px]:justify-end max-[440px]:text-sm"
+      >
         <Reiniciar
           onClick={() =>
             setParams((p) => {

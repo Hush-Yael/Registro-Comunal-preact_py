@@ -112,38 +112,43 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
         </tbody>
       </Tabla>
       {props.options?.getPaginationRowModel && (
-        <div class="flex items-center justify-between gap-5 w-full mt-4 *:flex *:items-center">
-          <div class="gap-3">
-            <span class="s-auto" role="status">
-              {tabla.getRowCount().toLocaleString()}{" "}
-              {props.filasNombre || "filas"}
-            </span>
-            <span class="text-neutral-500">/</span>
-            <label class="flex items-center gap-2" htmlFor="page-size">
-              <span className="min-w-max">
+        <div class="flex items-center justify-between gap-x-5 gap-y-3 w-full mt-4 *:flex *:items-center max-sm:flex-col max-sm:items-start max-sm:text-sm">
+          <div class="gap-3 max-sm:justify-between max-sm:w-full">
+            <div>
+              <span class="s-auto" role="status">
+                {tabla.getRowCount().toLocaleString()}{" "}
+                {props.filasNombre || "filas"}
+              </span>
+
+              <span class="text-neutral-500">/</span>
+
+              <span className="min-w-max" role="status">
                 {props.filasNombre || "filas"} por página:
               </span>
-              <select
-                id="page-size"
-                class="input"
-                value={tabla.getState().pagination.pageSize}
-                onChange={(e) => {
-                  tabla.setPageSize(
-                    Number((e.target as HTMLInputElement).value)
-                  );
-                }}
-              >
-                {Array.from({ length: 10 }, (_, i) => (i + 1) * 10)
-                  .concat([200, 500, 1000])
-                  .map((pageSize) => (
-                    <option key={pageSize} value={pageSize}>
-                      {pageSize}
-                    </option>
-                  ))}
-              </select>
+            </div>
+
+            <label class="flex items-center gap-2 sr-only" htmlFor="page-size">
+              Seleccionar cantidad de filas por página
             </label>
+            <select
+              id="page-size"
+              class="input max-sm:max-w-fit"
+              value={tabla.getState().pagination.pageSize}
+              onChange={(e) => {
+                tabla.setPageSize(Number((e.target as HTMLInputElement).value));
+              }}
+            >
+              {Array.from({ length: 10 }, (_, i) => (i + 1) * 10)
+                .concat([200, 500, 1000])
+                .map((pageSize) => (
+                  <option key={pageSize} value={pageSize}>
+                    {pageSize}
+                  </option>
+                ))}
+            </select>
           </div>
-          <div class="gap-5">
+
+          <div class="gap-x-5 gap-y-3 max-sm:flex-wrap max-sm:justify-between max-sm:w-full">
             <span role="status" class="flex items-center gap-1">
               <div>Página</div>
               <strong>
@@ -151,6 +156,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
                 {tabla.getPageCount().toLocaleString()}
               </strong>
             </span>
+
             <div role="group" class="flex items-center gap-1.5">
               <button
                 class="btn btn-secundario p-0!"
@@ -181,10 +187,14 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
                 <Iconos.FlechaDerUltimo class="size-6" />
               </button>
             </div>
-            <label htmlFor="page" class="flex items-center gap-2">
+
+            <label
+              htmlFor="page"
+              class="flex items-center gap-2 max-sm:justify-between max-sm:w-full"
+            >
               <span className="min-w-max">Ir a la página:</span>
               <input
-                class="input"
+                class="input max-sm:max-w-fit"
                 type="number"
                 min="1"
                 id="page"
@@ -243,10 +253,10 @@ const Filtro = <T extends Record<string, unknown>>({
 export const Tabla = (
   props: JSX.IntrinsicElements["table"] & { wrapperClass?: string }
 ) => (
-  <div class={`${props.wrapperClass || ""} overflow-y-auto`}>
+  <div class={`${props.wrapperClass || ""} overflow-y-auto max-w-full`}>
     <table
       {...props}
-      class={`w-full table-auto text-sm ${props.class || ""}`}
+      class={`w-full max-w-full table-auto text-sm ${props.class || ""}`}
       // @ts-expect-error: no se debe pasar wrapperClass
       wrapperClass={null}
     >

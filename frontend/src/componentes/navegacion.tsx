@@ -7,15 +7,15 @@ export default () =>
     <nav class="flex items-center gap-3 bg-base p-2 px-3 rounded-box border border-base shadow-lg">
       <A href="/">
         <Iconos.Campo />
-        Formulario
+        <span class="max-sm:sr-only max-sm:text-sm">Formulario</span>
       </A>
       <A href="/usuarios">
         <Iconos.Personas class="size-6" />
-        Usuarios
+        <span class="max-sm:sr-only max-sm:text-sm">Usuarios</span>
       </A>
       <A href="/registros">
         <Iconos.Registros />
-        Registros
+        <span class="max-sm:sr-only max-sm:text-sm">Registros</span>
       </A>
     </nav>
   );
@@ -27,7 +27,7 @@ const A = (props: LinkProps) => {
     <Link
       {...props}
       // @ts-expect-error: sí existe
-      class="btn aria-[current=page]:font-bold"
+      class="group btn aria-[current=page]:font-bold hover:bg-darkest"
       aria-current={props.href === pathname ? "page" : null}
     >
       {props.children}
