@@ -13,7 +13,10 @@
       {% if edad > 18 %} MAYOR {% else %} MENOR {% endif %} DE EDAD,
    {% endif %}
    
-   Venezolano(a), titular de la cédula de identidad N° <b> V-{{ cedula }}</b>,
+   Venezolano(a),
+   
+   {% if cedula %} titular de la cédula de identidad N° <b> V-{{ cedula }}</b>, {% endif %}
+   
    {% if edad and tipo_carta == "residencia" %}
       de {{ edad }} años de edad,
    {% endif %}

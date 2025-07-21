@@ -118,7 +118,7 @@ def retornar_carta():
         tipo_carta=tipo_carta,
         nombres=f"{datos['nombres']} {datos['apellidos']}".upper(),
         edad=fecha_a_años(datos.get("fecha_nacimiento", "")),
-        cedula=format_string("%d", int(datos["cedula"]), True),
+        cedula=format_string("%d", int(datos["cedula"]), True) if datos.get("cedula", "") else None,
         direccion=datos.get("direccion", "").upper(),
         numero_casa=datos.get("numero_casa", "").upper(),
         hoy=hoy,

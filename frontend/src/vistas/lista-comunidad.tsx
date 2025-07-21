@@ -45,7 +45,8 @@ export default () => {
     },
     {
       header: "Cédula",
-      accessorFn: (row) => row.cedula.toLocaleString("es-VE"),
+      accessorFn: (row) =>
+        row.cedula ? row.cedula.toLocaleString("es-VE") : "",
       maxSize: 125,
       meta: { filterInputValuePattern: /\d|\./ },
     },

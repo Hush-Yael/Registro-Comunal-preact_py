@@ -8,7 +8,7 @@ export type DatosComunidad = {
   id: number;
   nombres: string;
   apellidos: string;
-  cedula: number | string;
+  cedula: number | string | null;
   fecha_nacimiento: string;
   patologia: string;
   direccion: string;

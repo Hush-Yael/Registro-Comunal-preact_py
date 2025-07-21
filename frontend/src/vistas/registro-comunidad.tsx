@@ -10,7 +10,7 @@ import TerminarSesion from "../componentes/terminar-sesion";
 import Iconos from "../componentes/iconos";
 import { useContext, useEffect } from "preact/compat";
 import { useSearchParams } from "wouter-preact";
-import { rutaApi } from "../../utilidades";
+import { NOMBRE_MÍNIMO, rutaApi } from "../../utilidades";
 import { DatosComunidad } from "../tipos";
 import { signal } from "@preact/signals";
 import { datosComunidad } from "./lista-comunidad";
@@ -66,7 +66,9 @@ export default () => {
         }}
         modificarValoresEnviados={(d) => ({
           ...d,
-          cedula: (d.cedula as string).replace(/\D/g, ""),
+          cedula: (d.cedula as string).trim()
+            ? parseInt((d.cedula as string).replace(/\D/g, "")) || null
+            : null,
         })}
         fetchValues={
           editar
@@ -79,7 +81,9 @@ export default () => {
 
             return (datos.value = {
               ..._datos,
-              cedula: parseInt(_datos.cedula).toLocaleString("es-VE"),
+              cedula: _datos.cedula
+                ? parseInt(_datos.cedula).toLocaleString("es-VE")
+                : "",
             });
           } else
             setParams((p) => {
@@ -175,7 +179,7 @@ const Campos = () => {
         campo="nombres"
         id="nombres"
         type="text"
-        minlength={3}
+        minlength={NOMBRE_MÍNIMO}
         required
       />
       <Input
@@ -190,7 +194,6 @@ const Campos = () => {
         label="Cédula"
         campo="cedula"
         id="cedula"
-        required
         minlength={1}
         onChange={(e) => {
           clearTimeout(timeout);

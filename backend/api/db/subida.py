@@ -227,6 +227,9 @@ def importar_comunidad(archivo: StringIO):
 
     for row in reader:
         try:
+            cedula = row.get("cedula", "").strip() or None
+            row["cedula"] = cedula
+
             cursor.execute(
                 """--sql
                 INSERT INTO comunidad
