@@ -1,4 +1,4 @@
-import { sesion } from "..";
+import { sesion } from "~/index";
 import Iconos from "./iconos";
 import { Link, type LinkProps, useLocation } from "wouter-preact";
 

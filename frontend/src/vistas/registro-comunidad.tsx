@@ -1,16 +1,16 @@
-import Cabecera from "../componentes/cabecera";
+import Cabecera from "~/componentes/cabecera";
 import Formulario, {
   contextoFormulario,
   Mensaje,
   Reiniciar,
   Subir,
-} from "../componentes/formulario";
-import Input from "../componentes/formulario/input";
-import TerminarSesion from "../componentes/terminar-sesion";
-import Iconos from "../componentes/iconos";
+} from "~/componentes/formulario";
+import Input from "~/componentes/formulario/input";
+import TerminarSesion from "~/componentes/terminar-sesion";
+import Iconos from "~/componentes/iconos";
 import { useContext, useEffect } from "preact/compat";
 import { useSearchParams } from "wouter-preact";
-import { NOMBRE_MÍNIMO, rutaApi } from "../../utilidades";
+import { NOMBRE_MÍNIMO, rutaApi } from "~/utilidades";
 import { DatosComunidad } from "../tipos";
 import { signal } from "@preact/signals";
 import { datosComunidad } from "./lista-comunidad";

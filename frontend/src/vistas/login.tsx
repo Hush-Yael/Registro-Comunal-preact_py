@@ -1,15 +1,15 @@
 import { useContext } from "preact/hooks";
-import Cabecera from "../componentes/cabecera";
-import Input from "../componentes/formulario/input";
+import Cabecera from "~/componentes/cabecera";
+import Input from "~/componentes/formulario/input";
 import Formulario, {
   contextoFormulario,
   Mensaje,
-} from "../componentes/formulario";
-import Contraseña from "../componentes/formulario/contraseña";
+} from "~/componentes/formulario";
+import Contraseña from "~/componentes/formulario/contraseña";
 import { Link } from "wouter-preact";
-import { sesion } from "..";
+import { sesion } from "~/index";
 import { signal } from "@preact/signals";
-import { NOMBRE_MÍNIMO } from "../utilidades";
+import { NOMBRE_MÍNIMO } from "~/utilidades";
 
 export default () => {
   const datos = signal({ nombre: "", contraseña: "" });

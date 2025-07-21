@@ -4,13 +4,13 @@ import {
   type Table,
   type ColumnDef,
 } from "@tanstack/react-table";
-import { descarga, rutaApi } from "../utilidades";
-import Cabecera from "../componentes/cabecera";
-import Tabla from "../componentes/tabla";
-import { sesion } from "..";
+import { rutaApi } from "~/utilidades";
+import Cabecera from "~/componentes/cabecera";
+import Tabla from "~/componentes/tabla";
+import { sesion } from "~/index";
 import { DatosComunidad } from "../tipos";
-import useLocalStorage from "../hooks/useLocalStorage";
-import Iconos from "../componentes/iconos";
+import useLocalStorage from "~/hooks/useLocalStorage";
+import Iconos from "~/componentes/iconos";
 import { signal } from "@preact/signals";
 import { Link } from "wouter-preact";
 import Opcion from "../componentes/opcion";

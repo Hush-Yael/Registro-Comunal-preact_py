@@ -9,7 +9,7 @@ import RegistroComunidad from "./vistas/registro-comunidad";
 import ListaComunidad from "./vistas/lista-comunidad";
 import ListaUsuarios from "./vistas/lista-usuarios";
 import Navegacion from "./componentes/navegacion";
-import useTheme, { type Tema } from "./hooks/useTheme";
+import useTheme, { type Tema } from "~/hooks/useTheme";
 
 export const sesion = signal({
   usuario: "",

@@ -4,7 +4,7 @@ import { useEffect } from "preact/hooks";
 import { Signal, useSignal } from "@preact/signals";
 import Alerta from "../alerta";
 import { useContext } from "preact/hooks";
-import { rutaApi } from "../../utilidades";
+import { rutaApi } from "~/utilidades";
 
 export type ContextoFormulario<T extends Record<string, unknown>> = {
   datos: Signal<T>;

@@ -1,5 +1,5 @@
-import { sesion } from "..";
-import Iconos from "../componentes/iconos";
+import { sesion } from "~/index";
+import Iconos from "~/componentes/iconos";
 
 export default () => {
   return (

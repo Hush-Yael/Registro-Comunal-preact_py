@@ -1,16 +1,16 @@
 import { useContext } from "preact/hooks";
-import Cabecera from "../componentes/cabecera";
-import Input from "../componentes/formulario/input";
+import Cabecera from "~/componentes/cabecera";
+import Input from "~/componentes/formulario/input";
 import Formulario, {
   contextoFormulario,
   Mensaje,
-} from "../componentes/formulario";
-import Contraseña from "../componentes/formulario/contraseña";
+} from "~/componentes/formulario";
+import Contraseña from "~/componentes/formulario/contraseña";
 import { Link, useLocation, useSearchParams } from "wouter-preact";
-import { sesion } from "..";
+import { sesion } from "~/index";
 import { useSignal } from "@preact/signals";
 import { listaUsuarios } from "./lista-usuarios";
-import { rutaApi } from "../utilidades";
+import { rutaApi } from "~/utilidades";
 
 export default () => {
   const [, setLocation] = useLocation();

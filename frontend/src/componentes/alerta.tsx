@@ -1,5 +1,5 @@
-import Iconos from "../componentes/iconos";
-import Carga from "../componentes/carga";
+import Iconos from "~/componentes/iconos";
+import Carga from "~/componentes/carga";
 
 const FONDOS = {
   éxito: "bg-emerald-100 dark:bg-emerald-700",

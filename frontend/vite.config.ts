@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
 import legacy from "@vitejs/plugin-legacy";
 import tailwindcss from "@tailwindcss/vite";
+import { resolve } from "path";
 
 export default defineConfig({
   plugins: [
@@ -11,6 +12,11 @@ export default defineConfig({
       modernPolyfills: true,
     }),
   ],
+  resolve: {
+    alias: {
+      "~": resolve(__dirname, "src"),
+    },
+  },
   publicDir: "estatico",
   server: { host: true },
   css: {
