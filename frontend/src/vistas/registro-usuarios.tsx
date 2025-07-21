@@ -55,7 +55,7 @@ export default () => {
 
           listaUsuarios.value.push({
             id: listaUsuarios.value.length
-              ? listaUsuarios.value[listaUsuarios.value.length].id + 1
+              ? listaUsuarios.value[listaUsuarios.value.length - 1].id + 1
               : 1,
             nombre: contexto.datos.value.nombre,
             rol: "supervisor",
