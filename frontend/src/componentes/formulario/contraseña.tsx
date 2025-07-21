@@ -1,6 +1,7 @@
 import { useSignal } from "@preact/signals";
 import { Descripcion, Input, MensajeError, type InputProps } from "./input";
 import Iconos from "../../componentes/iconos";
+import { CONTRASEÑA_MÍNIMA } from "../../../utilidades";
 
 export default (props: Omit<InputProps, "label" | "campo" | "id">) => {
   const visible = useSignal(false);
@@ -14,6 +15,8 @@ export default (props: Omit<InputProps, "label" | "campo" | "id">) => {
             {...props}
             id="contrasena"
             campo="contraseña"
+            minLength={CONTRASEÑA_MÍNIMA}
+            required
             type={visible.value ? "text" : "password"}
           />
         </label>

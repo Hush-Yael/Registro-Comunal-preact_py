@@ -181,7 +181,7 @@ const Campos = () => {
         campo="apellidos"
         id="apellidos"
         type="text"
-        minlength={3}
+        minlength={NOMBRE_MÍNIMO}
         required
       />
       <Input

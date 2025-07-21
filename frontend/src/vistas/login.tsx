@@ -9,6 +9,7 @@ import Contraseña from "../componentes/formulario/contraseña";
 import { Link } from "wouter-preact";
 import { sesion } from "..";
 import { signal } from "@preact/signals";
+import { NOMBRE_MÍNIMO } from "../../utilidades";
 
 export default () => {
   const datos = signal({ nombre: "", contraseña: "" });
@@ -37,7 +38,13 @@ const Datos = () => {
 
   return (
     <div class="col mt-16 gap-6">
-      <Input campo="nombre" id="nombre-de-usuario" label="Nombre de usuario" />
+      <Input
+        campo="nombre"
+        id="nombre-de-usuario"
+        label="Nombre de usuario"
+        required
+        minlength={NOMBRE_MÍNIMO}
+      />
       <Contraseña />
 
       <Mensaje estado="subiendo" texto="Verificando datos..." />
