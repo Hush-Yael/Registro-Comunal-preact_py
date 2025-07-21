@@ -105,7 +105,9 @@ export default () => {
           } else
             datosComunidad.value.push({
               ...datos.value,
-              id: datosComunidad.value[datosComunidad.value.length - 1].id + 1,
+              id: datosComunidad.value.length
+                ? datosComunidad.value[datosComunidad.value.length - 1].id + 1
+                : 1,
             });
 
           contexto.datos.value = contexto.datosIniciales;
