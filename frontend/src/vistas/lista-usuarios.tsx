@@ -5,7 +5,7 @@ import TerminarSesion from "../componentes/terminar-sesion";
 import { sesion } from "..";
 import Iconos from "../componentes/iconos";
 import type { Usuario } from "../tipos";
-import { rutaApi } from "../../utilidades";
+import { rutaApi } from "../utilidades";
 import { Link } from "wouter-preact";
 
 export const listaUsuarios = signal<Usuario[]>([]);

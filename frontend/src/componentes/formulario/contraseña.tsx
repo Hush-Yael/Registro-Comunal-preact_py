@@ -1,7 +1,7 @@
 import { useSignal } from "@preact/signals";
 import { Descripcion, Input, MensajeError, type InputProps } from "./input";
 import Iconos from "../../componentes/iconos";
-import { CONTRASEÑA_MÍNIMA } from "../../../utilidades";
+import { CONTRASEÑA_MÍNIMA } from "../../utilidades";
 
 export default (props: Omit<InputProps, "label" | "campo" | "id">) => {
   const visible = useSignal(false);
