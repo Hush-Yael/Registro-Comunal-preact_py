@@ -35,7 +35,7 @@ type FormularioProps<
   // eslint-disable-next-line no-unused-vars
   onError?: (props: HandlerEvent<T>) => any | Promise<any>;
   // eslint-disable-next-line no-unused-vars
-  modifyBodyValues?: (values: T) => T;
+  modificarValoresEnviados?: (values: T) => T;
   method?: string;
   datos: Signal<T>;
   datosIniciales?: T;
@@ -108,8 +108,8 @@ export default <
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify(
-                  props.modifyBodyValues
-                    ? props.modifyBodyValues(datos.value)
+                  props.modificarValoresEnviados
+                    ? props.modificarValoresEnviados(datos.value)
                     : datos.value
                 ),
               }

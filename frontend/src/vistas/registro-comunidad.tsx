@@ -64,7 +64,7 @@ export default () => {
           numero_casa: "",
           id: 0,
         }}
-        modifyBodyValues={(d) => ({
+        modificarValoresEnviados={(d) => ({
           ...d,
           cedula: (d.cedula as string).replace(/\D/g, ""),
         })}
