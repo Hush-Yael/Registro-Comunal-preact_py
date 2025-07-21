@@ -1,7 +1,7 @@
 from csv import DictReader
 from io import StringIO
 from .apertura import abrir_db
-from constantes import DatosComunidad, DatosUsuario, ErrorDeValidacion
+from constantes import DatosComunidad, DatosUsuario, ErrorDeValidacion, CONTRASEÑA_MÍNIMA, NOMBRE_MÍNIMO
 
 ERROR_UNICO = "UNIQUE constraint failed"
 ERROR_DE_VERIFICACIÓN = "CHECK constraint failed"
@@ -55,14 +55,14 @@ def registrar_usuario(datos: DatosUsuario, modificar: bool = False):
                 raise ErrorDeValidacion(
                     {
                         "campo": "nombre",
-                        "mensaje": "El nombre debe tener al menos 3 caracteres, sin espacios a los lados",
+                        "mensaje": f"El nombre debe tener al menos {NOMBRE_MÍNIMO} caracteres, sin espacios a los lados",
                     }
                 )
             elif "contraseña" in error:
                 raise ErrorDeValidacion(
                     {
                         "campo": "contraseña",
-                        "mensaje": "La contraseña debe tener al menos 6 caracteres, sin espacios a los lados",
+                        "mensaje": f"La contraseña debe tener al menos {CONTRASEÑA_MÍNIMA} caracteres, sin espacios a los lados",
                     }
                 )
         # error desconocido, no debería pasar
@@ -193,7 +193,7 @@ def añadir_registro_comunidad(datos: DatosComunidad, modificar: bool = False):
                 raise ErrorDeValidacion(
                     {
                         "campo": campo,
-                        "mensaje": f"Los {campo} deben tener al menos 3 caracteres, sin espacios a los lados",
+                        "mensaje": f"Los {campo} deben tener al menos {NOMBRE_MÍNIMO} caracteres, sin espacios a los lados",
                     }
                 )
             elif "cedula" in error:
