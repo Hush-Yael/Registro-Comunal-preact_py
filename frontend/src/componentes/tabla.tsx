@@ -112,9 +112,9 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
         </tbody>
       </Tabla>
       {props.options?.getPaginationRowModel && (
-        <div class="flex items-center justify-between gap-x-5 gap-y-3 w-full mt-4 *:flex *:items-center max-sm:flex-col max-sm:items-start max-sm:text-sm">
+        <div class="flex items-center justify-between gap-x-5 gap-y-3 w-full mt-4 text-sm *:flex *:items-center max-[900px]:flex-col max-[900px]:items-start  sm:max-lg:items-center">
           <div class="gap-3 max-sm:justify-between max-sm:w-full">
-            <div>
+            <div class="flex items-center gap-2">
               <span class="s-auto" role="status">
                 {tabla.getRowCount().toLocaleString()}{" "}
                 {props.filasNombre || "filas"}
@@ -132,7 +132,7 @@ export default <T extends Record<string, unknown>>(props: TablaProps<T>) => {
             </label>
             <select
               id="page-size"
-              class="input max-sm:max-w-fit"
+              class="input max-w-fit"
               value={tabla.getState().pagination.pageSize}
               onChange={(e) => {
                 tabla.setPageSize(Number((e.target as HTMLInputElement).value));
