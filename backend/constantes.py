@@ -11,7 +11,7 @@ else:
     RUTA_BASE = os.path.dirname(os.path.abspath(__file__))
 
 NOMBRE_MÍNIMO = 3
-CONTRASEÑA_MÍNIMA = 6
+CONTRASEÑA_MÍNIMA = 5
 
 
 class DatosUsuario(TypedDict):
