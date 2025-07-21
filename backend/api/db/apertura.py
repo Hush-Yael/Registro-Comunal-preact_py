@@ -21,6 +21,12 @@ def abrir_db():
          contraseña TEXT NOT NULL CHECK(length(trim(contraseña)) >= {CONTRASEÑA_MÍNIMA})
          )
       """)
+    
+    cursor.execute("""--sql
+      INSERT INTO usuarios (nombre, rol, contraseña) 
+        SELECT "admin", "admin", "admin" 
+        WHERE (SELECT 1 WHERE (SELECT count(id) FROM usuarios LIMIT 1) = 0)
+    """)
 
     cursor.execute(f"""--sql
       CREATE TABLE IF NOT EXISTS comunidad (
