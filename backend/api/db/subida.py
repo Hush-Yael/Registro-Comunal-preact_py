@@ -156,7 +156,7 @@ def añadir_registro_comunidad(datos: DatosComunidad, modificar: bool = False):
                     }
                 )
 
-            sql = "UPDATE comunidad SET nombres = ?, apellidos = ?, cedula = ?, fecha_nacimiento = ?, patologia = ?, direccion = ?, numero_casa = ? WHERE id = ?"
+            sql = "UPDATE comunidad SET nombres = ?, apellidos = ?, cedula = ?, fecha_nacimiento = ?, patologia = ?, direccion = ?, numero_casa = ?, editado = datetime(current_timestamp,'localtime') WHERE id = ?"
 
         else:
             sql = "INSERT INTO comunidad (nombres, apellidos, cedula, fecha_nacimiento, patologia, direccion, numero_casa) VALUES (?, ?, ?, ?, ?, ?, ?)"
