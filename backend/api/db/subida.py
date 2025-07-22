@@ -1,7 +1,13 @@
 from csv import DictReader
 from io import StringIO
 from .apertura import abrir_db
-from constantes import DatosComunidad, DatosUsuario, ErrorDeValidacion, CONTRASEÑA_MÍNIMA, NOMBRE_MÍNIMO
+from constantes import (
+    DatosComunidad,
+    DatosUsuario,
+    ErrorDeValidacion,
+    CONTRASEÑA_MÍNIMA,
+    NOMBRE_MÍNIMO,
+)
 
 ERROR_UNICO = "UNIQUE constraint failed"
 ERROR_DE_VERIFICACIÓN = "CHECK constraint failed"
@@ -221,9 +227,10 @@ def importar_comunidad(archivo: StringIO):
 
     conn, cursor = abrir_db()
 
-    cursor.execute(
-        "DELETE FROM comunidad",
-    )
+    cursor.executescript("""--sql
+      DELETE FROM comunidad;
+      DELETE FROM sqlite_sequence WHERE name='comunidad';
+    """)
 
     for row in reader:
         try:
