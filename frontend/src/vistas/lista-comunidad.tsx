@@ -8,7 +8,7 @@ import { rutaApi } from "~/utilidades";
 import Cabecera from "~/componentes/cabecera";
 import Tabla from "~/componentes/tabla";
 import { sesion } from "~/index";
-import { DatosComunidad } from "../tipos";
+import type { DatosComunidad, OrdenColumnas, OrdenKey } from "../tipos";
 import useLocalStorage, { useLocalStorageState } from "~/hooks/useLocalStorage";
 import Iconos from "~/componentes/iconos";
 import { signal } from "@preact/signals";
@@ -17,10 +17,29 @@ import Menu from "./lista-comunidad/menu";
 import ModalGenerar from "./lista-comunidad/modal";
 import { idAGenerar } from "./lista-comunidad/modal";
 
+const COLUMNAS_ORDENABLES: OrdenKey[] = [
+  "rowid",
+  "nombres",
+  "apellidos",
+  "cedula",
+  "fecha_nacimiento",
+  "numero_casa",
+  "editado",
+];
+
 export const datosComunidad = signal<DatosComunidad[]>([]);
 export const cargarDatosComunidad = signal(true);
 export const generandoCarta = signal(false);
 export const modalGenerarAbierto = signal(false);
+export const ordenColumnas = useLocalStorage<OrdenColumnas>({
+  key: "orden-comunidad",
+  default: [],
+  validacion: (v) =>
+    Array.isArray(v) &&
+    v.length === 2 &&
+    COLUMNAS_ORDENABLES.includes(v[0]) &&
+    (v[1] === "asc" || v[1] === "desc"),
+});
 
 export default () => {
   const [paginacion, setPaginacion] = useLocalStorageState({
@@ -134,9 +153,13 @@ export default () => {
         columnas={columnas}
         shouldFetch={cargarDatosComunidad}
         valuesFetcher={() =>
-          fetch(rutaApi("lista-comunidad")).then((r) => r.json()) as Promise<
-            DatosComunidad[]
-          >
+          fetch(rutaApi("lista-comunidad"), {
+            method: "POST",
+            body: JSON.stringify(ordenColumnas.value),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }).then((r) => r.json()) as Promise<DatosComunidad[]>
         }
       />
     </>

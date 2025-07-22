@@ -29,6 +29,7 @@ from constantes import (
     ErrorDeValidacion,
     DatosComunidad,
     Sesion,
+    COLUMNAS_ORDENABLES,
 )
 from .db.modificacion import cambiar_rol, eliminar_registro_comunidad, eliminar_usuario
 from locale import format_string
@@ -56,11 +57,6 @@ def usuarios():
     return obtener_usuarios()
 
 
-@api.route("/api/lista-comunidad", methods=["GET"])
-def lista_comunidad():
-    return obtener_datos_comunidad()
-
-
 @api.route("/api/obtener-datos-comunidad/<id>", methods=["GET"])
 def datos_registro_comunidad(id: int):
     datos = obtener_datos_registro_comunidad(id)
@@ -82,6 +78,22 @@ def exportar():
         as_attachment=True,
         download_name="comunidad.csv",
     )
+
+
+@api.route("/api/lista-comunidad", methods=["POST"])
+def lista_comunidad():
+    columnaOrden = request.json  # type: ignore
+
+    if not columnaOrden or type(columnaOrden) is not list:
+        columnaOrden = []
+    else:
+        if columnaOrden[0] not in COLUMNAS_ORDENABLES or columnaOrden[1] not in [
+            "asc",
+            "desc",
+        ]:
+            columnaOrden = []
+
+    return obtener_datos_comunidad(columnaOrden)
 
 
 @api.route("/api/generar-carta", methods=["POST"])
@@ -118,7 +130,9 @@ def retornar_carta():
         tipo_carta=tipo_carta,
         nombres=f"{datos['nombres']} {datos['apellidos']}".upper(),
         edad=fecha_a_años(datos.get("fecha_nacimiento", "")),
-        cedula=format_string("%d", int(datos["cedula"]), True) if datos.get("cedula", "") else None,
+        cedula=format_string("%d", int(datos["cedula"]), True)
+        if datos.get("cedula", "")
+        else None,
         direccion=datos.get("direccion", "").upper(),
         numero_casa=datos.get("numero_casa", "").upper(),
         hoy=hoy,

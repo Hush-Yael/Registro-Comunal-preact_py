@@ -14,3 +14,10 @@ export type DatosComunidad = {
   direccion: string;
   numero_casa: string;
 };
+
+export type OrdenKey =
+  | Exclude<keyof DatosComunidad, "id" | "patologia" | "direccion">
+  | "editado"
+  | "rowid";
+
+export type OrdenColumnas = [] | [OrdenKey, "asc" | "desc"];

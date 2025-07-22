@@ -11,12 +11,19 @@ def obtener_usuarios():
     return [dict(row) for row in usuarios]
 
 
-def obtener_datos_comunidad():
+def obtener_datos_comunidad(ordenar_por: list[tuple[str, str]] = []):
     conn, cursor = abrir_db()
+
+    ORDEN = (
+        f"ORDER BY {ordenar_por[0]} {ordenar_por[1] or 'ASC'}"
+        if len(ordenar_por) > 0
+        else ""
+    )
+
     datos = (
-        cursor.execute(
-            "SELECT id, nombres, apellidos, CAST(comunidad.cedula as INTEGER) as cedula, fecha_nacimiento, patologia, direccion, numero_casa FROM comunidad"
-        )
+        cursor.execute(f"""--sql
+          SELECT id, nombres, apellidos, CAST(comunidad.cedula as INTEGER) as cedula, fecha_nacimiento, patologia, direccion, numero_casa FROM comunidad {ORDEN}
+        """)
     ).fetchall()
 
     conn.close()

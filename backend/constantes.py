@@ -13,6 +13,16 @@ else:
 NOMBRE_MÍNIMO = 3
 CONTRASEÑA_MÍNIMA = 5
 
+COLUMNAS_ORDENABLES = (
+    "rowid",
+    "nombres",
+    "apellidos",
+    "cedula",
+    "fecha_nacimiento",
+    "numero_casa",
+    "editado",
+)
+
 
 class DatosUsuario(TypedDict):
     id: int
