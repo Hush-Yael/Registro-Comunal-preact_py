@@ -16,18 +16,18 @@ export const sesion = signal({
   rol: "",
 });
 
-export function App() {
-  const [tema, setTema] = useTheme();
+const tema = useTheme();
 
+export function App() {
   return (
     <>
       <select
         id="tema"
         class="absolute right-4 top-4 input w-fit! shadow cursor-pointer"
-        value={tema}
+        value={tema.value}
         onChange={(e) => {
           const valor = (e.target as HTMLSelectElement).value;
-          setTema(valor as Tema);
+          tema.value = valor as Tema;
         }}
       >
         <option value="oscuro">Tema oscuro</option>

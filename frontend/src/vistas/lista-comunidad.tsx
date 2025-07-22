@@ -9,7 +9,7 @@ import Cabecera from "~/componentes/cabecera";
 import Tabla from "~/componentes/tabla";
 import { sesion } from "~/index";
 import { DatosComunidad } from "../tipos";
-import useLocalStorage from "~/hooks/useLocalStorage";
+import useLocalStorage, { useLocalStorageState } from "~/hooks/useLocalStorage";
 import Iconos from "~/componentes/iconos";
 import { signal } from "@preact/signals";
 import { Link } from "wouter-preact";
@@ -23,7 +23,7 @@ export const generandoCarta = signal(false);
 export const modalGenerarAbierto = signal(false);
 
 export default () => {
-  const [paginacion, setPaginacion] = useLocalStorage({
+  const [paginacion, setPaginacion] = useLocalStorageState({
     key: "paginacion-comunidad",
     default: {
       pageIndex: 0,
