@@ -1,6 +1,6 @@
+import { effect } from "@preact/signals";
 import useLocalStorage from "./useLocalStorage";
 import useMedia from "./useMedia";
-import { useEffect } from "preact/hooks";
 
 const HTML = document.documentElement,
   meta = document.querySelector("meta[name=theme-color]");
@@ -8,15 +8,17 @@ const HTML = document.documentElement,
 export type Tema = "claro" | "oscuro" | "sistema";
 
 export default () => {
-  const [mediaMatched] = useMedia("(prefers-color-scheme: dark)");
-  const [tema, setTema] = useLocalStorage<Tema>({
+  const mediaMatched = useMedia("(prefers-color-scheme: dark)");
+  const tema = useLocalStorage<Tema>({
     key: "tema",
     default: "sistema",
     validacion: (v) => ["claro", "oscuro", "sistema"].includes(v),
   });
 
-  useEffect(() => {
-    const oscuro = tema === "oscuro" || (tema === "sistema" && mediaMatched);
+  effect(() => {
+    const oscuro =
+      tema.value === "oscuro" ||
+      (tema.value === "sistema" && mediaMatched.value);
 
     if (!oscuro) {
       HTML.removeAttribute("class");
@@ -25,7 +27,7 @@ export default () => {
       HTML.classList.add("oscuro");
       meta.setAttribute("content", "#141414");
     }
-  }, [tema, mediaMatched]);
+  });
 
-  return [tema, setTema, mediaMatched] as const;
+  return tema;
 };
