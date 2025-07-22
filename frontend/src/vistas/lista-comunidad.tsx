@@ -38,7 +38,7 @@ export default () => {
   });
 
   const columnas: ColumnDef<DatosComunidad>[] = [
-    { header: "#", cell: (info) => info.row.index + 1, size: 5 },
+    { header: "#", accessorKey: "id", size: 5 },
     {
       header: "Nombres y apellidos",
       accessorFn: (row) => `${row.nombres} ${row.apellidos}`,
