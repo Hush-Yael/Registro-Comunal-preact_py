@@ -495,4 +495,53 @@ export default {
       <path d="M10,17a1,1,0,0,1-1-1V12H6a1,1,0,0,1-1-1V7A1,1,0,0,1,6,6H9V3a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1V6h3a1,1,0,0,1,1,1v4a1,1,0,0,1-1,1H15v1a1,1,0,0,1-2,0V11a1,1,0,0,1,1-1h3V8H14a1,1,0,0,1-1-1V4H11V7a1,1,0,0,1-1,1H7v2h3a1,1,0,0,1,1,1v5A1,1,0,0,1,10,17Z" />
     </svg>
   ),
+
+  Menu: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="12" cy="12" r="1" />
+      <circle cx="12" cy="5" r="1" />
+      <circle cx="12" cy="19" r="1" />
+    </svg>
+  ),
+
+  Ascendente: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="m3 8 4-4 4 4" />
+      <path d="M7 4v16" />
+      <path d="M11 12h4" />
+      <path d="M11 16h7" />
+      <path d="M11 20h10" />
+    </svg>
+  ),
+
+  Descendente: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="m3 16 4 4 4-4" />
+      <path d="M7 20V4" />
+      <path d="M11 4h10" />
+      <path d="M11 8h7" />
+      <path d="M11 12h4" />
+    </svg>
+  ),
 };
