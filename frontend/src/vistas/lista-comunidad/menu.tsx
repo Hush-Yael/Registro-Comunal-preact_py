@@ -3,11 +3,7 @@ import { signal } from "@preact/signals";
 import { useRef } from "preact/hooks";
 import Iconos from "~/componentes/iconos";
 import type { DatosComunidad, OrdenKey } from "~/tipos";
-import {
-  cargarDatosComunidad,
-  datosComunidad,
-  ordenColumnas,
-} from "../lista-comunidad";
+import { cargarDatosComunidad, datosComunidad, ordenColumnas } from ".";
 import { sesion } from "~/index";
 import { descarga, rutaApi } from "~/utilidades";
 import type { JSX } from "preact/jsx-runtime";

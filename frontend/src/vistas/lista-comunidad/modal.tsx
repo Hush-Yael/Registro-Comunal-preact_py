@@ -2,7 +2,7 @@ import { descarga, rutaApi } from "~/utilidades";
 import Opcion from "~/componentes/opcion";
 import Modal from "~/componentes/modal";
 import useLocalStorage from "~/hooks/useLocalStorage";
-import { generandoCarta, modalGenerarAbierto } from "../lista-comunidad";
+import { generandoCarta, modalGenerarAbierto } from ".";
 import Iconos from "~/componentes/iconos";
 
 export const idAGenerar = { current: -1 };
