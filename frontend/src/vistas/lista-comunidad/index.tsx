@@ -8,29 +8,21 @@ import { rutaApi } from "~/utilidades";
 import Cabecera from "~/componentes/cabecera";
 import Tabla from "~/componentes/tabla";
 import { sesion } from "~/index";
-import type { DatosComunidad, OrdenColumnas } from "~/tipos";
-import useLocalStorage, { useLocalStorageState } from "~/hooks/useLocalStorage";
+import type { DatosComunidad } from "~/tipos";
+import { useLocalStorageState } from "~/hooks/useLocalStorage";
 import Iconos from "~/componentes/iconos";
-import { signal } from "@preact/signals";
 import { Link } from "wouter-preact";
 import Menu from "./menu";
 import ModalGenerar from "./modal";
 import { idAGenerar } from "./modal";
-import { COLUMNAS_ORDENABLES } from "~/utilidades/contantes";
-
-export const datosComunidad = signal<DatosComunidad[]>([]);
-export const cargarDatosComunidad = signal(true);
-export const generandoCarta = signal(false);
-export const modalGenerarAbierto = signal(false);
-export const ordenColumnas = useLocalStorage<OrdenColumnas>({
-  key: "orden-comunidad",
-  default: [],
-  validacion: (v) =>
-    Array.isArray(v) &&
-    v.length === 2 &&
-    COLUMNAS_ORDENABLES.includes(v[0]) &&
-    (v[1] === "asc" || v[1] === "desc"),
-});
+import {
+  cargarDatosComunidad,
+  datosComunidad,
+  generandoCarta,
+  modalGenerarAbierto,
+  ordenColumnas,
+  eliminarRegistro,
+} from "./contantes";
 
 export default () => {
   const [paginacion, setPaginacion] = useLocalStorageState({
@@ -155,14 +147,4 @@ export default () => {
       />
     </>
   );
-};
-
-const eliminarRegistro = async (id: number) => {
-  if (confirm("¿Realmente desea eliminar el registro?")) {
-    const r = await fetch(rutaApi(`eliminar-registro-comunidad/${id}`), {
-      method: "DELETE",
-    });
-    if (r.ok)
-      datosComunidad.value = datosComunidad.value.filter((u) => u.id !== id);
-  }
 };

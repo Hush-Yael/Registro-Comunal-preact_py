@@ -13,8 +13,8 @@ import { useSearchParams } from "wouter-preact";
 import { rutaApi } from "~/utilidades";
 import { DatosComunidad } from "../tipos";
 import { signal } from "@preact/signals";
-import { datosComunidad } from "./lista-comunidad";
 import { NOMBRE_MÍNIMO } from "~/utilidades/contantes";
+import { datosComunidad } from "./lista-comunidad/contantes";
 
 const datos = signal<DatosComunidad>({
   nombres: "",
