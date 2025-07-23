@@ -30,14 +30,14 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
   };
 
   return (
-    <details onMouseLeave={closeSub} class="group relative" open>
+    <details onMouseLeave={closeSub} class="group relative">
       <summary class="list-none btn p-1! px-0! group-open:bg-primary! group-open:text-[var(--bg-base)]! group-open:border-transparent! cursor-pointer">
         <Iconos.Menu class="size-6" />
         <span className="sr-only">Opciones</span>
       </summary>
 
       <div class="dropdown-content right-0 origin-top-right" role="group">
-        <details ref={submenu} open class="relative">
+        <details ref={submenu} class="relative">
           <summary
             class="dropdown-item gap-0! list-none cursor-default"
             onMouseEnter={() => {
