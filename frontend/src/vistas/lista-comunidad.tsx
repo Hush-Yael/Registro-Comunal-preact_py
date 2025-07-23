@@ -140,7 +140,6 @@ export default () => {
             <Menu tabla={tabla} />
           </Cabecera>
         )}
-        filasNombre="registros"
         options={{
           getPaginationRowModel: getPaginationRowModel(),
           state: {
@@ -151,8 +150,9 @@ export default () => {
           getFilteredRowModel: getFilteredRowModel(),
         }}
         columnas={columnas}
-        shouldFetch={cargarDatosComunidad}
-        valuesFetcher={() =>
+        apodoFilas="registros"
+        datosDebenCargar={cargarDatosComunidad}
+        obtencionDatos={() =>
           fetch(rutaApi("lista-comunidad"), {
             method: "POST",
             body: JSON.stringify(ordenColumnas.value),

@@ -107,8 +107,8 @@ export default () => {
           },
         ]}
         datos={listaUsuarios}
-        shouldFetch={carga}
-        valuesFetcher={() => fetch(rutaApi("usuarios")).then((r) => r.json())}
+        datosDebenCargar={carga}
+        obtencionDatos={() => fetch(rutaApi("usuarios")).then((r) => r.json())}
       />
     </>
   );
