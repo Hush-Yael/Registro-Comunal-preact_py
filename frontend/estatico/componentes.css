@@ -50,7 +50,7 @@ label.btn {
 }
 
 .dropdown-radio-btn {
-  @apply flex justify-center min-h-4 min-w-4 p-1 border border-transparent text-muted peer-not-checked:border-base rounded-selector peer-disabled:opacity-50 cursor-pointer peer-disabled:cursor-not-allowed peer-not-[:disabled,:checked]:hover:bg-dark peer-checked:bg-primary peer-checked:text-[var(--bg-base)] transition-colors
+  @apply flex justify-center min-h-4 min-w-4 p-1 border border-transparent text-muted peer-not-checked:border-base rounded-selector cursor-pointer peer-not-checked:bg-dark peer-checked:bg-primary peer-checked:text-[var(--bg-base)] transition-colors
 }
 
 .carga {
