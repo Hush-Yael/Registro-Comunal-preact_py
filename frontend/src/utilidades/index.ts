@@ -15,6 +15,3 @@ export const descarga = async (r: Response, nombre: string) => {
   link.click();
   URL.revokeObjectURL(url);
 };
-
-export const NOMBRE_MÍNIMO = 3;
-export const CONTRASEÑA_MÍNIMA = 5;

@@ -8,7 +8,7 @@ import { rutaApi } from "~/utilidades";
 import Cabecera from "~/componentes/cabecera";
 import Tabla from "~/componentes/tabla";
 import { sesion } from "~/index";
-import type { DatosComunidad, OrdenColumnas, OrdenKey } from "../../tipos";
+import type { DatosComunidad, OrdenColumnas } from "~/tipos";
 import useLocalStorage, { useLocalStorageState } from "~/hooks/useLocalStorage";
 import Iconos from "~/componentes/iconos";
 import { signal } from "@preact/signals";
@@ -16,16 +16,7 @@ import { Link } from "wouter-preact";
 import Menu from "./menu";
 import ModalGenerar from "./modal";
 import { idAGenerar } from "./modal";
-
-const COLUMNAS_ORDENABLES: OrdenKey[] = [
-  "rowid",
-  "nombres",
-  "apellidos",
-  "cedula",
-  "fecha_nacimiento",
-  "numero_casa",
-  "editado",
-];
+import { COLUMNAS_ORDENABLES } from "~/utilidades/contantes";
 
 export const datosComunidad = signal<DatosComunidad[]>([]);
 export const cargarDatosComunidad = signal(true);

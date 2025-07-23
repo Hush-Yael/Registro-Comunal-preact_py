@@ -9,7 +9,7 @@ import Contraseña from "~/componentes/formulario/contraseña";
 import { Link } from "wouter-preact";
 import { sesion } from "~/index";
 import { signal } from "@preact/signals";
-import { NOMBRE_MÍNIMO } from "~/utilidades";
+import { NOMBRE_MÍNIMO } from "~/utilidades/contantes";
 
 export default () => {
   const datos = signal({ nombre: "", contraseña: "" });
