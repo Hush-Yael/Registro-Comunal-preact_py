@@ -15,3 +15,14 @@ export const descarga = async (r: Response, nombre: string) => {
   link.click();
   URL.revokeObjectURL(url);
 };
+
+export const normalizarString = (s: string) => {
+  return s
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+};
+
+export const comparacionInsensitiva = (s1: string, s2: string) =>
+  normalizarString(s1).includes(normalizarString(s2));
