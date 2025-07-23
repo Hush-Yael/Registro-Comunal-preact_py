@@ -71,7 +71,7 @@ export default () => {
       accessorKey: "numero_casa",
       size: 30,
       minSize: 0,
-      meta: { filterInputValuePattern: /\d|-/ },
+      meta: { filterInputValuePattern: /[\d-_\s/]/ },
     },
     ...(sesion.value.rol === "admin"
       ? [
