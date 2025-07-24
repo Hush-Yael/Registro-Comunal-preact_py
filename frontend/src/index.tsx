@@ -76,7 +76,7 @@ const SelectTema = () => (
 
     <Select.Portal>
       <Select.Content position="popper" side="bottom" sideOffset={5}>
-        <Select.Viewport class="portal-content">
+        <Select.Viewport class="dropdown-content">
           <Select.Item class="dropdown-check" value="claro">
             <Iconos.Sol class="opacity-75 size-5" />
             <Select.ItemText>Tema claro</Select.ItemText>

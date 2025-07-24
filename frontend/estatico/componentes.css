@@ -42,13 +42,8 @@ label.btn {
   @apply bg-red-500 not-disabled:hover:bg-red-600 text-white
 }
 
-.portal-content,
 .dropdown-content {
   @apply col gap-2 p-2 rounded-box shadow-lg bg-base border border-base
-}
-
-.dropdown-content {
-  @apply text-sm
 }
 
 .dropdown-item,

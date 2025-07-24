@@ -32,7 +32,7 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
           side="right"
           sideOffset={5}
           alignOffset={-2}
-          class="dropdown-content"
+          class="dropdown-content text-sm"
         >
           <Orden />
 
@@ -146,7 +146,7 @@ const Orden = () => {
         <Menu.SubContent
           sideOffset={10}
           collisionPadding={10}
-          class="dropdown-content max-[375px]:transform-[translateX(50%)]! max-[450px]:transform-[translateX(40%)]!"
+          class="dropdown-content max-[375px]:transform-[translateX(50%)]! max-[450px]:transform-[translateX(40%)]! text-sm"
         >
           <Menu.Label class="font-bold text-center py-1">
             Ordenar datos por:
