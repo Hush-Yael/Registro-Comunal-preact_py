@@ -116,7 +116,7 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
           accept=".csv"
           id="exportar"
         />
-        <label class="dropdown-item" htmlFor="exportar">
+        <label class="dropdown-item cursor-pointer" htmlFor="exportar">
           <Iconos.Importar />
           Importar datos...
         </label>
