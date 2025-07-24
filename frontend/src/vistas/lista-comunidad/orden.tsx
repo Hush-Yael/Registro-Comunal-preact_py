@@ -7,7 +7,7 @@ import Iconos from "~/componentes/iconos";
 export default () => {
   return (
     <Menu.Sub>
-      <Menu.SubTrigger class="dropdown-item gap-0! list-none cursor-default">
+      <Menu.SubTrigger class="dropdown-item gap-0! list-none">
         <Iconos.FlechaDer class="size-6 transform-[rotate(180deg)_translate(3px,1px)]" />
         Orden de los datos
       </Menu.SubTrigger>

@@ -48,7 +48,7 @@ label.btn {
 
 .dropdown-item,
 .dropdown-check {
-  @apply w-full hover:outline-0! border border-transparent! data-highlighted:not-disabled:not-[[data-state=checked]]:hover:bg-dark data-highlighted:border-highlight
+  @apply w-full hover:outline-0! border border-transparent! data-highlighted:not-disabled:not-[[data-state=checked]]:bg-dark data-highlighted:border-highlight! cursor-default
 }
 
 .dropdown-check-btn {
