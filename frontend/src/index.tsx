@@ -10,6 +10,8 @@ import ListaComunidad from "./vistas/lista-comunidad";
 import ListaUsuarios from "./vistas/lista-usuarios";
 import Navegacion from "./componentes/navegacion";
 import useTheme, { type Tema } from "~/hooks/useTheme";
+import { Select } from "radix-ui";
+import Iconos from "./componentes/iconos";
 
 export const sesion = signal({
   usuario: "",
@@ -21,19 +23,7 @@ const tema = useTheme();
 export function App() {
   return (
     <>
-      <select
-        id="tema"
-        class="absolute right-4 top-4 input w-fit! shadow cursor-pointer"
-        value={tema.value}
-        onChange={(e) => {
-          const valor = (e.target as HTMLSelectElement).value;
-          tema.value = valor as Tema;
-        }}
-      >
-        <option value="oscuro">Tema oscuro</option>
-        <option value="claro">Tema claro</option>
-        <option value="sistema">Tema del sistema</option>
-      </select>
+      <SelectTema />
       <Navegacion />
       <main class="col p-4 mx-auto py-5 px-6 rounded-box border border-base bg-base shadow-lg max-h-[85%] max-w-[95%]">
         {!sesion.value.usuario ? (
@@ -62,5 +52,49 @@ export function App() {
     </>
   );
 }
+
+const IconoTema = () => {
+  switch (tema.value) {
+    case "claro":
+      return <Iconos.Sol />;
+    case "oscuro":
+      return <Iconos.Luna />;
+    case "sistema":
+      return <Iconos.Monitor />;
+  }
+};
+
+const SelectTema = () => (
+  <Select.Root
+    value={tema.value}
+    onValueChange={(v) => (tema.value = v as Tema)}
+  >
+    <Select.Trigger class="absolute right-4 top-4 flex items-center p-1.5 w-fit! bg-base border border-base rounded-field shadow cursor-pointer">
+      <Select.Value class="sr-only" />
+      <IconoTema />
+    </Select.Trigger>
+
+    <Select.Portal>
+      <Select.Content position="popper" side="bottom" sideOffset={5}>
+        <Select.Viewport class="portal-content">
+          <Select.Item class="dropdown-check" value="claro">
+            <Iconos.Sol class="opacity-75 size-5" />
+            <Select.ItemText>Tema claro</Select.ItemText>
+          </Select.Item>
+
+          <Select.Item class="dropdown-check" value="oscuro">
+            <Iconos.Luna class="opacity-75 size-5" />
+            <Select.ItemText>Tema oscuro</Select.ItemText>
+          </Select.Item>
+
+          <Select.Item class="dropdown-check" value="sistema">
+            <Iconos.Monitor class="opacity-75 size-5" />
+            <Select.ItemText>Tema del sistema</Select.ItemText>
+          </Select.Item>
+        </Select.Viewport>
+      </Select.Content>
+    </Select.Portal>
+  </Select.Root>
+);
 
 render(<App />, document.getElementById("app"));
