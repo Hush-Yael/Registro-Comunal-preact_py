@@ -123,7 +123,7 @@ export default () => {
       <Tabla
         class={`${
           cargarDatosComunidad.value ? "h-full" : "max-h-full"
-        } w-[500px] [&_td]:nth-3:text-right [&_td]:nth-4:text-right [&_td]:nth-7:text-right`}
+        } w-[500px] [&_td]:nth-3:text-right [&_td]:nth-4:text-right [&_td]:nth-5:text-right [&_td]:nth-8:text-right`}
         wrapperClass="mt-6"
         datos={datosComunidad}
         header={(tabla: Table<DatosComunidad>) => (
