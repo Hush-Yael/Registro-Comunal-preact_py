@@ -5,21 +5,12 @@ import {
   getCoreRowModel,
   flexRender,
   type TableOptions,
-  type RowData,
   type Table,
 } from "@tanstack/react-table";
 import type { JSX } from "preact/jsx-runtime";
 import Carga from "~/componentes/carga";
 import Filtro from "./filtro";
 import Paginacion from "./paginacion";
-
-declare module "@tanstack/react-table" {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  interface ColumnMeta<TData extends RowData, TValue> {
-    filterInputValuePattern?: RegExp;
-    filterVariant?: "number" | "date" | "time" | "datetime" | "range";
-  }
-}
 
 export type TablaDatos = Record<string, unknown>;
 
