@@ -26,3 +26,13 @@ export const normalizarString = (s: string) => {
 
 export const comparacionInsensitiva = (s1: string, s2: string) =>
   normalizarString(s1).includes(normalizarString(s2));
+
+export const añosDesdeFecha = (fechaNacimiento: string) => {
+  const fecha = new Date(fechaNacimiento);
+  if (fecha.toString() === "Invalid Date") return false;
+
+  fecha.setHours(0, 0, 0, 0);
+  const diferencia = Date.now() - fecha.getTime();
+  const fechaEdad = new Date(diferencia);
+  return Math.abs(fechaEdad.getUTCFullYear() - 1970);
+};

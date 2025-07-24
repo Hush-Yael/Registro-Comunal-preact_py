@@ -4,7 +4,7 @@ import {
   type Table,
   type ColumnDef,
 } from "@tanstack/react-table";
-import { rutaApi } from "~/utilidades";
+import { añosDesdeFecha, rutaApi } from "~/utilidades";
 import Cabecera from "~/componentes/cabecera";
 import Tabla from "~/componentes/tabla";
 import { sesion } from "~/index";
@@ -59,6 +59,14 @@ export default () => {
       size: 50,
       minSize: 0,
       meta: { filterInputValuePattern: /\d|\// },
+    },
+    {
+      header: "Edad",
+      accessorFn: (row) =>
+        row.fecha_nacimiento && añosDesdeFecha(row.fecha_nacimiento),
+      size: 25,
+      minSize: 0,
+      meta: { filterInputValuePattern: /\d/ },
     },
     {
       header: "Patología / condición",
