@@ -16,7 +16,7 @@ export default () => {
         <Menu.SubContent
           sideOffset={10}
           collisionPadding={10}
-          class="dropdown-content max-[375px]:transform-[translateX(50%)]! max-[450px]:transform-[translateX(40%)]! text-sm"
+          class="dropdown-content max-[450px]:transform-[translateX(70%)]! max-[500px]:transform-[translateX(50%)]! text-sm"
         >
           <Menu.Label class="font-bold text-center py-1">
             Ordenar datos por:
