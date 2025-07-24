@@ -58,7 +58,7 @@ export default () => {
       accessorKey: "fecha_nacimiento",
       size: 50,
       minSize: 0,
-      meta: { filterInputValuePattern: /\d|\// },
+      meta: { filterInputValuePattern: /\d|-/ },
     },
     {
       header: "Edad",
