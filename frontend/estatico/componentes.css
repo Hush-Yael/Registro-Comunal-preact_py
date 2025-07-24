@@ -42,15 +42,15 @@ label.btn {
 }
 
 .dropdown-content {
-  @apply absolute z-2 col gap-2 w-max max-w-[25rem] mt-2 p-2 rounded-box shadow-lg bg-base border border-base text-sm
+  @apply col gap-2 p-2 rounded-box shadow-lg bg-base border border-base text-sm
 }
 
 .dropdown-item {
-  @apply w-full border border-transparent not-disabled:hover:bg-dark not-disabled:hover:border-highlight
+  @apply w-full hover:outline-0! border border-transparent! data-highlighted:hover:bg-dark data-highlighted:border-highlight
 }
 
-.dropdown-radio-btn {
-  @apply flex justify-center min-h-4 min-w-4 p-1 border border-transparent text-muted peer-not-checked:border-base rounded-selector cursor-pointer peer-not-checked:bg-dark peer-checked:bg-primary peer-checked:text-[var(--bg-base)] transition-colors
+.dropdown-check-btn {
+  @apply flex justify-center p-1 hover:outline-0! border border-transparent text-muted aria-[checked=false]:border-base rounded-selector cursor-pointer aria-[checked=false]:bg-dark aria-[checked=true]:bg-primary aria-[checked=true]:text-[var(--bg-base)] transition-colors
 }
 
 .carga {

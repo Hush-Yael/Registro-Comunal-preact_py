@@ -11,6 +11,7 @@
 		"@tailwindcss/vite": "^4.1.10",
 		"@tanstack/react-table": "^8.21.3",
 		"preact": "^10.25.3",
+		"radix-ui": "^1.4.2",
 		"tailwindcss": "^4.1.10",
 		"wouter-preact": "^3.7.1"
 	},
