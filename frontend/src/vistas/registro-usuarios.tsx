@@ -10,7 +10,7 @@ import { Link, useLocation, useSearchParams } from "wouter-preact";
 import { sesion } from "~/index";
 import { useSignal } from "@preact/signals";
 import { listaUsuarios } from "./lista-usuarios";
-import { rutaApi } from "~/utilidades";
+import { rutaApi } from "~/lib";
 
 export default () => {
   const [, setLocation] = useLocation();

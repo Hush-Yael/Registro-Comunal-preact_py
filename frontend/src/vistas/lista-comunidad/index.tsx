@@ -4,7 +4,7 @@ import {
   type Table,
   type ColumnDef,
 } from "@tanstack/react-table";
-import { rutaApi } from "~/utilidades";
+import { rutaApi } from "~/lib";
 import Cabecera from "~/componentes/cabecera";
 import Tabla from "~/componentes/tabla";
 import { sesion } from "~/index";

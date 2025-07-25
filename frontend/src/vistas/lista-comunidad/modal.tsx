@@ -1,4 +1,4 @@
-import { descarga, rutaApi } from "~/utilidades";
+import { descarga, rutaApi } from "~/lib";
 import Opcion from "~/componentes/opcion";
 import Modal from "~/componentes/modal";
 import useLocalStorage from "~/hooks/useLocalStorage";

@@ -3,7 +3,7 @@ import { signal } from "@preact/signals";
 import Iconos from "~/componentes/iconos";
 import type { DatosComunidad } from "~/tipos";
 import { sesion } from "~/index";
-import { descarga, rutaApi } from "~/utilidades";
+import { descarga, rutaApi } from "~/lib";
 import { cargarDatosComunidad, datosComunidad } from "./contantes";
 import { DropdownMenu as Menu } from "radix-ui";
 import Orden from "./orden";

@@ -10,10 +10,10 @@ import TerminarSesion from "~/componentes/terminar-sesion";
 import Iconos from "~/componentes/iconos";
 import { useContext, useEffect } from "preact/compat";
 import { useSearchParams } from "wouter-preact";
-import { rutaApi } from "~/utilidades";
+import { rutaApi } from "~/lib";
 import { DatosComunidad } from "../tipos";
 import { signal } from "@preact/signals";
-import { NOMBRE_MÍNIMO } from "~/utilidades/contantes";
+import { NOMBRE_MÍNIMO } from "~/constantes";
 import { datosComunidad } from "./lista-comunidad/contantes";
 
 const datos = signal<DatosComunidad>({

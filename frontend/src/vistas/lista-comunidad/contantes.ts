@@ -1,8 +1,8 @@
 import type { DatosComunidad, OrdenColumnas } from "~/tipos";
 import useLocalStorage from "~/hooks/useLocalStorage";
 import { signal } from "@preact/signals";
-import { COLUMNAS_ORDENABLES } from "~/utilidades/contantes";
-import { rutaApi } from "~/utilidades";
+import { COLUMNAS_ORDENABLES } from "~/constantes";
+import { rutaApi } from "~/lib";
 
 export const datosComunidad = signal<DatosComunidad[]>([]);
 export const cargarDatosComunidad = signal(true);
