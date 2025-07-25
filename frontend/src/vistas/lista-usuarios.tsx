@@ -4,7 +4,7 @@ import Cabecera from "~/componentes/cabecera";
 import TerminarSesion from "~/componentes/terminar-sesion";
 import { sesion } from "~/index";
 import Iconos from "~/componentes/iconos";
-import type { Usuario } from "../tipos";
+import type { Usuario } from "~/tipos";
 import { rutaApi } from "~/lib";
 import { Link } from "wouter-preact";
 
