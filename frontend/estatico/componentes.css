@@ -43,7 +43,7 @@ label.btn {
 }
 
 .dropdown-content {
-  @apply col gap-2 p-2 rounded-box shadow-lg bg-base border border-base
+  @apply col gap-2 p-2 rounded-box shadow-lg bg-base border border-base will-change-[opacity,transform] data-[side=bottom]:animate-[slideUpAndFade_150ms] data-[side=left]:animate-[slideRightAndFade_150ms] data-[side=right]:animate-[slideLeftAndFade_150ms] data-[side=top]:animate-[slideDownAndFade_150ms]
 }
 
 .dropdown-item,
@@ -80,4 +80,52 @@ label.btn {
   fill: none;
   opacity: var(--bg-opacity);
   transition: stroke 0.5s ease;
+}
+
+@keyframes slideUpAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRightAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(-2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideDownAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeftAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
