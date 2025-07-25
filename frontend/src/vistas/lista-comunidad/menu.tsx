@@ -10,6 +10,7 @@ import {
 } from "~/constantes/lista-comunidad";
 import { DropdownMenu as Menu } from "radix-ui";
 import Orden from "./orden";
+import ConfiguracionFiltros from "./filtros";
 
 const _portando = signal(false);
 
@@ -35,6 +36,17 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
         >
           <Orden />
 
+          <ConfiguracionFiltros tabla={props.tabla} />
+
+          <Menu.Item
+            class="dropdown-item"
+            // @ts-expect-error: no importa
+            onSelect={props.tabla.resetColumnFilters}
+          >
+            <Iconos.LimpiarFiltros />
+            Limpiar filtros
+          </Menu.Item>
+
           <Menu.Item
             class="dropdown-item"
             onSelect={() => {
@@ -44,15 +56,6 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
           >
             <Iconos.Recargar />
             Recargar datos
-          </Menu.Item>
-
-          <Menu.Item
-            class="dropdown-item"
-            // @ts-expect-error: no importa
-            onSelect={props.tabla.resetColumnFilters}
-          >
-            <Iconos.LimpiarFiltros />
-            Limpiar filtros
           </Menu.Item>
 
           <Menu.Item

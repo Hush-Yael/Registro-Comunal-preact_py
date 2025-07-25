@@ -1,4 +1,5 @@
-import type { DatosComunidad, OrdenKey } from "~/tipos";
+import { DatosComunidad } from "~/tipos";
+import type { FiltroKey, OrdenKey } from "~/tipos/lista-comunidad";
 
 export const NOMBRE_MÍNIMO = 3;
 export const CONTRASEÑA_MÍNIMA = 5;
@@ -14,12 +15,16 @@ export const COLUMNAS: (keyof DatosComunidad)[] = [
   "numero_casa",
 ];
 
-export const COLUMNAS_ORDENABLES: OrdenKey[] = [
-  "rowid",
-  "nombres",
-  "apellidos",
+export const COLUMNAS_FILTRABLES: FiltroKey[] = [
+  "Nombres y apellidos",
   "cedula",
+  "edad",
   "fecha_nacimiento",
   "numero_casa",
+];
+
+export const COLUMNAS_ORDENABLES: OrdenKey[] = [
+  ...COLUMNAS,
+  "rowid",
   "editado",
 ];

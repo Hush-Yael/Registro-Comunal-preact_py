@@ -21,8 +21,10 @@ import {
   generandoCarta,
   modalGenerarAbierto,
   ordenColumnas,
-  eliminarRegistro,
-} from "./contantes";
+  configuracionFiltros,
+} from "~/constantes/lista-comunidad";
+import { funcionFiltro } from "~/lib/filtros";
+import { FiltroId } from "~/tipos/lista-comunidad";
 
 export default () => {
   const [paginacion, setPaginacion] = useLocalStorageState({
@@ -40,25 +42,43 @@ export default () => {
   });
 
   const columnas: ColumnDef<DatosComunidad>[] = [
-    { header: "#", accessorKey: "id", size: 5 },
+    { header: "#", accessorKey: "id", size: 5, enableColumnFilter: false },
     {
       header: "Nombres y apellidos",
       accessorFn: (row) => `${row.nombres} ${row.apellidos}`,
       size: 225,
+      filterFn: funcionFiltro,
     },
     {
       header: "Cédula",
+      id: "cedula",
       accessorFn: (row) =>
         row.cedula ? row.cedula.toLocaleString("es-VE") : "",
       maxSize: 125,
       meta: { filterInputValuePattern: /\d|\./ },
+      filterFn: funcionFiltro,
     },
     {
       header: "F. nacimiento",
       accessorKey: "fecha_nacimiento",
       size: 50,
       minSize: 0,
-      meta: { filterInputValuePattern: /\d|-/ },
+      meta: {
+        filterInputValuePattern: /\d|-/,
+        filterVariant: (
+          [
+            "igual-a",
+            "diferente-de",
+            "antes-de",
+            "despues-de",
+          ] as FiltroId<"fecha_nacimiento">[]
+        )
+          // @ts-expect-error: el tipo del valor es correcto
+          .includes(configuracionFiltros.value["fecha_nacimiento"])
+          ? "date"
+          : undefined,
+      },
+      filterFn: funcionFiltro,
     },
     {
       header: "Edad",
@@ -66,19 +86,26 @@ export default () => {
       size: 25,
       minSize: 0,
       meta: { filterInputValuePattern: /\d/, filterVariant: "number" },
+      filterFn: funcionFiltro,
     },
     {
       header: "Patología / condición",
       accessorKey: "patologia",
       size: 15,
     },
-    { header: "Dirección", accessorKey: "direccion", size: 100 },
+    {
+      header: "Dirección",
+      accessorKey: "direccion",
+      size: 100,
+      filterFn: funcionFiltro,
+    },
     {
       header: "N° casa",
       accessorKey: "numero_casa",
       size: 30,
       minSize: 0,
       meta: { filterInputValuePattern: /[\d-_\s/]/ },
+      filterFn: funcionFiltro,
     },
     ...(sesion.value.rol === "admin"
       ? [
@@ -133,7 +160,6 @@ export default () => {
           state: {
             pagination: paginacion,
           },
-          globalFilterFn: "includesString",
           onPaginationChange: setPaginacion,
           getFilteredRowModel: getFilteredRowModel(),
         }}
