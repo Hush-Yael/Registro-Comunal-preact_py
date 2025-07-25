@@ -10,6 +10,7 @@ export const COLUMNAS: (keyof DatosComunidad)[] = [
   "apellidos",
   "cedula",
   "fecha_nacimiento",
+  "edad",
   "patologia",
   "direccion",
   "numero_casa",

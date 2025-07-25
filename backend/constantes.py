@@ -19,6 +19,7 @@ COLUMNAS_ORDENABLES = (
     "apellidos",
     "cedula",
     "fecha_nacimiento",
+    "edad",
     "numero_casa",
     "editado",
 )

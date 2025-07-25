@@ -34,6 +34,8 @@ export default () => {
 
             <OrdenItem id="fecha_nacimiento">Fecha de nacimiento</OrdenItem>
 
+            <OrdenItem id="edad">Edad</OrdenItem>
+
             <OrdenItem id="numero_casa">Número de casa</OrdenItem>
 
             <OrdenItem id="rowid">Orden de añadido</OrdenItem>

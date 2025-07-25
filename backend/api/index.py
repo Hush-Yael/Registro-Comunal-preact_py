@@ -93,6 +93,9 @@ def lista_comunidad():
         ]:
             columnaOrden = []
 
+    if columnaOrden[0] == "edad":
+        columnaOrden[0] = "CAST(edad AS INTEGER)"
+
     return obtener_datos_comunidad(columnaOrden)
 
 
