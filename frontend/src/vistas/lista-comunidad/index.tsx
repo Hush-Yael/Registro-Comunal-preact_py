@@ -4,7 +4,7 @@ import {
   type Table,
   type ColumnDef,
 } from "@tanstack/react-table";
-import { añosDesdeFecha, rutaApi } from "~/utilidades";
+import { rutaApi } from "~/utilidades";
 import Cabecera from "~/componentes/cabecera";
 import Tabla from "~/componentes/tabla";
 import { sesion } from "~/index";
@@ -65,7 +65,7 @@ export default () => {
       accessorKey: "edad",
       size: 25,
       minSize: 0,
-      meta: { filterInputValuePattern: /\d/ },
+      meta: { filterInputValuePattern: /\d/, filterVariant: "number" },
     },
     {
       header: "Patología / condición",

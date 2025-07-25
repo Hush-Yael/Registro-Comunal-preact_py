@@ -11,6 +11,11 @@ def obtener_usuarios():
     return [dict(row) for row in usuarios]
 
 
+EDAD_SQL = """--sql
+  IIF(fecha_nacimiento IS NOT NULL AND TRIM(fecha_nacimiento) != '', CAST(strftime('%Y-%m-%d', 'now') - strftime('%Y-%m-%d', fecha_nacimiento) AS TEXT), "") AS edad
+"""
+
+
 def obtener_datos_comunidad(ordenar_por: list[tuple[str, str]] = []):
     conn, cursor = abrir_db()
 
@@ -22,7 +27,8 @@ def obtener_datos_comunidad(ordenar_por: list[tuple[str, str]] = []):
 
     datos = (
         cursor.execute(f"""--sql
-          SELECT id, nombres, apellidos, CAST(comunidad.cedula as INTEGER) as cedula, fecha_nacimiento, CAST(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', comunidad.fecha_nacimiento) as INTEGER) AS edad, patologia, direccion, numero_casa FROM comunidad {ORDEN}
+          SELECT id, nombres, apellidos, CAST(comunidad.cedula as INTEGER) as cedula, fecha_nacimiento, 
+            {EDAD_SQL}, patologia, direccion, numero_casa FROM comunidad {ORDEN}
         """)
     ).fetchall()
 
