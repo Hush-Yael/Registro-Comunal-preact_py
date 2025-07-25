@@ -62,8 +62,7 @@ export default () => {
     },
     {
       header: "Edad",
-      accessorFn: (row) =>
-        row.fecha_nacimiento && añosDesdeFecha(row.fecha_nacimiento),
+      accessorKey: "edad",
       size: 25,
       minSize: 0,
       meta: { filterInputValuePattern: /\d/ },
