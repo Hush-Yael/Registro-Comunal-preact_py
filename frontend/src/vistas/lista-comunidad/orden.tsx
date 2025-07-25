@@ -1,5 +1,8 @@
 import type { OrdenKey } from "~/tipos/lista-comunidad";
-import { cargarDatosComunidad, ordenColumnas } from "./contantes";
+import {
+  cargarDatosComunidad,
+  ordenColumnas,
+} from "~/constantes/lista-comunidad";
 import type { JSX } from "preact/jsx-runtime";
 import { DropdownMenu as Menu } from "radix-ui";
 import Iconos from "~/componentes/iconos";

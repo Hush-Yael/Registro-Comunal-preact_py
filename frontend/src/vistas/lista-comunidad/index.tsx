@@ -153,3 +153,13 @@ export default () => {
     </>
   );
 };
+
+export const eliminarRegistro = async (id: number) => {
+  if (confirm("¿Realmente desea eliminar el registro?")) {
+    const r = await fetch(rutaApi(`eliminar-registro-comunidad/${id}`), {
+      method: "DELETE",
+    });
+    if (r.ok)
+      datosComunidad.value = datosComunidad.value.filter((u) => u.id !== id);
+  }
+};

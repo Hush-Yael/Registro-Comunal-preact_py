@@ -1,13 +1,14 @@
-import type { DatosComunidad, OrdenColumnas } from "~/tipos";
+import type { DatosComunidad } from "~/tipos";
+import type { OrdenColumnas } from "~/tipos/lista-comunidad";
 import useLocalStorage from "~/hooks/useLocalStorage";
 import { signal } from "@preact/signals";
 import { COLUMNAS_ORDENABLES } from "~/constantes";
-import { rutaApi } from "~/lib";
 
 export const datosComunidad = signal<DatosComunidad[]>([]);
 export const cargarDatosComunidad = signal(true);
 export const generandoCarta = signal(false);
 export const modalGenerarAbierto = signal(false);
+
 export const ordenColumnas = useLocalStorage<OrdenColumnas>({
   key: "orden-comunidad",
   default: [],
@@ -17,13 +18,3 @@ export const ordenColumnas = useLocalStorage<OrdenColumnas>({
     COLUMNAS_ORDENABLES.includes(v[0]) &&
     (v[1] === "asc" || v[1] === "desc"),
 });
-
-export const eliminarRegistro = async (id: number) => {
-  if (confirm("¿Realmente desea eliminar el registro?")) {
-    const r = await fetch(rutaApi(`eliminar-registro-comunidad/${id}`), {
-      method: "DELETE",
-    });
-    if (r.ok)
-      datosComunidad.value = datosComunidad.value.filter((u) => u.id !== id);
-  }
-};

@@ -11,10 +11,10 @@ import Iconos from "~/componentes/iconos";
 import { useContext, useEffect } from "preact/compat";
 import { useSearchParams } from "wouter-preact";
 import { rutaApi } from "~/lib";
-import { DatosComunidad } from "../tipos";
+import { DatosComunidad } from "~/tipos";
 import { signal } from "@preact/signals";
 import { NOMBRE_MÍNIMO } from "~/constantes";
-import { datosComunidad } from "./lista-comunidad/contantes";
+import { datosComunidad } from "~/constantes/lista-comunidad";
 
 const datos = signal<DatosComunidad>({
   nombres: "",
