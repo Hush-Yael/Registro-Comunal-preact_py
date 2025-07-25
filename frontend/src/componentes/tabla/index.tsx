@@ -8,7 +8,6 @@ import {
   type Table,
 } from "@tanstack/react-table";
 import type { JSX } from "preact/jsx-runtime";
-import Carga from "~/componentes/carga";
 import Filtro from "./filtro";
 import Paginacion from "./paginacion";
 
@@ -101,16 +100,27 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
 
 const MensajeCarga = <T extends TablaDatos>(
   props: Pick<TablaProps<T>, "columnas">
-) => (
-  <tr class="bg-darkest">
-    <td class="p-4" colSpan={props.columnas.length}>
-      <span role="status" class="flex items-center justify-center gap-2">
-        <Carga class="size-5 mx-1" />
-        Cargando...
-      </span>
-    </td>
-  </tr>
-);
+) =>
+  Array.from({ length: 6 }).map(() => (
+    <tr>
+      <td
+        class="bg-dark animate-pulse"
+        colSpan={props.columnas.length}
+        style={{ animationDuration: "1s" }}
+      >
+        <div
+          role="status"
+          aria-label="Cargando"
+          class="-z-1 flex items-center gap-3 p-2 w-full *:w-full *:h-10 *:rounded-selector *:bg-[hsl(0,0%,90%)] dark:*:bg-[hsl(0,0%,15%)]"
+        >
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      </td>
+    </tr>
+  ));
 
 const Tabla = (
   props: JSX.IntrinsicElements["table"] & { wrapperClass?: string }
