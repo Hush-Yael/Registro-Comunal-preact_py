@@ -221,7 +221,6 @@ def añadir_registro_comunidad(datos: DatosComunidad, modificar: bool = False):
 
 def importar_comunidad(archivo: StringIO):
     reader = DictReader(archivo, delimiter=";")
-    next(reader)
     añadidos = 0
     fallos = 0
 
