@@ -22,7 +22,7 @@ import {
 } from "~/constantes/lista-comunidad";
 import { funcionFiltro } from "~/lib/filtros";
 import { FiltroId } from "~/tipos/lista-comunidad";
-import MenuTrigger from "~/componentes/menu-trigger";
+import MenuTrigger from "~/componentes/menu/trigger";
 
 export default () => {
   const [paginacion, setPaginacion] = useLocalStorageState({

@@ -11,7 +11,7 @@ import {
 import { DropdownMenu as Menu } from "radix-ui";
 import Orden from "./orden";
 import ConfiguracionFiltros from "./filtros";
-import MenuTrigger from "~/componentes/menu-trigger";
+import MenuTrigger from "~/componentes/menu/trigger";
 
 const _portando = signal(false);
 
