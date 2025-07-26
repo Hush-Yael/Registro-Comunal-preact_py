@@ -79,7 +79,7 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
         </thead>
         <tbody>
           {props.obtencionDatos && props.datosDebenCargar.value ? (
-            <MensajeCarga columnas={props.columnas} />
+            <EsqueletoCarga columnas={props.columnas} />
           ) : (
             tabla.getRowModel().rows.map((row) => (
               <Fila key={row.id}>
@@ -98,27 +98,21 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
   );
 };
 
-const MensajeCarga = <T extends TablaDatos>(
+const EsqueletoCarga = <T extends TablaDatos>(
   props: Pick<TablaProps<T>, "columnas">
 ) =>
   Array.from({ length: 6 }).map(() => (
-    <tr>
-      <td
-        class="bg-dark animate-pulse"
-        colSpan={props.columnas.length}
-        style={{ animationDuration: "1s" }}
-      >
-        <div
-          role="status"
-          aria-label="Cargando"
-          class="-z-1 flex items-center gap-3 p-2 w-full *:w-full *:h-10 *:rounded-selector *:bg-[hsl(0,0%,90%)] dark:*:bg-[hsl(0,0%,15%)]"
-        >
-          <div />
-          <div />
-          <div />
-          <div />
-        </div>
-      </td>
+    <tr
+      role="status"
+      aria-label="Cargando"
+      class="bg-dark animate-pulse"
+      style={{ animationDuration: "1s" }}
+    >
+      {Array.from({ length: props.columnas.length }).map(() => (
+        <td>
+          <div class="m-2 h-10 rounded-selector bg-[hsl(0,0%,90%)] dark:bg-[hsl(0,0%,15%)]" />
+        </td>
+      ))}
     </tr>
   ));
 
