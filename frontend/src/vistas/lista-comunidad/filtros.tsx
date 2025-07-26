@@ -5,14 +5,11 @@ import {
   configuracionFiltros,
 } from "~/constantes/lista-comunidad";
 import { DropdownMenu as Menu } from "radix-ui";
-import Iconos from "~/componentes/iconos";
+import SubTrigger from "~/componentes/menu/subtrigger";
 
 export default (props: { tabla: Table<DatosComunidad> }) => (
   <Menu.Sub>
-    <Menu.SubTrigger class="dropdown-item gap-0! list-none">
-      <Iconos.FlechaDer class="size-6 transform-[rotate(180deg)_translate(3px,1px)]" />
-      Configuración de filtros
-    </Menu.SubTrigger>
+    <SubTrigger>Configuración de filtros</SubTrigger>
 
     <Menu.Portal>
       <Menu.SubContent

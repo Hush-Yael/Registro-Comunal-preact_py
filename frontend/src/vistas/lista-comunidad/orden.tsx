@@ -6,14 +6,12 @@ import {
 import type { JSX } from "preact/jsx-runtime";
 import { DropdownMenu as Menu } from "radix-ui";
 import Iconos from "~/componentes/iconos";
+import SubTrigger from "~/componentes/menu/subtrigger";
 
 export default () => {
   return (
     <Menu.Sub>
-      <Menu.SubTrigger class="dropdown-item gap-0! list-none">
-        <Iconos.FlechaDer class="size-6 transform-[rotate(180deg)_translate(3px,1px)]" />
-        Orden de los datos
-      </Menu.SubTrigger>
+      <SubTrigger>Orden de los datos</SubTrigger>
 
       <Menu.Portal>
         <Menu.SubContent
