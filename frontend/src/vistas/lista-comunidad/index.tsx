@@ -10,21 +10,19 @@ import Tabla from "~/componentes/tabla";
 import { sesion } from "~/index";
 import type { DatosComunidad } from "~/tipos";
 import { useLocalStorageState } from "~/hooks/useLocalStorage";
-import Iconos from "~/componentes/iconos";
-import { Link } from "wouter-preact";
 import Menu from "./menu";
 import ModalGenerar from "./modal";
-import { idAGenerar } from "./modal";
+import FilaOpciones from "./menu-fila-opciones";
 import {
   cargarDatosComunidad,
   datosComunidad,
-  generandoCarta,
-  modalGenerarAbierto,
   ordenColumnas,
   configuracionFiltros,
+  idARegistroSeleccionado,
 } from "~/constantes/lista-comunidad";
 import { funcionFiltro } from "~/lib/filtros";
 import { FiltroId } from "~/tipos/lista-comunidad";
+import MenuTrigger from "~/componentes/menu-trigger";
 
 export default () => {
   const [paginacion, setPaginacion] = useLocalStorageState({
@@ -96,7 +94,7 @@ export default () => {
     {
       header: "Dirección",
       accessorKey: "direccion",
-      size: 100,
+      size: 200,
       filterFn: funcionFiltro,
     },
     {
@@ -109,34 +107,27 @@ export default () => {
     },
     ...(sesion.value.rol === "admin"
       ? [
+          // @ts-expect-error: no importa
           {
-            header: "Acciones",
+            header: <span class="sr-only">Acciones</span>,
+            id: "acciones",
             size: 20,
+            enableColumnFilter: false,
+            enableSorting: false,
             cell: (info) => (
-              <div role="group" class="flex gap-1 *:p-1! [&_svg]:size-4!">
-                <Link
-                  href={`/?editar=${info.row.original.id}`}
-                  class="btn btn-primario"
-                >
-                  <Iconos.Editar />
-                </Link>
-                <button
-                  class="btn btn-borde"
-                  disabled={generandoCarta.value}
-                  onClick={() => {
-                    idAGenerar.current = info.row.original.id;
-                    modalGenerarAbierto.value = true;
-                  }}
-                >
-                  <Iconos.Documento />
-                </button>
-                <button
-                  onClick={() => eliminarRegistro(info.row.original.id)}
-                  class="btn btn-peligro"
-                >
-                  <Iconos.Eliminar />
-                </button>
-              </div>
+              <MenuTrigger
+                aria-label="Opciones del registro"
+                class="z-0 h-6 w-5 bg-dark group-odd:bg-base border border-base hover:border-highlight hover:bg-darkest group-odd:hover:bg-dark"
+                onPointerDown={() =>
+                  (idARegistroSeleccionado.current = info.row.original.id)
+                }
+                onKeyDown={(e) => {
+                  (e.key === "Enter" ||
+                    e.key === "Space" ||
+                    e.key === "ArrowDown") &&
+                    (idARegistroSeleccionado.current = info.row.original.id);
+                }}
+              />
             ),
           } as ColumnDef<DatosComunidad>,
         ]
@@ -146,46 +137,38 @@ export default () => {
   return (
     <>
       <ModalGenerar />
-      <Tabla
-        class="w-[500px] [&_td]:first:text-right [&_th]:first:text-right [&_td]:nth-3:text-right [&_th]:nth-3:text-right [&_td]:nth-4:text-right [&_th]:nth-4:text-right [&_td]:nth-5:text-right [&_th]:nth-5:text-right [&_td]:nth-8:text-right [&_th]:nth-8:text-right"
-        wrapperClass="h-[60vh] mt-6"
-        datos={datosComunidad}
-        header={(tabla: Table<DatosComunidad>) => (
-          <Cabecera titulo="Lista de registros de la comunidad">
-            <Menu tabla={tabla} />
-          </Cabecera>
-        )}
-        options={{
-          getPaginationRowModel: getPaginationRowModel(),
-          state: {
-            pagination: paginacion,
-          },
-          onPaginationChange: setPaginacion,
-          getFilteredRowModel: getFilteredRowModel(),
-        }}
-        columnas={columnas}
-        apodoFilas="registros"
-        datosDebenCargar={cargarDatosComunidad}
-        obtencionDatos={() =>
-          fetch(rutaApi("lista-comunidad"), {
-            method: "POST",
-            body: JSON.stringify(ordenColumnas.value),
-            headers: {
-              "Content-Type": "application/json",
+      <FilaOpciones>
+        <Tabla
+          class="w-[500px] [&>thead>tr]:z-1 [&_td]:first:text-right [&_th]:first:text-right [&_td]:nth-3:text-right [&_th]:nth-3:text-right [&_td]:nth-4:text-right [&_th]:nth-4:text-right [&_td]:nth-5:text-right [&_th]:nth-5:text-right [&_td]:nth-8:text-right [&_th]:nth-8:text-right"
+          wrapperClass="h-[60vh] mt-6"
+          datos={datosComunidad}
+          header={(tabla: Table<DatosComunidad>) => (
+            <Cabecera titulo="Lista de registros de la comunidad">
+              <Menu tabla={tabla} />
+            </Cabecera>
+          )}
+          options={{
+            getPaginationRowModel: getPaginationRowModel(),
+            state: {
+              pagination: paginacion,
             },
-          }).then((r) => r.json()) as Promise<DatosComunidad[]>
-        }
-      />
+            onPaginationChange: setPaginacion,
+            getFilteredRowModel: getFilteredRowModel(),
+          }}
+          columnas={columnas}
+          apodoFilas="registros"
+          datosDebenCargar={cargarDatosComunidad}
+          obtencionDatos={() =>
+            fetch(rutaApi("lista-comunidad"), {
+              method: "POST",
+              body: JSON.stringify(ordenColumnas.value),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }).then((r) => r.json()) as Promise<DatosComunidad[]>
+          }
+        />
+      </FilaOpciones>
     </>
   );
-};
-
-export const eliminarRegistro = async (id: number) => {
-  if (confirm("¿Realmente desea eliminar el registro?")) {
-    const r = await fetch(rutaApi(`eliminar-registro-comunidad/${id}`), {
-      method: "DELETE",
-    });
-    if (r.ok)
-      datosComunidad.value = datosComunidad.value.filter((u) => u.id !== id);
-  }
 };

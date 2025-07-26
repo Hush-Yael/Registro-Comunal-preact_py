@@ -4,11 +4,10 @@ import Modal from "~/componentes/modal";
 import useLocalStorage from "~/hooks/useLocalStorage";
 import {
   generandoCarta,
+  idARegistroSeleccionado,
   modalGenerarAbierto,
 } from "~/constantes/lista-comunidad";
 import Iconos from "~/componentes/iconos";
-
-export const idAGenerar = { current: -1 };
 
 export default () => {
   const documento = useLocalStorage<{
@@ -41,7 +40,7 @@ export default () => {
       const r = await fetch(rutaApi("generar-carta"), {
         method: "POST",
         body: JSON.stringify({
-          id: idAGenerar.current,
+          id: idARegistroSeleccionado.current,
           tipo_documento: documento.value.tipo,
           tipo_carta: documento.value.base,
           tiempo_,
@@ -73,7 +72,7 @@ export default () => {
       );
       console.error(error);
     } finally {
-      idAGenerar.current = undefined;
+      idARegistroSeleccionado.current = undefined;
       generandoCarta.value = false;
     }
   };

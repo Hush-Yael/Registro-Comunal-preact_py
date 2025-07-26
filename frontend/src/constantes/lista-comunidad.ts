@@ -12,6 +12,7 @@ export const datosComunidad = signal<DatosComunidad[]>([]);
 export const cargarDatosComunidad = signal(true);
 export const generandoCarta = signal(false);
 export const modalGenerarAbierto = signal(false);
+export const idARegistroSeleccionado = { current: -1 };
 
 export const ordenColumnas = useLocalStorage<OrdenColumnas>({
   key: "orden-comunidad",

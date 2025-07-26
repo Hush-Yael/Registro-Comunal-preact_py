@@ -129,3 +129,23 @@ label.btn {
     transform: translateX(0);
   }
 }
+
+.wrapper-tabla-comunidad > [data-radix-popper-content-wrapper] {
+  position: absolute !important;
+  left: unset !important;
+  top: calc(var(--spacing) * 1) !important;
+  right: calc(var(--spacing) * 12) !important;
+  transform: none !important;
+}
+
+.wrapper-tabla-comunidad>[data-radix-popper-content-wrapper]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #0002;
+  animation: aparecer 0.3s ease;
+}
+
+.oscuro .wrapper-tabla-comunidad>[data-radix-popper-content-wrapper]::before {
+  background: #0005 !important;
+}
