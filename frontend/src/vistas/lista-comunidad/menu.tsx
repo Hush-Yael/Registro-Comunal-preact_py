@@ -75,7 +75,7 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
             accept=".csv"
             id="exportar"
           />
-          <Menu.Item asChild>
+          <Menu.Item onSelect={(e) => e.preventDefault()} asChild>
             <label class="dropdown-item cursor-pointer" htmlFor="exportar">
               <Iconos.Importar />
               Importar datos...
