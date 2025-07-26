@@ -147,8 +147,8 @@ export default () => {
     <>
       <ModalGenerar />
       <Tabla
-        class="h-[60vh] w-[500px] [&_td]:first:text-right [&_th]:first:text-right [&_td]:nth-3:text-right [&_th]:nth-3:text-right [&_td]:nth-4:text-right [&_th]:nth-4:text-right [&_td]:nth-5:text-right [&_th]:nth-5:text-right [&_td]:nth-8:text-right [&_th]:nth-8:text-right"
-        wrapperClass="mt-6"
+        class="w-[500px] [&_td]:first:text-right [&_th]:first:text-right [&_td]:nth-3:text-right [&_th]:nth-3:text-right [&_td]:nth-4:text-right [&_th]:nth-4:text-right [&_td]:nth-5:text-right [&_th]:nth-5:text-right [&_td]:nth-8:text-right [&_th]:nth-8:text-right"
+        wrapperClass="h-[60vh] mt-6"
         datos={datosComunidad}
         header={(tabla: Table<DatosComunidad>) => (
           <Cabecera titulo="Lista de registros de la comunidad">
