@@ -17,10 +17,10 @@ const _portando = signal(false);
 export default (props: { tabla: Table<DatosComunidad> }) => {
   return (
     <Menu.Root>
-      <Menu.Trigger class="list-none btn p-1! px-0! data-[state=open]:bg-primary! data-[state=open]:text-[var(--bg-base)]! data-[state=open]:border-transparent! cursor-pointer">
-        <Iconos.Menu class="size-6" />
-        <span className="sr-only">Opciones</span>
-      </Menu.Trigger>
+      <MenuTrigger
+        class="h-7 w-4 data-[state=open]:bg-primary! data-[state=open]:text-[var(--bg-base)]! data-[state=open]:border-transparent!"
+        aria-label="Opciones"
+      />
 
       <Menu.Portal>
         <Menu.Content
