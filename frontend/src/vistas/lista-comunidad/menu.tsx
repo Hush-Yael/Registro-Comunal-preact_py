@@ -12,6 +12,7 @@ import { DropdownMenu as Menu } from "radix-ui";
 import Orden from "./orden";
 import ConfiguracionFiltros from "./filtros";
 import MenuTrigger from "~/componentes/menu/trigger";
+import Visibilidad from "./visibilidad";
 
 const _portando = signal(false);
 
@@ -38,6 +39,8 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
           <Orden />
 
           <ConfiguracionFiltros tabla={props.tabla} />
+
+          <Visibilidad tabla={props.tabla} />
 
           <Menu.Item
             class="dropdown-item"

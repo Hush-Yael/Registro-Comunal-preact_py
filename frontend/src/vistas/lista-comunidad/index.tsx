@@ -39,6 +39,20 @@ export default () => {
       val.pageSize >= 10,
   });
 
+  const [visibilidad, setVisibilidad] = useLocalStorageState({
+    key: "visibilidad-comunidad",
+    default: {
+      nombres: true,
+      apellidos: true,
+      cedula: true,
+      fecha_nacimiento: true,
+      edad: true,
+      patologia: true,
+      direccion: true,
+      numero_casa: true,
+    },
+  });
+
   const columnas: ColumnDef<DatosComunidad>[] = [
     { header: "#", accessorKey: "id", size: 5, enableColumnFilter: false },
     {
@@ -107,10 +121,8 @@ export default () => {
     },
     ...(sesion.value.rol === "admin"
       ? [
-          // @ts-expect-error: no importa
           {
-            header: <span class="sr-only">Acciones</span>,
-            id: "acciones",
+            header: "Acciones",
             size: 20,
             enableColumnFilter: false,
             enableSorting: false,
@@ -139,7 +151,7 @@ export default () => {
       <ModalGenerar />
       <FilaOpciones>
         <Tabla
-          class="w-[500px] [&>thead>tr]:z-1 [&_td]:first:text-right [&_th]:first:text-right [&_td]:nth-3:text-right [&_th]:nth-3:text-right [&_td]:nth-4:text-right [&_th]:nth-4:text-right [&_td]:nth-5:text-right [&_th]:nth-5:text-right [&_td]:nth-8:text-right [&_th]:nth-8:text-right"
+          class="w-[500px] [&>thead>tr]:z-1 [&_td]:first:text-right [&_th]:first:text-right [&_td]:nth-3:text-right [&_th]:nth-3:text-right [&_td]:nth-4:text-right [&_th]:nth-4:text-right [&_td]:nth-5:text-right [&_th]:nth-5:text-right [&_td]:nth-8:text-right [&_th]:nth-8:text-right [&_th[data-id=Acciones]>div]:sr-only"
           wrapperClass="h-[60vh] mt-6"
           datos={datosComunidad}
           header={(tabla: Table<DatosComunidad>) => (
@@ -151,7 +163,9 @@ export default () => {
             getPaginationRowModel: getPaginationRowModel(),
             state: {
               pagination: paginacion,
+              columnVisibility: visibilidad,
             },
+            onColumnVisibilityChange: setVisibilidad,
             onPaginationChange: setPaginacion,
             getFilteredRowModel: getFilteredRowModel(),
           }}
