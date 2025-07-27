@@ -4,7 +4,7 @@ import Iconos from "~/componentes/iconos";
 
 export default (props: { children: JSX.Element | string }) => (
   <Menu.SubTrigger class="dropdown-item gap-0!">
-    <Iconos.FlechaDer class="size-6 transform-[rotate(180deg)_translate(3px,1px)]" />
+    <Iconos.FlechaDer class="size-6 transform-[rotate(180deg)_translateX(3px)]" />
     {props.children}
   </Menu.SubTrigger>
 );
