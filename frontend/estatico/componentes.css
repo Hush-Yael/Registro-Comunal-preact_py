@@ -56,7 +56,7 @@ label.btn {
 }
 
 .dropdown-check {
-  @apply data-[state="checked"]:bg-primary data-[state="checked"]:text-[var(--bg-base)] cursor-default
+  @apply data-[state="checked"]:bg-primary! data-[state="checked"]:text-[var(--bg-base)] cursor-default
 }
 
 .carga {
