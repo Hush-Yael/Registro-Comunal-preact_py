@@ -43,7 +43,7 @@ label.btn {
 }
 
 .dropdown-content {
-  @apply z-2 col gap-2 p-2 rounded-box shadow-lg bg-base border border-base will-change-[opacity,transform] data-[side=bottom]:animate-[slideUpAndFade_150ms] data-[side=left]:animate-[slideRightAndFade_150ms] data-[side=right]:animate-[slideLeftAndFade_150ms] data-[side=top]:animate-[slideDownAndFade_150ms] group-data-[side=bottom]/content:animate-[slideUpAndFade_150ms] group-data-[side=left]/content:animate-[slideRightAndFade_150ms] group-data-[side=right]/content:animate-[slideLeftAndFade_150ms] group-data-[side=top]/content:animate-[slideDownAndFade_150ms]
+  @apply z-2 col gap-2 p-2 rounded-box shadow-lg bg-base border border-base data-[side=bottom]:animate-[slideUpAndFade_150ms] data-[side=left]:animate-[slideRightAndFade_150ms] data-[side=right]:animate-[slideLeftAndFade_150ms] data-[side=top]:animate-[slideDownAndFade_150ms] group-data-[side=bottom]/content:animate-[slideUpAndFade_150ms] group-data-[side=left]/content:animate-[slideRightAndFade_150ms] group-data-[side=right]/content:animate-[slideLeftAndFade_150ms] group-data-[side=top]/content:animate-[slideDownAndFade_150ms]
 }
 
 .dropdown-item,
@@ -131,6 +131,10 @@ label.btn {
 }
 
 .wrapper-tabla-comunidad > [data-radix-popper-content-wrapper] {
+  will-change: unset !important;
+}
+
+.wrapper-tabla-comunidad > [data-radix-popper-content-wrapper] {
   position: absolute !important;
   left: unset !important;
   top: calc(var(--spacing) * 1) !important;
@@ -138,14 +142,14 @@ label.btn {
   transform: none !important;
 }
 
-.wrapper-tabla-comunidad>[data-radix-popper-content-wrapper]::before {
-  content: "";
+.wrapper-tabla-comunidad>[data-radix-popper-content-wrapper] .backdrop {
   position: fixed;
+  z-index: -1;
   inset: 0;
   background: #0002;
   animation: aparecer 0.3s ease;
 }
 
-.oscuro .wrapper-tabla-comunidad>[data-radix-popper-content-wrapper]::before {
+.oscuro .wrapper-tabla-comunidad>[data-radix-popper-content-wrapper] .backdrop {
   background: #0005 !important;
 }

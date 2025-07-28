@@ -22,6 +22,8 @@ export default (props: { children: JSX.Element }) => {
           side="top"
           class="dropdown-content flex-row! text-sm shadow-none!"
         >
+          <div className="backdrop" />
+
           <DropdownMenu.Item
             class="dropdown-item"
             aria-label="Editar registro"
