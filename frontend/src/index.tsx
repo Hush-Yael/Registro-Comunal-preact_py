@@ -75,7 +75,12 @@ const SelectTema = () => (
     </Select.Trigger>
 
     <Select.Portal>
-      <Select.Content position="popper" side="bottom" sideOffset={5}>
+      <Select.Content
+        class="group/content"
+        position="popper"
+        side="bottom"
+        sideOffset={5}
+      >
         <Select.Viewport class="dropdown-content">
           <Select.Item class="dropdown-check" value="claro">
             <Iconos.Sol class="opacity-75 size-5" />
