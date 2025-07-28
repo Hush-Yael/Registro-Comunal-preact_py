@@ -76,7 +76,7 @@ const SelectTema = () => (
 
     <Select.Portal>
       <Select.Content
-        class="group/content"
+        class="group/content z-1"
         position="popper"
         side="bottom"
         sideOffset={5}
