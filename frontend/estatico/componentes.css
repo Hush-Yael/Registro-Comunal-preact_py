@@ -147,7 +147,8 @@ label.btn {
   z-index: -1;
   inset: 0;
   background: #0002;
-  animation: aparecer 0.3s ease;
+  animation: aparecer 1s;
+  pointer-events: none;
 }
 
 .oscuro .wrapper-tabla-comunidad>[data-radix-popper-content-wrapper] .backdrop {
