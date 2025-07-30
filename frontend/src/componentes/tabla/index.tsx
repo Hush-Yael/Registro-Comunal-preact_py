@@ -8,8 +8,7 @@ import {
   type Table,
 } from "@tanstack/react-table";
 import type { JSX } from "preact/jsx-runtime";
-import Filtro from "./filtro";
-import Paginacion from "./paginacion";
+import Esqueleto from "./esqueleto";
 
 export type TablaDatos = Record<string, unknown>;
 
@@ -45,6 +44,15 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  if (props.obtencionDatos && props.datosDebenCargar.value)
+    return (
+      <Esqueleto
+        class={props.class}
+        paginacion={props.options?.getPaginationRowModel !== undefined}
+        tabla={tabla}
+      />
+    );
+
   return (
     <>
       {props.header && props.header(tabla)}
@@ -78,19 +86,15 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
           ))}
         </thead>
         <tbody>
-          {props.obtencionDatos && props.datosDebenCargar.value ? (
-            <EsqueletoCarga columnas={props.columnas} />
-          ) : (
-            tabla.getRowModel().rows.map((row) => (
-              <Fila key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} class="p-1.5 px-2.5">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </Fila>
-            ))
-          )}
+          {tabla.getRowModel().rows.map((row) => (
+            <Fila key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id} class="p-1.5 px-2.5">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </Fila>
+          ))}
         </tbody>
       </Tabla>
       {props.options?.getPaginationRowModel && (
@@ -99,24 +103,6 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
     </>
   );
 };
-
-const EsqueletoCarga = <T extends TablaDatos>(
-  props: Pick<TablaProps<T>, "columnas">
-) =>
-  Array.from({ length: 6 }).map(() => (
-    <tr
-      role="status"
-      aria-label="Cargando"
-      class="bg-dark animate-pulse"
-      style={{ animationDuration: "1s" }}
-    >
-      {Array.from({ length: props.columnas.length }).map(() => (
-        <td>
-          <div class="m-2 h-10 rounded-selector bg-[hsl(0,0%,90%)] dark:bg-[hsl(0,0%,15%)]" />
-        </td>
-      ))}
-    </tr>
-  ));
 
 const Tabla = (
   props: JSX.IntrinsicElements["table"] & { wrapperClass?: string }
