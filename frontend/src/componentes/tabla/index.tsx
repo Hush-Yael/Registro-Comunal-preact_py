@@ -9,7 +9,7 @@ import {
   Row,
 } from "@tanstack/react-table";
 import type { JSX } from "preact/jsx-runtime";
-import { useVirtualizer } from "@tanstack/react-virtual";
+import { useVirtualizer, Virtualizer } from "@tanstack/react-virtual";
 import { useRef } from "preact/hooks";
 import Cabeceras from "./cabeceras";
 import Esqueleto from "./esqueleto";
@@ -25,8 +25,12 @@ export type TablaProps<T extends TablaDatos> = {
   apodoFilas?: string;
   datosDebenCargar?: Signal<boolean>;
   obtencionDatos?: () => Promise<T[]>;
-  // eslint-disable-next-line no-unused-vars
-  header?: (tabla: Table<T>) => JSX.Element;
+  header?: (
+    // eslint-disable-next-line no-unused-vars
+    tabla: Table<T>,
+    // eslint-disable-next-line no-unused-vars
+    virtualizador: Virtualizer<Element, Element>
+  ) => JSX.Element;
 };
 
 export default <T extends TablaDatos>(props: TablaProps<T>) => {
@@ -50,8 +54,11 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
 
   const filas = tabla.getRowModel().rows;
 
-  const tableContainerRef = useRef<HTMLDivElement>(null);
-  const rowVirtualizer = useVirtualizer<HTMLDivElement, HTMLTableRowElement>({
+  const contenedorTablaRef = useRef<HTMLDivElement>(null);
+  const virtualizadorFilas = useVirtualizer<
+    HTMLDivElement,
+    HTMLTableRowElement
+  >({
     count: filas.length,
     estimateSize: () => 40, // estimación de la altura de la fila para un arrastre de la scrollbar adecuado
     getScrollElement: () => contenedorTablaRef.current,

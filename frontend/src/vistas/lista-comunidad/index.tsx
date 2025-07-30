@@ -1,7 +1,6 @@
 import {
   getFilteredRowModel,
   getPaginationRowModel,
-  type Table,
   type ColumnDef,
 } from "@tanstack/react-table";
 import { rutaApi } from "~/lib";
@@ -145,10 +144,14 @@ export default () => {
           [&_th[data-id=Acciones]]:text-[0px]
         "
         datos={datosComunidad}
-        header={(tabla: Table<DatosComunidad>) => (
+        header={(tabla, virtualizador) => (
           <div>
             {paginacion.pageSize !== null && (
-              <Paginacion apodoFilas="registros" tabla={tabla} />
+              <Paginacion
+                virtualizador={virtualizador}
+                apodoFilas="registros"
+                tabla={tabla}
+              />
             )}
             <Menu tabla={tabla} />
           </div>

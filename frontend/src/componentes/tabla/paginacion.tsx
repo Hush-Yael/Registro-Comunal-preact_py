@@ -2,25 +2,48 @@ import type { Table } from "@tanstack/react-table";
 import Iconos from "~/componentes/iconos";
 import useMedia from "~/hooks/useMedia";
 import { TablaDatos } from ".";
-import { Popover } from "radix-ui";
+import { DropdownMenu, Popover } from "radix-ui";
+import type { Virtualizer } from "@tanstack/react-virtual";
 
 type PaginasProps<T extends TablaDatos> = {
   tabla: Table<T>;
+  virtualizador: Virtualizer<Element, Element>;
   apodoFilas: string;
 };
 
 export default <T extends TablaDatos>(props: PaginasProps<T>) => (
   <div class="flex items-center justify-between gap-5 w-full -mb-2 p-2 px-3 rounded-box bg-dark border border-base text-muted text-sm">
-    <div className="flex items-center gap-3  max-[450px]:[&_svg]:size-4!">
-      <button
-        class="flex items-center gap-2"
-        onClick={() => cambiarLimite(props)}
-      >
-        <Iconos.Tuerca class="size-5" />
-        <span class="after:content-['...'] after:-ml-0.5 sr-only">
-          Establecer límite de {props.apodoFilas || "filas"} por página:
-        </span>
-      </button>
+    <div className="flex items-center gap-2">
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger class="trigger-primario relative size-6 p-0! not-data-[state=open]:bg-darkest!">
+          <Iconos.Menu class="trigger-puntos max-[450px]:transform-[scale(.8)]" />
+        </DropdownMenu.Trigger>
+
+        <DropdownMenu.Portal>
+          <DropdownMenu.Content
+            class="dropdown-content text-sm"
+            align="start"
+            side="bottom"
+            sideOffset={5}
+          >
+            <DropdownMenu.Item
+              class="dropdown-item after:content-['...'] after:-ml-1.75"
+              onSelect={() => cambiarLimite(props)}
+            >
+              Establecer límite de {props.apodoFilas || "filas"}{" "}
+              <span class="sr-only">por página:</span>
+            </DropdownMenu.Item>
+
+            <DropdownMenu.Item
+              class="dropdown-item"
+              onSelect={() => irAlRegistro(props)}
+            >
+              Ir al registro número...
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Portal>
+      </DropdownMenu.Root>
+
       <Cantidad {...props} />
     </div>
 
@@ -117,7 +140,7 @@ const Cantidad = <T extends TablaDatos>(props: PaginasProps<T>) => {
   return media.value ? (
     <Popover.Root>
       <Popover.Trigger>
-        <Iconos.Info />
+        <Iconos.Info class="max-[450px]:size-4!" />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
@@ -126,11 +149,70 @@ const Cantidad = <T extends TablaDatos>(props: PaginasProps<T>) => {
           sideOffset={5}
         >
           {l}
-          <Popover.Arrow className="fill-[var(--border-base)]!" />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
   ) : (
     <span role="status">{l}</span>
   );
+};
+
+const irAlRegistro = <T extends TablaDatos>(
+  props: Omit<PaginasProps<T>, "apodoFilas">
+) => {
+  let n = parseInt(prompt("Indique el índice del registro a buscar:")) - 1;
+
+  if (isNaN(n) || n < 0 || n > props.tabla.getRowCount()) return;
+
+  const limiteFilas = props.tabla.getState().pagination.pageSize,
+    paginaActual = props.tabla.getState().pagination.pageIndex;
+
+  const paginasAdelante = Math.floor(n / limiteFilas),
+    paginasAtras = paginasAdelante - paginaActual;
+
+  // Si se busca una fila en una página adelante o atrás de la actual, se cambia a esa página
+  if (paginasAdelante > 0 || paginasAtras < 0) {
+    props.tabla.setPagination((p) => ({
+      ...p,
+      pageIndex:
+        paginasAdelante > 0 ? paginasAdelante : paginaActual + paginasAtras,
+    }));
+
+    // el índice se reinicia al cambiar de página, se debe calcular en relación al nuevo orden
+    n = n - paginasAdelante * limiteFilas;
+  }
+
+  props.virtualizador.scrollToIndex(n);
+
+  setTimeout(() => {
+    const fila = document.querySelector(`[data-index="${n}"]`);
+
+    if (fila) {
+      fila?.scrollIntoView({
+        block: "center",
+        inline: "start",
+      });
+
+      // esperar el scroll
+      setTimeout(() => {
+        fila.animate(
+          [
+            {
+              background: "var(--primary)",
+              color: "var(--bg-base)",
+            },
+            {
+              background: "var(--bg-base)",
+              color: "var(--text-base)",
+            },
+          ],
+          {
+            duration: 600,
+            easing: "ease",
+            iterations: 2,
+          }
+        );
+      }, 100);
+    }
+  }, 200);
 };
