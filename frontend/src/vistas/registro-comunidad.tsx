@@ -46,12 +46,12 @@ export default () => {
   }, [params]);
 
   return (
-    <>
+    <div class="grid grid-rows-[auto_1fr] gap-10 h-full max-h-full overflow-hidden">
       <Cabecera titulo="Registro de la comunidad">
         <TerminarSesion />
       </Cabecera>
       <Formulario
-        class="h-full"
+        class="h-full col overflow-hidden"
         rutaApi="registro-comunidad"
         method={editar ? "PUT" : "POST"}
         datos={datos}
@@ -119,7 +119,7 @@ export default () => {
           setTimeout(() => (contexto.estado.value = ""), 800);
         }}
       >
-        <div class="col gap-5 mt-10 max-w-[700px] h-full overflow-hidden">
+        <div class="col gap-5 max-w-[700px] min-h-full overflow-hidden">
           <Mensaje estado="subiendo" texto="Guardando..." />
           <Mensaje estado="fetching" texto="Recuperando datos..." />
           <Mensaje
@@ -128,13 +128,13 @@ export default () => {
               editar ? "actualizado" : "guardado"
             } correctamente`}
           />
-          <div class="col gap-10">
+          <div class="grid grid-rows-[1fr_auto] gap-10 h-full max-h-full">
             <Campos />
             <Botones />
           </div>
         </div>
       </Formulario>
-    </>
+    </div>
   );
 };
 
@@ -174,7 +174,7 @@ const Campos = () => {
   };
 
   return (
-    <div class="grid grid-cols-2 gap-5 h-full overflow-y-auto max-sm:col max-sm:max-h-[40vh]">
+    <div class="grid grid-cols-2 gap-5 h-full overflow-auto max-sm:col">
       <Input
         label="Nombres"
         campo="nombres"

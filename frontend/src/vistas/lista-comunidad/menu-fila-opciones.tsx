@@ -14,43 +14,41 @@ export default (props: { children: JSX.Element }) => {
   const [, setLocation] = useLocation();
 
   return (
-    <div class="wrapper-tabla-comunidad relative">
-      <DropdownMenu.Root>
-        {props.children}
+    <DropdownMenu.Root>
+      {props.children}
 
-        <DropdownMenu.Content
-          side="top"
-          class="dropdown-content flex-row! text-sm shadow-none!"
+      <DropdownMenu.Content
+        side="top"
+        class="dropdown-content flex-row! text-sm shadow-none!"
+      >
+        <div className="backdrop" />
+
+        <DropdownMenu.Item
+          class="dropdown-item"
+          aria-label="Editar registro"
+          onSelect={() =>
+            setLocation(`/?editar=${idARegistroSeleccionado.current}`)
+          }
         >
-          <div className="backdrop" />
-
-          <DropdownMenu.Item
-            class="dropdown-item"
-            aria-label="Editar registro"
-            onSelect={() =>
-              setLocation(`/?editar=${idARegistroSeleccionado.current}`)
-            }
-          >
-            <Iconos.Editar />
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            class="dropdown-item"
-            disabled={generandoCarta.value}
-            aria-label="Generar carta"
-            onSelect={() => (modalGenerarAbierto.value = true)}
-          >
-            <Iconos.Documento />
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            onSelect={() => eliminarRegistro(idARegistroSeleccionado.current)}
-            class="dropdown-item"
-            aria-label="Eliminar registro"
-          >
-            <Iconos.Eliminar />
-          </DropdownMenu.Item>
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
-    </div>
+          <Iconos.Editar />
+        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          class="dropdown-item"
+          disabled={generandoCarta.value}
+          aria-label="Generar carta"
+          onSelect={() => (modalGenerarAbierto.value = true)}
+        >
+          <Iconos.Documento />
+        </DropdownMenu.Item>
+        <DropdownMenu.Item
+          onSelect={() => eliminarRegistro(idARegistroSeleccionado.current)}
+          class="dropdown-item"
+          aria-label="Eliminar registro"
+        >
+          <Iconos.Eliminar />
+        </DropdownMenu.Item>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   );
 };
 

@@ -41,12 +41,12 @@ const eliminarUsuario = async (nombre: string) => {
 
 export default () => {
   return (
-    <>
+    <div class="col gap-6 h-full">
       <Cabecera titulo="Lista de usuarios">
         <TerminarSesion />
       </Cabecera>
       <Tabla
-        wrapperClass="h-[60vh] w-[600px] mt-8"
+        wrapperClass="h-full"
         class="[&_th]:text-left [&_th]:nth-[1]:text-center [&_td]:nth-[1]:text-center [&_th]:nth-[4]:text-right [&_thead>tr]:z-5"
         columnas={[
           {
@@ -110,6 +110,6 @@ export default () => {
         datosDebenCargar={carga}
         obtencionDatos={() => fetch(rutaApi("usuarios")).then((r) => r.json())}
       />
-    </>
+    </div>
   );
 };

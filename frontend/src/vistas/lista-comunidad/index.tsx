@@ -147,12 +147,11 @@ export default () => {
   ];
 
   return (
-    <>
+    <div class="wrapper-tabla-comunidad col gap-4 relative h-full max-h-full">
       <ModalGenerar />
       <FilaOpciones>
         <Tabla
           class="w-[500px] [&>thead>tr]:z-1 [&_td]:first:text-right [&_th]:first:text-right [&_td]:nth-3:text-right [&_th]:nth-3:text-right [&_td]:nth-4:text-right [&_th]:nth-4:text-right [&_td]:nth-5:text-right [&_th]:nth-5:text-right [&_td]:nth-8:text-right [&_th]:nth-8:text-right [&_th[data-id=Acciones]>div]:sr-only"
-          wrapperClass="h-[60vh] mt-6"
           datos={datosComunidad}
           header={(tabla: Table<DatosComunidad>) => (
             <div>
@@ -187,6 +186,6 @@ export default () => {
           }
         />
       </FilaOpciones>
-    </>
+    </div>
   );
 };

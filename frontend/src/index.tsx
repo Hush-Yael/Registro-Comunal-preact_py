@@ -23,9 +23,9 @@ const tema = useTheme();
 export function App() {
   return (
     <>
-      <SelectTema />
       <Navegacion />
-      <main class="col p-4 mx-auto py-5 px-6 rounded-box border border-base bg-base shadow-lg max-h-[85%] max-w-[95%]">
+      <main class="col p-4 mx-auto py-5 px-6 rounded-box border border-base bg-base shadow-lg max-w-full h-full max-h-full overflow-auto only:row-span-2 only:h-max only:m-auto">
+        <SelectTema />
         {!sesion.value.usuario ? (
           <Router>
             <Switch>
