@@ -19,7 +19,7 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
   return (
     <Menu.Root>
       <Menu.Trigger
-        class="btn btn-secundario p-1! absolute top-0 right-0 data-[state=open]:bg-primary! data-[state=open]:text-[var(--bg-base)]! data-[state=open]:border-transparent!"
+        class="trigger-primario absolute top-0 right-0 p-1!"
         aria-label="Opciones"
       >
         <Iconos.Tuerca />

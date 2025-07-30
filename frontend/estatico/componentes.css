@@ -2,7 +2,8 @@
 
 .btn,
 .dropdown-item,
-.dropdown-check {
+.dropdown-check,
+.trigger-primario {
   @apply flex items-center gap-2 p-1.5 px-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
@@ -34,7 +35,7 @@ label.btn {
   @apply border-2 border-primary not-disabled:hover:bg-dark not-disabled:focus:bg-dark -outline-offset-2
 }
 
-.btn-secundario {
+.btn-secundario, .trigger-primario {
   @apply border bg-darkest text-neutral-500 dark:text-neutral-300
 }
 
@@ -57,6 +58,10 @@ label.btn {
 
 .dropdown-check {
   @apply data-[state="checked"]:bg-primary! data-[state="checked"]:text-[var(--bg-base)] cursor-default
+}
+
+.trigger-primario {
+  @apply border-base! data-[state=open]:bg-primary! data-[state=open]:text-[var(--bg-base)]! data-[state=open]:border-transparent!
 }
 
 .carga {
