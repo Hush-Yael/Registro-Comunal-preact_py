@@ -137,8 +137,8 @@ label.btn {
 .wrapper-tabla-comunidad > [data-radix-popper-content-wrapper] {
   position: absolute !important;
   left: unset !important;
-  top: calc(var(--spacing) * 1) !important;
-  right: calc(var(--spacing) * 12) !important;
+  top: 0 !important;
+  right: calc(var(--spacing) * 15) !important;
   transform: none !important;
 }
 
@@ -153,4 +153,15 @@ label.btn {
 
 .oscuro .wrapper-tabla-comunidad>[data-radix-popper-content-wrapper] .backdrop {
   background: #0005 !important;
+}
+
+@media screen and (max-width: 550px) {
+  .wrapper-tabla-comunidad>[data-radix-popper-content-wrapper] {
+    top: unset !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    width: max-content;
+    margin: auto;
+  }
 }
