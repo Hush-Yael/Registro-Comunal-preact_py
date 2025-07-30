@@ -97,9 +97,6 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
           ))}
         </tbody>
       </Tabla>
-      {props.options?.getPaginationRowModel && (
-        <Paginacion apodoFilas={props.apodoFilas} tabla={tabla} />
-      )}
     </>
   );
 };

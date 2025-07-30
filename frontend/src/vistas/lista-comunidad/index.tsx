@@ -22,7 +22,7 @@ import {
 } from "~/constantes/lista-comunidad";
 import { funcionFiltro } from "~/lib/filtros";
 import { FiltroId } from "~/tipos/lista-comunidad";
-import MenuTrigger from "~/componentes/menu/trigger";
+import Paginacion from "~/componentes/tabla/paginacion";
 
 export default () => {
   const [paginacion, setPaginacion] = useLocalStorageState({
@@ -155,9 +155,12 @@ export default () => {
           wrapperClass="h-[60vh] mt-6"
           datos={datosComunidad}
           header={(tabla: Table<DatosComunidad>) => (
-            <Cabecera titulo="Lista de registros de la comunidad">
+            <div>
+              {paginacion.pageSize !== null && (
+                <Paginacion apodoFilas="registros" tabla={tabla} />
+              )}
               <Menu tabla={tabla} />
-            </Cabecera>
+            </div>
           )}
           options={{
             getPaginationRowModel: getPaginationRowModel(),
