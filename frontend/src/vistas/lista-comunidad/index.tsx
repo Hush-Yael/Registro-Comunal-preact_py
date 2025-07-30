@@ -36,7 +36,7 @@ export default () => {
       Number.isInteger(val.pageIndex) &&
       val.pageIndex >= 0 &&
       Number.isInteger(val.pageSize) &&
-      val.pageSize >= 10,
+      val.pageSize > 0,
   });
 
   const [visibilidad, setVisibilidad] = useLocalStorageState({
