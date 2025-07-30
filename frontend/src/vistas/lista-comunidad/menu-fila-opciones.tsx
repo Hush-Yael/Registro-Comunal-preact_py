@@ -16,9 +16,9 @@ export default (props: { id: number }) => {
     <Menu.Root>
       <Menu.Trigger
         aria-label="Opciones del registro"
-        class="relative z-0 h-6 w-5 btn p-0! bg-dark group-odd:bg-base border border-base hover:border-highlight hover:bg-darkest group-odd:hover:bg-dark"
+        class="trigger-primario relative z-0 size-6 btn"
       >
-        <Iconos.Menu class="absolute m-auto h-full" />
+        <Iconos.Menu class="trigger-puntos" />
       </Menu.Trigger>
 
       <Menu.Portal>
