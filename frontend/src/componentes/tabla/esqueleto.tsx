@@ -12,7 +12,10 @@ export default <T extends TablaDatos>(props: {
   return (
     <div class={`col gap-2 overflow-auto h-full ${props.wrapperClass || ""}`}>
       {props.paginacion && (
-        <div class="flex justify-between gap-8 w-full h-12 p-2 rounded-box bg-dark border border-base animate-pulse [&>div]:h-full [&>div]:rounded-selector [&>div]:bg-[#0002] dark:[&>div]:bg-[#fff1]">
+        <div
+          style={{ animationDuration: "1s" }}
+          class="flex justify-between gap-8 w-full h-12 p-2 rounded-box bg-dark border border-base animate-pulse [&>div]:h-full [&>div]:rounded-selector [&>div]:bg-[#0002] dark:[&>div]:bg-[#fff1]"
+        >
           <div class="w-1/3" />
           <div class="w-full" />
         </div>

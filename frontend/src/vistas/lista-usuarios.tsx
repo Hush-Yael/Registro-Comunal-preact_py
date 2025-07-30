@@ -47,22 +47,22 @@ export default () => {
       </Cabecera>
       <Tabla
         wrapperClass="h-full"
-        class="[&_th]:text-left [&_th]:nth-[1]:text-center [&_td]:nth-[1]:text-center [&_th]:nth-[4]:text-right [&_thead>tr]:z-5"
+        class="[&_th]:last:items-end [&_thead>tr]:z-5 w-max m-auto"
         columnas={[
           {
             header: "#",
-            size: 30,
+            maxSize: 30,
             cell: (info) => info.row.index + 1,
           },
           {
             header: "Nombre",
             accessorKey: "nombre",
-            size: 100,
+            maxSize: 200,
           },
           {
             header: "Rol",
             accessorKey: "rol",
-            size: 100,
+            maxSize: 100,
             cell: (info) =>
               sesion.value.rol !== "admin" ||
               info.row.original.nombre === sesion.value.usuario ? (
@@ -81,9 +81,9 @@ export default () => {
           },
           {
             header: "Acciones",
-            size: 30,
+            size: 150,
             cell: (info) => (
-              <div className="flex justify-end gap-3">
+              <div className="flex justify-end gap-3 ml-auto">
                 {info.row.original.nombre !== sesion.value.usuario ? (
                   <button
                     class="btn btn-peligro ml-auto"

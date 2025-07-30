@@ -54,11 +54,11 @@ export default () => {
   });
 
   const columnas: ColumnDef<DatosComunidad>[] = [
-    { header: "#", accessorKey: "id", size: 5, enableColumnFilter: false },
+    { header: "#", accessorKey: "id", maxSize: 45, enableColumnFilter: false },
     {
       header: "Nombres y apellidos",
       accessorFn: (row) => `${row.nombres} ${row.apellidos}`,
-      size: 225,
+      size: 200,
       filterFn: funcionFiltro,
     },
     {
@@ -66,15 +66,14 @@ export default () => {
       id: "cedula",
       accessorFn: (row) =>
         row.cedula ? row.cedula.toLocaleString("es-VE") : "",
-      maxSize: 125,
+      maxSize: 100,
       meta: { filterInputValuePattern: /\d|\./ },
       filterFn: funcionFiltro,
     },
     {
       header: "F. nacimiento",
       accessorKey: "fecha_nacimiento",
-      size: 50,
-      minSize: 0,
+      size: 150,
       meta: {
         filterInputValuePattern: /\d|-/,
         filterVariant: (
@@ -95,7 +94,7 @@ export default () => {
     {
       header: "Edad",
       accessorKey: "edad",
-      size: 25,
+      size: 60,
       minSize: 0,
       meta: { filterInputValuePattern: /\d/, filterVariant: "number" },
       filterFn: funcionFiltro,
@@ -103,19 +102,18 @@ export default () => {
     {
       header: "Patología / condición",
       accessorKey: "patologia",
-      size: 15,
+      size: 145,
     },
     {
       header: "Dirección",
       accessorKey: "direccion",
-      size: 200,
+      size: 150,
       filterFn: funcionFiltro,
     },
     {
       header: "N° casa",
       accessorKey: "numero_casa",
-      size: 30,
-      minSize: 0,
+      size: 80,
       meta: { filterInputValuePattern: /[\d-_\s/]/ },
       filterFn: funcionFiltro,
     },
@@ -123,7 +121,7 @@ export default () => {
       ? [
           {
             header: "Acciones",
-            size: 20,
+            size: 50,
             enableColumnFilter: false,
             enableSorting: false,
             cell: (info) => (
@@ -148,10 +146,20 @@ export default () => {
 
   return (
     <div class="wrapper-tabla-comunidad col gap-4 relative h-full max-h-full">
+      <Cabecera titulo="Lista de registros de la comunidad" />
+
       <ModalGenerar />
+
       <FilaOpciones>
         <Tabla
-          class="w-[500px] [&>thead>tr]:z-1 [&_td]:first:text-right [&_th]:first:text-right [&_td]:nth-3:text-right [&_th]:nth-3:text-right [&_td]:nth-4:text-right [&_th]:nth-4:text-right [&_td]:nth-5:text-right [&_th]:nth-5:text-right [&_td]:nth-8:text-right [&_th]:nth-8:text-right [&_th[data-id=Acciones]>div]:sr-only"
+          class="
+            [&_th[data-id=id]]:items-end [&_td[data-column-id=id]]:justify-end
+            [&_th[data-id=cedula]]:items-end [&_td[data-column-id=cedula]]:justify-end
+            [&_th[data-id=fecha\\_nacimiento]]:items-end [&_td[data-column-id=fecha\\_nacimiento]]:justify-end
+            [&_th[data-id=edad]]:items-end [&_td[data-column-id=edad]]:justify-end
+            [&_th[data-id=numero\\_casa]]:items-end [&_td[data-column-id=numero\\_casa]]:justify-end
+            [&_th[data-id=Acciones]]:text-[0px]
+          "
           datos={datosComunidad}
           header={(tabla: Table<DatosComunidad>) => (
             <div>

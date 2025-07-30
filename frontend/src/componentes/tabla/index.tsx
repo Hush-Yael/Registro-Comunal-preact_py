@@ -6,8 +6,12 @@ import {
   flexRender,
   type TableOptions,
   type Table,
+  Row,
 } from "@tanstack/react-table";
 import type { JSX } from "preact/jsx-runtime";
+import { useVirtualizer } from "@tanstack/react-virtual";
+import { useRef } from "preact/hooks";
+import Cabeceras from "./cabeceras";
 import Esqueleto from "./esqueleto";
 
 export type TablaDatos = Record<string, unknown>;
@@ -44,6 +48,22 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const filas = tabla.getRowModel().rows;
+
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+  const rowVirtualizer = useVirtualizer<HTMLDivElement, HTMLTableRowElement>({
+    count: filas.length,
+    estimateSize: () => 40, // estimación de la altura de la fila para un arrastre de la scrollbar adecuado
+    getScrollElement: () => tableContainerRef.current,
+    // cálculo de la altura dinámica de la fila, excepto en Firefox, porque mide la altura del borde incorrectamente
+    measureElement:
+      typeof window !== "undefined" &&
+      navigator.userAgent.indexOf("Firefox") === -1
+        ? (element) => element?.getBoundingClientRect().height
+        : undefined,
+    overscan: 5,
+  });
+
   if (props.obtencionDatos && props.datosDebenCargar.value)
     return (
       <Esqueleto
@@ -56,82 +76,64 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
   return (
     <>
       {props.header && props.header(tabla)}
-      <Tabla wrapperClass={props.wrapperClass} class={props.class}>
-        <thead>
-          {tabla.getHeaderGroups().map((headerGroup) => (
-            <tr class="sticky top-0" key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <Cabecera
-                  key={header.id}
-                  data-id={header.id}
-                  style={{ width: header.getSize() }}
+      <div
+        ref={tableContainerRef}
+        class={`relative size-full max-h-full overflow-auto ${
+          props.wrapperClass || ""
+        }`}
+      >
+        <table
+          class={`grid table-fixed border-collapse text-sm ${
+            props.class || ""
+          }`}
+        >
+          <Cabeceras
+            tabla={tabla}
+            filtrable={props.options?.getFilteredRowModel !== undefined}
+          />
+          <tbody
+            class="grid relative"
+            style={{ height: `${rowVirtualizer.getTotalSize()}px` }}
+          >
+            {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+              const row = filas[virtualRow.index] as Row<T>;
+
+              return (
+                <tr
+                  key={row.id}
+                  class="flex w-full absolute group dark:not-data-odd:bg-darkest data-odd:bg-dark"
+                  data-index={virtualRow.index} // se necesita para la medida de la altura dinámica
+                  ref={(node) =>
+                    // cálculo de la altura de la fila
+                    rowVirtualizer.measureElement(node)
+                  }
+                  // como se generan dinámicamente, se necesita el index para saber si es par o impar
+                  data-odd={virtualRow.index % 2 === 0 ? "" : null}
+                  style={{
+                    transform: `translateY(${virtualRow.start}px)`, // distancia en relación a la anterior fila
+                  }}
                 >
-                  <div class="col gap-1.5">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                    {props.options?.getFilteredRowModel &&
-                      header.column.getCanFilter() && (
-                        <div class="w-full">
-                          <Filtro column={header.column} />
-                        </div>
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      key={cell.id}
+                      class="flex items-center p-1.5 px-2.5"
+                      data-column-id={cell.column.id}
+                      style={{
+                        width: cell.column.getSize(),
+                      }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
                       )}
-                  </div>
-                </Cabecera>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {tabla.getRowModel().rows.map((row) => (
-            <Fila key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} class="p-1.5 px-2.5">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </Fila>
-          ))}
-        </tbody>
-      </Tabla>
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };
-
-const Tabla = (
-  props: JSX.IntrinsicElements["table"] & { wrapperClass?: string }
-) => (
-  <div class={`${props.wrapperClass || ""} overflow-y-auto max-w-full`}>
-    <table
-      {...props}
-      class={`w-full max-w-full table-auto text-sm ${props.class || ""}`}
-      // @ts-expect-error: no se debe pasar wrapperClass
-      wrapperClass={null}
-    >
-      {props.children}
-    </table>
-  </div>
-);
-
-const Cabecera = (props: JSX.IntrinsicElements["th"]) => (
-  <th
-    {...props}
-    class={`p-1.5 px-2.5 primario first:rounded-tl-lg last:rounded-tr-lg text-nowrap ${
-      props.class || ""
-    }`}
-  >
-    {props.children}
-  </th>
-);
-
-const Fila = (props: JSX.IntrinsicElements["tr"]) => (
-  <tr
-    {...props}
-    class={`group odd:bg-darkest border-b border-base ${props.class || ""}`}
-  >
-    {props.children}
-  </tr>
-);
