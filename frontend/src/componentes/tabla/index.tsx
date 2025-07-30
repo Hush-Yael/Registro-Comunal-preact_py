@@ -54,7 +54,7 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
   const rowVirtualizer = useVirtualizer<HTMLDivElement, HTMLTableRowElement>({
     count: filas.length,
     estimateSize: () => 40, // estimación de la altura de la fila para un arrastre de la scrollbar adecuado
-    getScrollElement: () => tableContainerRef.current,
+    getScrollElement: () => contenedorTablaRef.current,
     // cálculo de la altura dinámica de la fila, excepto en Firefox, porque mide la altura del borde incorrectamente
     measureElement:
       typeof window !== "undefined" &&
@@ -75,9 +75,9 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
 
   return (
     <>
-      {props.header && props.header(tabla)}
+      {props.header && props.header(tabla, virtualizadorFilas)}
       <div
-        ref={tableContainerRef}
+        ref={contenedorTablaRef}
         class={`relative size-full max-h-full overflow-auto ${
           props.wrapperClass || ""
         }`}
@@ -93,9 +93,9 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
           />
           <tbody
             class="grid relative"
-            style={{ height: `${rowVirtualizer.getTotalSize()}px` }}
+            style={{ height: `${virtualizadorFilas.getTotalSize()}px` }}
           >
-            {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+            {virtualizadorFilas.getVirtualItems().map((virtualRow) => {
               const row = filas[virtualRow.index] as Row<T>;
 
               return (
@@ -105,7 +105,7 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
                   data-index={virtualRow.index} // se necesita para la medida de la altura dinámica
                   ref={(node) =>
                     // cálculo de la altura de la fila
-                    rowVirtualizer.measureElement(node)
+                    virtualizadorFilas.measureElement(node)
                   }
                   // como se generan dinámicamente, se necesita el index para saber si es par o impar
                   data-odd={virtualRow.index % 2 === 0 ? "" : null}
