@@ -1,4 +1,4 @@
-import { DropdownMenu } from "radix-ui";
+import { DropdownMenu as Menu } from "radix-ui";
 import { useLocation } from "wouter-preact";
 import {
   datosComunidad,
@@ -7,48 +7,54 @@ import {
   modalGenerarAbierto,
 } from "~/constantes/lista-comunidad";
 import Iconos from "~/componentes/iconos";
-import type { JSX } from "preact/jsx-runtime";
 import { rutaApi } from "~/lib";
 
-export default (props: { children: JSX.Element }) => {
+export default (props: { id: number }) => {
   const [, setLocation] = useLocation();
 
   return (
-    <DropdownMenu.Root>
-      {props.children}
-
-      <DropdownMenu.Content
-        side="top"
-        class="dropdown-content flex-row! text-sm shadow-none!"
+    <Menu.Root>
+      <Menu.Trigger
+        aria-label="Opciones del registro"
+        class="relative z-0 h-6 w-5 btn p-0! bg-dark group-odd:bg-base border border-base hover:border-highlight hover:bg-darkest group-odd:hover:bg-dark"
       >
-        <div className="backdrop" />
+        <Iconos.Menu class="absolute m-auto h-full" />
+      </Menu.Trigger>
 
-        <DropdownMenu.Item
-          class="dropdown-item"
-          aria-label="Editar registro"
-          onSelect={() =>
-            setLocation(`/?editar=${idARegistroSeleccionado.current}`)
-          }
+      <Menu.Portal>
+        <Menu.Content
+          side="left"
+          sideOffset={10}
+          class="dropdown-content flex-row! text-sm"
         >
-          <Iconos.Editar />
-        </DropdownMenu.Item>
-        <DropdownMenu.Item
-          class="dropdown-item"
-          disabled={generandoCarta.value}
-          aria-label="Generar carta"
-          onSelect={() => (modalGenerarAbierto.value = true)}
-        >
-          <Iconos.Documento />
-        </DropdownMenu.Item>
-        <DropdownMenu.Item
-          onSelect={() => eliminarRegistro(idARegistroSeleccionado.current)}
-          class="dropdown-item"
-          aria-label="Eliminar registro"
-        >
-          <Iconos.Eliminar />
-        </DropdownMenu.Item>
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+          <Menu.Item
+            class="dropdown-item"
+            aria-label="Editar registro"
+            onSelect={() => setLocation(`/?editar=${props.id}`)}
+          >
+            <Iconos.Editar />
+          </Menu.Item>
+          <Menu.Item
+            class="dropdown-item"
+            disabled={generandoCarta.value}
+            aria-label="Generar carta"
+            onSelect={() => {
+              idARegistroSeleccionado.current = props.id;
+              modalGenerarAbierto.value = true;
+            }}
+          >
+            <Iconos.Documento />
+          </Menu.Item>
+          <Menu.Item
+            onSelect={() => eliminarRegistro(props.id)}
+            class="dropdown-item"
+            aria-label="Eliminar registro"
+          >
+            <Iconos.Eliminar />
+          </Menu.Item>
+        </Menu.Content>
+      </Menu.Portal>
+    </Menu.Root>
   );
 };
 

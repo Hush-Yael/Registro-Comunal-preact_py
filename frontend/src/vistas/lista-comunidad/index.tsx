@@ -18,7 +18,6 @@ import {
   datosComunidad,
   ordenColumnas,
   configuracionFiltros,
-  idARegistroSeleccionado,
 } from "~/constantes/lista-comunidad";
 import { funcionFiltro } from "~/lib/filtros";
 import { FiltroId } from "~/tipos/lista-comunidad";
@@ -124,21 +123,7 @@ export default () => {
             size: 50,
             enableColumnFilter: false,
             enableSorting: false,
-            cell: (info) => (
-              <MenuTrigger
-                aria-label="Opciones del registro"
-                class="z-0 h-6 w-5 bg-dark group-odd:bg-base border border-base hover:border-highlight hover:bg-darkest group-odd:hover:bg-dark"
-                onPointerDown={() =>
-                  (idARegistroSeleccionado.current = info.row.original.id)
-                }
-                onKeyDown={(e) => {
-                  (e.key === "Enter" ||
-                    e.key === "Space" ||
-                    e.key === "ArrowDown") &&
-                    (idARegistroSeleccionado.current = info.row.original.id);
-                }}
-              />
-            ),
+            cell: (info) => <FilaOpciones id={info.row.original.id} />,
           } as ColumnDef<DatosComunidad>,
         ]
       : []),
@@ -150,50 +135,48 @@ export default () => {
 
       <ModalGenerar />
 
-      <FilaOpciones>
-        <Tabla
-          class="
-            [&_th[data-id=id]]:items-end [&_td[data-column-id=id]]:justify-end
-            [&_th[data-id=cedula]]:items-end [&_td[data-column-id=cedula]]:justify-end
-            [&_th[data-id=fecha\\_nacimiento]]:items-end [&_td[data-column-id=fecha\\_nacimiento]]:justify-end
-            [&_th[data-id=edad]]:items-end [&_td[data-column-id=edad]]:justify-end
-            [&_th[data-id=numero\\_casa]]:items-end [&_td[data-column-id=numero\\_casa]]:justify-end
-            [&_th[data-id=Acciones]]:text-[0px]
-          "
-          datos={datosComunidad}
-          header={(tabla: Table<DatosComunidad>) => (
-            <div>
-              {paginacion.pageSize !== null && (
-                <Paginacion apodoFilas="registros" tabla={tabla} />
-              )}
-              <Menu tabla={tabla} />
-            </div>
-          )}
-          options={{
-            getPaginationRowModel: getPaginationRowModel(),
-            state: {
-              pagination: paginacion,
-              columnVisibility: visibilidad,
+      <Tabla
+        class="
+          [&_th[data-id=id]]:items-end [&_td[data-column-id=id]]:justify-end
+          [&_th[data-id=cedula]]:items-end [&_td[data-column-id=cedula]]:justify-end
+          [&_th[data-id=fecha\\_nacimiento]]:items-end [&_td[data-column-id=fecha\\_nacimiento]]:justify-end
+          [&_th[data-id=edad]]:items-end [&_td[data-column-id=edad]]:justify-end
+          [&_th[data-id=numero\\_casa]]:items-end [&_td[data-column-id=numero\\_casa]]:justify-end
+          [&_th[data-id=Acciones]]:text-[0px]
+        "
+        datos={datosComunidad}
+        header={(tabla: Table<DatosComunidad>) => (
+          <div>
+            {paginacion.pageSize !== null && (
+              <Paginacion apodoFilas="registros" tabla={tabla} />
+            )}
+            <Menu tabla={tabla} />
+          </div>
+        )}
+        options={{
+          getPaginationRowModel: getPaginationRowModel(),
+          state: {
+            pagination: paginacion,
+            columnVisibility: visibilidad,
+          },
+          onColumnVisibilityChange: setVisibilidad,
+          onPaginationChange: setPaginacion,
+          autoResetPageIndex: false,
+          getFilteredRowModel: getFilteredRowModel(),
+        }}
+        columnas={columnas}
+        apodoFilas="registros"
+        datosDebenCargar={cargarDatosComunidad}
+        obtencionDatos={() =>
+          fetch(rutaApi("lista-comunidad"), {
+            method: "POST",
+            body: JSON.stringify(ordenColumnas.value),
+            headers: {
+              "Content-Type": "application/json",
             },
-            onColumnVisibilityChange: setVisibilidad,
-            onPaginationChange: setPaginacion,
-            autoResetPageIndex: false,
-            getFilteredRowModel: getFilteredRowModel(),
-          }}
-          columnas={columnas}
-          apodoFilas="registros"
-          datosDebenCargar={cargarDatosComunidad}
-          obtencionDatos={() =>
-            fetch(rutaApi("lista-comunidad"), {
-              method: "POST",
-              body: JSON.stringify(ordenColumnas.value),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }).then((r) => r.json()) as Promise<DatosComunidad[]>
-          }
-        />
-      </FilaOpciones>
+          }).then((r) => r.json()) as Promise<DatosComunidad[]>
+        }
+      />
     </div>
   );
 };
