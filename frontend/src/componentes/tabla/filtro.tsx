@@ -1,4 +1,5 @@
 import type { Column, RowData } from "@tanstack/react-table";
+import type { TablaDatos } from ".";
 
 declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
@@ -8,7 +9,7 @@ declare module "@tanstack/react-table" {
   }
 }
 
-export default <T extends Record<string, unknown>>({
+export default <T extends TablaDatos>({
   column,
 }: {
   column: Column<T, unknown>;
