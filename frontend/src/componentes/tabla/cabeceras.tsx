@@ -6,11 +6,11 @@ export default <T extends TablaDatos>(props: {
   tabla: Table<T>;
   filtrable?: boolean;
 }) => (
-  <thead class="grid z-1 sticky top-0 w-full">
+  <thead class="grid z-1 sticky top-0 w-full border border-base rounded-t">
     <tr class="flex w-full">
       {props.tabla.getHeaderGroups()[0].headers.map((header) => (
         <th
-          class="col justify-center items-start p-1.5 px-2.5 primario first:rounded-tl-[var(--radius-box)] last:rounded-tr-[var(--radius-box)] text-nowrap"
+          class="col justify-center items-start p-1.5 px-2.5 first:rounded-tl last:rounded-tr bg-dark text-nowrap"
           key={header.id}
           data-id={header.id}
           style={{ width: header.getSize() }}

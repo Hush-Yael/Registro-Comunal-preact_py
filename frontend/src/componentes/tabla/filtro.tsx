@@ -33,7 +33,7 @@ export default <T extends TablaDatos>({
 
   return (
     <input
-      class="w-full [[type=date]]:max-w-[12ch] p-0.25 px-1 mb-1 rounded-field outline outline-offset-1 outline-neutral-600 dark:outline-neutral-400 hover:outline-neutral-500 focus:outline-white focus:dark:outline-neutral-900 bg-neutral-800 dark:bg-[#bababa] focus:bg-neutral-700 focus:dark:bg-neutral-400 transition-colors scheme-dark dark:scheme-light"
+      class="w-full [[type=date]]:max-w-[12ch] p-0.25 px-1 mb-1 rounded-field outline outline-offset-1 outline-neutral-300 dark:outline-neutral-700 hover:not-focus:outline-neutral-400 dark:hover:not-focus:outline-neutral-600 focus:outline-primary bg-neutral-200 dark:bg-neutral-800 dark:focus:bg-neutral-700 transition-colors"
       type={filterVariant}
       name="filtro"
       // @ts-expect-error: el tipo del valor es correcto

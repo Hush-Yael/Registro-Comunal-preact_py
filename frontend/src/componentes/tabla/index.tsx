@@ -90,7 +90,7 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
         }`}
       >
         <table
-          class={`grid grid-rows-[auto_1fr] min-h-full table-fixed border-collapse text-sm ${
+          class={`grid grid-rows-[auto_1fr] min-h-full table-fixed border-collapse rounded text-sm [&_th,&_td]:border-r [&_th,&_td]:border-base ${
             props.class || ""
           }`}
         >
@@ -99,7 +99,7 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
             filtrable={props.options?.getFilteredRowModel !== undefined}
           />
           <tbody
-            class="grid relative min-h-full bg-dark border-b-2 border-primary empty:before:content-['No_se_encontraron_datos'] before:m-auto before:text-lg before:text-muted"
+            class="grid relative min-h-full bg-dark border border-t-0 border-base rounded-b empty:before:content-['No_se_encontraron_datos'] before:m-auto before:text-lg before:text-muted"
             style={{ height: `${virtualizadorFilas.getTotalSize()}px` }}
           >
             {virtualizadorFilas.getVirtualItems().map((virtualRow) => {
@@ -108,7 +108,7 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
               return (
                 <tr
                   key={row.id}
-                  class="flex w-full absolute group not-data-odd:bg-base dark:not-data-odd:bg-darkest data-odd:bg-dark"
+                  class="flex w-full absolute group data-odd:bg-base dark:data-odd:bg-darkest not-data-odd:bg-dark"
                   data-index={virtualRow.index} // se necesita para la medida de la altura dinámica
                   ref={(node) =>
                     // cálculo de la altura de la fila
