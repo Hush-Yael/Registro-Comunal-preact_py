@@ -20,18 +20,19 @@ export default <T extends TablaDatos>(props: {
           <div class="w-full" />
         </div>
       )}
-      <table class={`size-full table-fixed ${props.class || ""}`}>
+      <table
+        class={`size-full table-fixed rounded border-separate border-spacing-0 border-tools-table-outline border border-base [&_th,&_td]:border-r [&_th,&_td]:border-base  ${
+          props.class || ""
+        }`}
+      >
         <thead>
-          <tr
-            class="primario animate-pulse"
-            style={{ animationDuration: "1s" }}
-          >
+          <tr class="bg-dark animate-pulse" style={{ animationDuration: "1s" }}>
             {cabeceras.map((header) => (
               <th
-                class="p-1.5 px-2.5 first:rounded-tl-lg last:rounded-tr-lg"
+                class="first:rounded-tl last:rounded-tr"
                 style={{ width: header.getSize() }}
               >
-                <div class="m-2 h-7 rounded-selector dark:bg-[hsl(0,0%,80%)] bg-[hsl(0,0%,15%)]" />
+                <div class="m-2 h-7 rounded-selector bg-[hsl(0,0%,80%)] dark:bg-[hsl(0,0%,15%)]" />
               </th>
             ))}
           </tr>
