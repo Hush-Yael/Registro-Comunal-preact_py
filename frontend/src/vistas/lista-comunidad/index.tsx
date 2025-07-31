@@ -156,11 +156,16 @@ export default () => {
 
       <Tabla
         class="
-          [&_th[data-id=id]]:items-end [&_td[data-column-id=id]]:justify-end
-          [&_th[data-id=cedula]]:items-end [&_td[data-column-id=cedula]]:justify-end
-          [&_th[data-id=fecha\\_nacimiento]]:items-end [&_td[data-column-id=fecha\\_nacimiento]]:justify-end
-          [&_th[data-id=edad]]:items-end [&_td[data-column-id=edad]]:justify-end
-          [&_th[data-id=numero\\_casa]]:items-end [&_td[data-column-id=numero\\_casa]]:justify-end
+          [&_th[data-id=id],&_th[data-id=cedula-filtro]_input]:text-right [&_td[data-column-id=id]]:justify-end
+
+          [&_th[data-id=cedula]]:text-right [&_td[data-column-id=cedula]]:justify-end
+          
+          [&_th[data-id=fecha\\_nacimiento],&_th[data-id=fecha\\_nacimiento-filtro]_input]:text-right [&_td[data-column-id=fecha\\_nacimiento]]:justify-end
+          
+          [&_th[data-id=edad],&_th[data-id=edad-filtro]_input]:text-right [&_td[data-column-id=edad]]:justify-end
+
+          [&_th[data-id=numero\\_casa],&_th[data-id=numero\\_casa-filtro]_input]:text-right [&_td[data-column-id=numero\\_casa]]:justify-end
+
           [&_th[data-id=Acciones]]:text-[0px]
         "
         datos={datosComunidad}

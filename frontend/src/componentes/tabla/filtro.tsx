@@ -33,7 +33,8 @@ export default <T extends TablaDatos>({
 
   return (
     <input
-      class="w-full [[type=date]]:max-w-[12ch] p-0.25 px-1 mb-1 rounded-field outline outline-offset-1 outline-neutral-300 dark:outline-neutral-700 hover:not-focus:outline-neutral-400 dark:hover:not-focus:outline-neutral-600 focus:outline-primary bg-neutral-200 dark:bg-neutral-800 dark:focus:bg-neutral-700 transition-colors"
+      class="w-full p-1.5 outline-0 focus:inset-shadow-[0_0_0_1px] focus:inset-shadow-primary [[type=date]]:not-focus:text-muted font-[400] placeholder:font-thin placeholder:text-muted"
+      placeholder="buscar..."
       type={filterVariant}
       name="filtro"
       // @ts-expect-error: el tipo del valor es correcto

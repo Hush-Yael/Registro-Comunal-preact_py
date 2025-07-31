@@ -10,21 +10,30 @@ export default <T extends TablaDatos>(props: {
     <tr class="flex w-full">
       {props.tabla.getHeaderGroups()[0].headers.map((header) => (
         <th
-          class="col justify-center items-start p-1.5 px-2.5 first:rounded-tl last:rounded-tr bg-dark text-nowrap"
+          class="text-left p-1.5 px-2.5 first:rounded-tl last:rounded-tr bg-dark overflow-hidden text-nowrap text-ellipsis"
           key={header.id}
           data-id={header.id}
           style={{ width: header.getSize() }}
         >
-          <span className="overflow-hidden text-ellipsis max-w-full">
-            {flexRender(header.column.columnDef.header, header.getContext())}
-          </span>
-          {props.filtrable && header.column.getCanFilter() && (
-            <div class="w-full mt-1.5">
-              <Filtro column={header.column} />
-            </div>
-          )}
+          {flexRender(header.column.columnDef.header, header.getContext())}
         </th>
       ))}
     </tr>
+    {props.filtrable && (
+      <tr class="flex w-full border-t border-base">
+        {props.tabla.getHeaderGroups()[0].headers.map((header) => (
+          <th
+            class="block bg-base"
+            key={header.id + "-filtro"}
+            data-id={header.id + "-filtro"}
+            style={{ width: header.getSize() }}
+          >
+            {header.column.getCanFilter() ? (
+              <Filtro column={header.column} />
+            ) : null}
+          </th>
+        ))}
+      </tr>
+    )}
   </thead>
 );
