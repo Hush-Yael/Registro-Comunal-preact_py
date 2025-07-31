@@ -15,7 +15,9 @@ export default <T extends TablaDatos>(props: {
           data-id={header.id}
           style={{ width: header.getSize() }}
         >
-          {flexRender(header.column.columnDef.header, header.getContext())}
+          <span className="overflow-hidden text-ellipsis max-w-full">
+            {flexRender(header.column.columnDef.header, header.getContext())}
+          </span>
           {props.filtrable && header.column.getCanFilter() && (
             <div class="w-full mt-1.5">
               <Filtro column={header.column} />
