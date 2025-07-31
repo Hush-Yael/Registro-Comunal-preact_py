@@ -129,7 +129,7 @@ export default () => {
   ];
 
   return (
-    <div class="wrapper-tabla-comunidad col gap-4 relative h-full max-h-full">
+    <div class="wrapper-tabla-comunidad col gap-4 relative h-full max-h-full max-w-[1000px]">
       <Cabecera titulo="Lista de registros de la comunidad" />
 
       <ModalGenerar />
