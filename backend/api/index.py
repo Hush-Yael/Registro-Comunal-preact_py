@@ -31,7 +31,12 @@ from constantes import (
     Sesion,
     COLUMNAS_ORDENABLES,
 )
-from .db.modificacion import cambiar_rol, eliminar_registro_comunidad, eliminar_usuario
+from .db.modificacion import (
+    cambiar_rol,
+    eliminar_registro_comunidad,
+    eliminar_registros_comunidad,
+    eliminar_usuario,
+)
 from locale import format_string
 from .utilidades import fecha_a_años, generar_documento
 
@@ -269,4 +274,20 @@ def _eliminar_usuario(nombre: str):
 @api.route("/api/eliminar-registro-comunidad/<id>", methods=["DELETE"])
 def eliminar_registro(id: int):
     eliminar_registro_comunidad(id)
+    return ("", 200)
+
+
+@api.route("/api/eliminar-registros-comunidad", methods=["DELETE"])
+def eliminar_registros():
+    ids = request.json
+    print(ids)
+
+    if not ids:
+        return "No se proporcionaron ids", 400
+    elif type(ids) is not list:
+        return "No se proporcionaron ids", 400
+    elif len(ids) < 1:
+        return "No se proporcionaron ids", 400
+
+    eliminar_registros_comunidad(ids)
     return ("", 200)

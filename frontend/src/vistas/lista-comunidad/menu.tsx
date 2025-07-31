@@ -7,6 +7,7 @@ import { descarga, rutaApi } from "~/lib";
 import {
   cargarDatosComunidad,
   datosComunidad,
+  eliminandoMultiples,
 } from "~/constantes/lista-comunidad";
 import { DropdownMenu as Menu } from "radix-ui";
 import Orden from "./orden";
@@ -86,6 +87,22 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
               Importar datos...
             </label>
           </Menu.Item>
+
+          <Menu.CheckboxItem
+            onCheckedChange={() =>
+              (eliminandoMultiples.value = !eliminandoMultiples.value)
+            }
+            checked={eliminandoMultiples.value}
+            disabled={
+              sesion.value.rol !== "admin" ||
+              _portando.value ||
+              datosComunidad.value.length < 1
+            }
+            class="group dropdown-item justify-between"
+          >
+            Eliminación múltiple
+            <span className="switch" />
+          </Menu.CheckboxItem>
         </Menu.Content>
       </Menu.Portal>
     </Menu.Root>

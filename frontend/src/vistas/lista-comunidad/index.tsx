@@ -1,6 +1,7 @@
 import {
   getFilteredRowModel,
   getPaginationRowModel,
+  RowSelectionState,
   type ColumnDef,
 } from "@tanstack/react-table";
 import { rutaApi } from "~/lib";
@@ -9,7 +10,6 @@ import Tabla from "~/componentes/tabla";
 import { sesion } from "~/index";
 import type { DatosComunidad } from "~/tipos";
 import { useLocalStorageState } from "~/hooks/useLocalStorage";
-import Menu from "./menu";
 import ModalGenerar from "./modal";
 import FilaOpciones from "./menu-fila-opciones";
 import {
@@ -17,12 +17,16 @@ import {
   datosComunidad,
   ordenColumnas,
   configuracionFiltros,
+  eliminandoMultiples,
 } from "~/constantes/lista-comunidad";
 import { funcionFiltro } from "~/lib/filtros";
 import { FiltroId } from "~/tipos/lista-comunidad";
-import Paginacion from "~/componentes/tabla/paginacion";
+import { useEffect, useState } from "preact/hooks";
+import TablaHeader from "./tabla-header";
 
 export default () => {
+  const [seleccion, setSeleccion] = useState<RowSelectionState>({});
+
   const [paginacion, setPaginacion] = useLocalStorageState({
     key: "paginacion-comunidad",
     default: {
@@ -122,11 +126,27 @@ export default () => {
             size: 50,
             enableColumnFilter: false,
             enableSorting: false,
-            cell: (info) => <FilaOpciones id={info.row.original.id} />,
+            cell: (info) =>
+              eliminandoMultiples.value ? (
+                <input
+                  class="size-4.25"
+                  aria-label="Seleccionar registro para eliminar"
+                  name="eliminar-multiples"
+                  type="checkbox"
+                  checked={info.row.getIsSelected()}
+                  onChange={() => info.row.toggleSelected()}
+                />
+              ) : (
+                <FilaOpciones id={info.row.original.id} />
+              ),
           } as ColumnDef<DatosComunidad>,
         ]
       : []),
   ];
+
+  useEffect(() => {
+    return () => (eliminandoMultiples.value = false);
+  }, []);
 
   return (
     <div class="wrapper-tabla-comunidad col gap-4 relative h-full max-h-full max-w-[1000px]">
@@ -145,23 +165,24 @@ export default () => {
         "
         datos={datosComunidad}
         header={(tabla, virtualizador) => (
-          <div>
-            {paginacion.pageSize !== null && (
-              <Paginacion
-                virtualizador={virtualizador}
-                apodoFilas="registros"
-                tabla={tabla}
-              />
-            )}
-            <Menu tabla={tabla} />
-          </div>
+          <TablaHeader
+            paginacion={paginacion}
+            seleccion={seleccion}
+            tabla={tabla}
+            virtualizador={virtualizador}
+          />
         )}
         options={{
           getPaginationRowModel: getPaginationRowModel(),
           state: {
             pagination: paginacion,
             columnVisibility: visibilidad,
+            rowSelection: seleccion,
           },
+          // @ts-expect-error: no importa
+          getRowId: (row) => row.id,
+          enableRowSelection: eliminandoMultiples.value,
+          onRowSelectionChange: setSeleccion,
           onColumnVisibilityChange: setVisibilidad,
           onPaginationChange: setPaginacion,
           autoResetPageIndex: false,

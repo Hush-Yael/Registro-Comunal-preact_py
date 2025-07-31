@@ -39,3 +39,17 @@ def eliminar_registro_comunidad(id: int):
     conn.commit()
     conn.close()
     return True
+
+
+def eliminar_registros_comunidad(ids: list[int]):
+    conn, cursor = abrir_db()
+
+    for id in ids:
+        cursor.execute(
+            "DELETE FROM comunidad WHERE id = ?",
+            (id,),
+        )
+
+    conn.commit()
+    conn.close()
+    return True

@@ -138,3 +138,49 @@ label.btn {
     transform: translateX(0);
   }
 }
+
+.switch {
+  --s: 16px;
+  
+  position: relative;
+  height: var(--s);
+  width: calc(var(--s) * 2);
+  background: var(--bg-darkest);
+  border: 1px solid var(--border-base);
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.switch::after {
+  --x: 3px;
+
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: var(--x);
+  width: calc(var(--s) * 0.6);
+  height: calc(var(--s) * 0.6);
+  background: #0005;
+  border-radius: 100px;
+  transition: left 0.2s, transform 0.2s;
+}
+
+.oscuro .switch::after {
+  background: #fff4;
+}
+
+.group[data-checked] .switch,
+.group[data-state=checked] .switch,
+.switch:checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.group[data-checked] .switch::after,
+.group[data-state=checked] .switch::after,
+.switch:checked::after {
+  left: calc(100% - var(--x));
+  transform: translateX(-100%);
+  background: var(--bg-base);
+  border-color: var(--bg-base);
+}
