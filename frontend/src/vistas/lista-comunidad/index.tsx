@@ -126,6 +126,7 @@ export default () => {
             size: 50,
             enableColumnFilter: false,
             enableSorting: false,
+            enableResizing: false,
             cell: (info) =>
               eliminandoMultiples.value ? (
                 <input
@@ -186,6 +187,7 @@ export default () => {
           },
           // @ts-expect-error: no importa
           getRowId: (row) => row.id,
+          enableColumnResizing: true,
           enableRowSelection: eliminandoMultiples.value,
           onRowSelectionChange: setSeleccion,
           onColumnVisibilityChange: setVisibilidad,

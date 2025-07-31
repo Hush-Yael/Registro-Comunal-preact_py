@@ -10,12 +10,30 @@ export default <T extends TablaDatos>(props: {
     <tr class="flex w-full">
       {props.tabla.getHeaderGroups()[0].headers.map((header) => (
         <th
-          class="text-left p-1.5 px-2.5 first:rounded-tl last:rounded-tr bg-dark overflow-hidden text-nowrap text-ellipsis"
+          class="inline-flex relative text-left p-1.5 px-2.5 first:rounded-tl last:rounded-tr bg-dark select-none"
           key={header.id}
           data-id={header.id}
           style={{ width: header.getSize() }}
         >
-          {flexRender(header.column.columnDef.header, header.getContext())}
+          <span class="w-full overflow-hidden text-nowrap text-ellipsis">
+            {flexRender(header.column.columnDef.header, header.getContext())}
+          </span>
+
+          {props.tabla.options.enableColumnResizing && (
+            <div
+              class="z-1 absolute top-0 right-0 bottom-0 w-1 hover:bg-[#0003] dark:hover:bg-[#fff3] cursor-ew-resize active:cursor-grabbing active:bg-primary! transition-colors"
+              style={{
+                transform: header.column.getIsResizing()
+                  ? `translateX(${
+                      props.tabla.getState().columnSizingInfo.deltaOffset
+                    }px)`
+                  : "",
+              }}
+              onDblClick={() => header.column.resetSize()}
+              onMouseDown={header.getResizeHandler()}
+              onTouchStart={header.getResizeHandler()}
+            />
+          )}
         </th>
       ))}
     </tr>
