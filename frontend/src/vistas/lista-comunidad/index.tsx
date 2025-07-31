@@ -156,7 +156,7 @@ export default () => {
 
       <Tabla
         class="
-          [&_th[data-id=id],&_th[data-id=cedula-filtro]_input]:text-right [&_td[data-column-id=id]]:justify-end
+          [&_th[data-id=id]]:text-right [&_td[data-column-id=id]]:justify-end
 
           [&_th[data-id=cedula]]:text-right [&_td[data-column-id=cedula]]:justify-end
           
