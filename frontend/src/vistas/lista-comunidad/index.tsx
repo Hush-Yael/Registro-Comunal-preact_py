@@ -105,6 +105,7 @@ export default () => {
       header: "Patología / condición",
       accessorKey: "patologia",
       size: 145,
+      filterFn: funcionFiltro,
     },
     {
       header: "Dirección",
