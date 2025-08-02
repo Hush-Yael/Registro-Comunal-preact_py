@@ -24,8 +24,11 @@ export const normalizarString = (s: string) => {
     .toLowerCase();
 };
 
-export const comparacionInsensitiva = (s1: string, s2: string) =>
-  normalizarString(s1).includes(normalizarString(s2));
+export const comparacionInsensitiva = (
+  s1: string,
+  s2: string,
+  fn: "startsWith" | "endsWith" | "includes" = "includes"
+) => normalizarString(s1)[fn](normalizarString(s2));
 
 export const añosDesdeFecha = (fechaNacimiento: string) => {
   const fecha = new Date(fechaNacimiento);
