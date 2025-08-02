@@ -188,6 +188,7 @@ export default () => {
           },
           // @ts-expect-error: no importa
           getRowId: (row) => row.id,
+          enableGlobalFilter: false,
           enableColumnResizing: true,
           enableRowSelection: eliminandoMultiples.value,
           onRowSelectionChange: setSeleccion,
