@@ -51,7 +51,7 @@ export default () => {
         columnas={[
           {
             header: "#",
-            maxSize: 30,
+            size: 40,
             cell: (info) => info.row.index + 1,
           },
           {
@@ -62,7 +62,7 @@ export default () => {
           {
             header: "Rol",
             accessorKey: "rol",
-            maxSize: 100,
+            size: 110,
             cell: (info) =>
               sesion.value.rol !== "admin" ||
               info.row.original.nombre === sesion.value.usuario ? (
