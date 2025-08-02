@@ -69,7 +69,7 @@ export default () => {
                 info.getValue()
               ) : (
                 <select
-                  class="py-1.25 -mx-2 border border-transparent rounded-field hover:border-base focus-visible:bg-darkest hover:bg-darkest group-odd:hover:bg-base transition-colors"
+                  class="py-1.25 -mx-2 border border-transparent rounded-field hover:border-base focus-visible:bg-darkest hover:bg-darkest group-[[data-odd]]:hover:bg-base transition-colors"
                   name="rol"
                   defaultValue={info.getValue()}
                   onChange={() => cambiarRol(info.row.original)}
