@@ -88,7 +88,7 @@ const busquedaIgualA = (
   else if (columna === "Nombres y apellidos" || columna === "direccion")
     return normalizarString(valorActual) === normalizarString(valorBusqueda);
 
-  return valorActual === valorBusqueda;
+  return valorActual.trim() === valorBusqueda.trim();
 };
 
 export const funcionFiltro = <T extends RowData>(
