@@ -47,7 +47,7 @@ export default () => {
       </Cabecera>
       <Tabla
         wrapperClass="h-full"
-        class="[&_th]:last:items-end [&_thead>tr]:z-5 w-max m-auto"
+        class="[&_th]:first:text-right [&_td]:first:justify-end [&_th]:last:text-right [&_td]:last:justify-end [&_thead>tr]:z-5 w-max m-auto"
         columnas={[
           {
             header: "#",
