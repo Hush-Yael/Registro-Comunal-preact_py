@@ -60,6 +60,9 @@ export default () => {
     {
       header: "Nombres y apellidos",
       accessorFn: (row) => `${row.nombres} ${row.apellidos}`,
+      cell: (info) => (
+        <span class="capitalize">{info.getValue() as string}</span>
+      ),
       size: 200,
       filterFn: funcionFiltro,
     },
