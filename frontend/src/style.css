@@ -124,6 +124,12 @@ button:disabled {
   opacity: 0.5;
 }
 
+
+option:checked {
+  background-color: var(--primary);
+  color: var(--bg-base)
+}
+
 @keyframes aparecer {
   from {
     opacity: 0;
