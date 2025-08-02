@@ -20,6 +20,7 @@ export const COLUMNAS_FILTRABLES: FiltroKey[] = [
   "Nombres y apellidos",
   "cedula",
   "edad",
+  "direccion",
   "fecha_nacimiento",
   "numero_casa",
 ];
