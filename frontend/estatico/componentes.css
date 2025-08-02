@@ -20,7 +20,7 @@ label.btn {
 }
 
 .input {
-  @apply w-full p-0.5 px-2 rounded border bg-darkest aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500 disabled:cursor-not-allowed disabled:text-neutral-400 transition-colors
+  @apply w-full p-0.5 px-2 rounded border bg-darkest aria-[invalid=true]:border-red-500 aria-[invalid=true]:outline-red-500 aria-[invalid=true]:text-red-500 disabled:cursor-not-allowed disabled:opacity-50 disabled:text-neutral-400 transition-colors
 }
 
 .btn-primario, a[aria-current=page], .primario {
