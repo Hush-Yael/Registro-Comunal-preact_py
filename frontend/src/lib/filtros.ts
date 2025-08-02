@@ -97,61 +97,73 @@ export const funcionFiltro = <T extends RowData>(
   const valorFilaActual: string = fila.getValue(idColumna);
 
   switch (configuracionFiltros.value[idColumna]) {
-    case "contiene":
+    case "contiene": {
       return busquedaContiene(idColumna, valorFilaActual, valorBusqueda);
+    }
 
-    case "no-contiene":
+    case "no-contiene": {
       return !busquedaContiene(idColumna, valorFilaActual, valorBusqueda);
+    }
 
-    case "igual-a":
+    case "igual-a": {
       return busquedaIgualA(idColumna, valorFilaActual, valorBusqueda);
+    }
 
-    case "diferente-de":
+    case "diferente-de": {
       return !busquedaIgualA(idColumna, valorFilaActual, valorBusqueda);
+    }
 
-    case "mayor-a":
+    case "mayor-a": {
       return busquedaMayor(idColumna, valorFilaActual, valorBusqueda);
+    }
 
-    case "menor-a":
+    case "menor-a": {
       return !busquedaMayor(idColumna, valorFilaActual, valorBusqueda);
+    }
 
-    case "despues-de":
+    case "despues-de": {
       return busquedaAntesODespues(valorFilaActual, valorBusqueda, false);
+    }
 
-    case "antes-de":
+    case "antes-de": {
       return busquedaAntesODespues(valorFilaActual, valorBusqueda, true);
+    }
 
-    case "empieza-con":
+    case "empieza-con": {
       return busquedaEmpiezaOTerminaCon(
         idColumna,
         valorFilaActual,
         valorBusqueda,
         true
       );
+    }
 
-    case "no-empieza-con":
+    case "no-empieza-con": {
       return !busquedaEmpiezaOTerminaCon(
         idColumna,
         valorFilaActual,
         valorBusqueda,
         true
       );
+    }
 
-    case "termina-con":
+    case "termina-con": {
       return busquedaEmpiezaOTerminaCon(
         idColumna,
         valorFilaActual,
         valorBusqueda,
         false
       );
+    }
 
-    case "no-termina-con":
+    case "no-termina-con": {
       return !busquedaEmpiezaOTerminaCon(
         idColumna,
         valorFilaActual,
         valorBusqueda,
         false
       );
+    }
 
     default:
       throw new Error("Función de filtro no implementada o no encontrada");
