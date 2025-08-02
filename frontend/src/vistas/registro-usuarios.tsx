@@ -133,7 +133,10 @@ const Datos = () => {
       />
 
       <div class="col gap-2.5">
-        <button class="btn btn-primario" disabled={estado.value == "subiendo"}>
+        <button
+          class="btn btn-primario"
+          disabled={estado.value == "subiendo" || estado.value == "fetching"}
+        >
           {PUEDE_EDITAR ? "Guardar cambios" : "Registrar"}
         </button>
         {!PUEDE_EDITAR && (
