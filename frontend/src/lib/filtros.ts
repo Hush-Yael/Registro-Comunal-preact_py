@@ -1,5 +1,9 @@
 import { RowData, Row } from "@tanstack/react-table";
-import { añosDesdeFecha, comparacionInsensitiva } from "~/lib";
+import {
+  añosDesdeFecha,
+  comparacionInsensitiva,
+  normalizarString,
+} from "~/lib";
 import { COLUMNAS_FILTRABLES } from "~/constantes";
 import { configuracionFiltros } from "~/constantes/lista-comunidad";
 
@@ -69,10 +73,10 @@ const busquedaEmpiezaOTerminaCon = (
 
   if (columna === "cedula")
     return valorActual.replace(/\./g, "")[fn](valorBusqueda.replace(/\./g, ""));
-  else if (columna !== "Nombres y apellidos")
-    return valorActual[fn](valorBusqueda);
+  else if (columna === "Nombres y apellidos" || columna === "direccion")
+    return comparacionInsensitiva(valorActual, valorBusqueda, fn);
 
-  return comparacionInsensitiva(valorActual, valorBusqueda);
+  return valorActual.trim()[fn](valorBusqueda.trim());
 };
 
 const busquedaIgualA = (
