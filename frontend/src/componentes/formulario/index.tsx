@@ -29,10 +29,15 @@ type FormularioProps<
   T extends Record<string, unknown>,
   F extends (() => Promise<Response>) | undefined = undefined
 > = Omit<JSX.IntrinsicElements["form"], "onSubmit" | "onError"> & {
+  onSubmit?: () => any;
   // eslint-disable-next-line no-unused-vars
-  onSuccess?: (props: HandlerEvent<T>) => any | Promise<any>;
+  finally?: (contexto: HandlerEvent<T>["contexto"]) => any;
   // eslint-disable-next-line no-unused-vars
-  onError?: (props: HandlerEvent<T>) => any | Promise<any>;
+  onSuccess?: (props: HandlerEvent<T>) => any;
+  // eslint-disable-next-line no-unused-vars
+  onError?: (contexto: HandlerEvent<T>["contexto"]) => any;
+  // eslint-disable-next-line no-unused-vars
+  onBadRequest?: (props: HandlerEvent<T>) => any;
   // eslint-disable-next-line no-unused-vars
   modificarValoresEnviados?: (values: T) => T;
   method?: string;
@@ -96,6 +101,7 @@ export default <
         onSubmit={async (e) => {
           e.preventDefault();
           estado.value = "subiendo";
+          if (props.onSubmit) props.onSubmit();
 
           try {
             const respuesta = await fetch(
@@ -119,16 +125,7 @@ export default <
             if (respuesta.ok) {
               estado.value = "exito";
 
-              if (props.onSuccess) {
-                const _name = Object.prototype.toString.call(props.onSuccess);
-
-                if (
-                  "[object Promise]" === _name ||
-                  "[object AsyncFunction]" === _name
-                )
-                  await props.onSuccess({ contexto, json, respuesta });
-                else props.onSuccess({ contexto, json, respuesta });
-              }
+              props.onSuccess && props.onSuccess({ contexto, json, respuesta });
             } else {
               estado.value = "error";
               errores.value = {
@@ -136,26 +133,23 @@ export default <
                 [json.campo]: json.mensaje,
               };
 
-              if (props.onError) {
-                const _name = Object.prototype.toString.call(props.onError);
-
-                if (
-                  "[object Promise]" === _name ||
-                  "[object AsyncFunction]" === _name
-                )
-                  await props.onError({ contexto, json, respuesta });
-                else props.onError({ contexto, json, respuesta });
-              }
+              props.onBadRequest &&
+                props.onBadRequest({ contexto, json, respuesta });
             }
           } catch (e) {
             estado.value = "error";
             console.error(e);
+            props.onError && props.onError(contexto);
+          } finally {
+            props.finally && props.finally(contexto);
           }
         }}
         // @ts-expect-error: no se debe pasar
         datos={null}
         rutaApi={null}
         datosIniciales={null}
+        finally={null}
+        onBadRequest={null}
       >
         {props.children}
       </form>
