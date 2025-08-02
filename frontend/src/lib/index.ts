@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 export const rutaApi = (ruta: string) =>
   `${location.protocol}//${
     // es la propia máquina, se usa 127.0.0.1, ya que ese es el backend
@@ -8,12 +10,14 @@ export const rutaApi = (ruta: string) =>
   }/api/${ruta}`;
 
 export const descarga = async (r: Response, nombre: string) => {
+  const mensaje = toast.loading("Descargando archivo...");
   const url = URL.createObjectURL(await r.blob());
   const link = document.createElement("a");
   link.href = url;
   link.download = nombre;
   link.click();
   URL.revokeObjectURL(url);
+  toast.dismiss(mensaje);
 };
 
 export const normalizarString = (s: string) => {

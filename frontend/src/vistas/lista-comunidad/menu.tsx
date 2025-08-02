@@ -13,6 +13,7 @@ import { DropdownMenu as Menu } from "radix-ui";
 import Orden from "./orden";
 import ConfiguracionFiltros from "./filtros";
 import Visibilidad from "./visibilidad";
+import { toast } from "sonner";
 
 const _portando = signal(false);
 
@@ -122,7 +123,7 @@ const importar = async (e: Event) => {
     );
 
     if (!contraseña || !contraseña.trim()) {
-      alert("Por favor, ingrese una contraseña válida");
+      toast.error("Por favor, ingrese una contraseña válida");
       return ((e.target as HTMLInputElement).value = "");
     }
 
@@ -135,17 +136,36 @@ const importar = async (e: Event) => {
     formData.append("contraseña", contraseña);
     formData.append("archivo", file);
 
-    const r = await fetch(rutaApi("importar-comunidad"), {
-      method: "POST",
-      body: formData,
-    });
+    const mensajeId = toast.loading("Importando datos...");
 
-    (e.target as HTMLInputElement).value = "";
-    _portando.value = false;
+    try {
+      const respuesta = await fetch(rutaApi("importar-comunidad"), {
+        method: "POST",
+        body: formData,
+      });
 
-    alert(await r.text());
+      if (respuesta.ok) {
+        cargarDatosComunidad.value = true;
+        toast.promise(respuesta.text(), {
+          loading: "Generando mensaje...",
+          success: (mensaje) => mensaje,
+          error: "Error al generar el mensaje",
+          id: mensajeId,
+        });
+      }
 
-    if (r.ok) cargarDatosComunidad.value = true;
+      if (respuesta.status === 400)
+        toast.error("Contraseña incorrecta", { id: mensajeId });
+      else toast.error("Error al importar los datos", { id: mensajeId });
+    } catch (error) {
+      console.error(error);
+      toast.error("Error interno en el servidor al importar los datos", {
+        id: mensajeId,
+      });
+    } finally {
+      (e.target as HTMLInputElement).value = "";
+      _portando.value = false;
+    }
   }
 };
 
@@ -153,7 +173,25 @@ const exportar = async () => {
   if (datosComunidad.value.length < 1) return;
 
   _portando.value = true;
-  const r = await fetch(rutaApi("exportar-comunidad"));
-  descarga(r, "Registros de la comunidad Santo Domingo De Guzmán.csv");
-  _portando.value = false;
+  const mensajeId = toast.loading("Generando archivo...");
+
+  try {
+    const r = await fetch(rutaApi("exportar-comunidad"));
+    if (r.ok) {
+      toast.dismiss(mensajeId);
+      return descarga(
+        r,
+        "Registros de la comunidad Santo Domingo De Guzmán.csv"
+      );
+    }
+
+    toast.error("Error al generar el archivo", { id: mensajeId });
+  } catch (error) {
+    console.error(error);
+    toast.error("Error interno en el servidor al generar el archivo", {
+      id: mensajeId,
+    });
+  } finally {
+    _portando.value = false;
+  }
 };

@@ -8,6 +8,7 @@ import {
   modalGenerarAbierto,
 } from "~/constantes/lista-comunidad";
 import Iconos from "~/componentes/iconos";
+import { toast } from "sonner";
 
 export default () => {
   const documento = useLocalStorage<{
@@ -36,6 +37,8 @@ export default () => {
       "Indique el tiempo de residencia del individuo: (ejemplo: 3 meses)"
     );
 
+    const mensajeId = toast.loading("Generando carta...");
+
     try {
       const r = await fetch(rutaApi("generar-carta"), {
         method: "POST",
@@ -56,21 +59,24 @@ export default () => {
         },
       });
 
-      if (r.ok)
+      if (r.ok) {
         descarga(
           r,
           `${
             documento.value.base === "plantilla" ? "plantilla" : "constancia"
           }.${documento.value.tipo}`
         );
-      else {
-        alert(await r.text());
+
+        return toast.success("Archivo generado", { id: mensajeId });
       }
+
+      toast.error(await r.text(), { id: mensajeId });
     } catch (error) {
-      alert(
-        "No se pudo generar el reporte debido a un error interno del servidor"
-      );
       console.error(error);
+      toast.error(
+        "No se pudo generar el reporte debido a un error interno del servidor",
+        { id: mensajeId }
+      );
     } finally {
       idARegistroSeleccionado.current = undefined;
       generandoCarta.value = false;

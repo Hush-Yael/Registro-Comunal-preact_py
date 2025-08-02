@@ -8,6 +8,7 @@ import {
 } from "~/constantes/lista-comunidad";
 import Iconos from "~/componentes/iconos";
 import { rutaApi } from "~/lib";
+import { toast } from "sonner";
 
 export default (props: { id: number }) => {
   const [, setLocation] = useLocation();
@@ -60,10 +61,22 @@ export default (props: { id: number }) => {
 
 const eliminarRegistro = async (id: number) => {
   if (confirm("¿Realmente desea eliminar el registro?")) {
-    const r = await fetch(rutaApi(`eliminar-registro-comunidad/${id}`), {
-      method: "DELETE",
-    });
-    if (r.ok)
-      datosComunidad.value = datosComunidad.value.filter((u) => u.id !== id);
+    toast.promise(
+      fetch(rutaApi(`eliminar-registro-comunidad/${id}`), {
+        method: "DELETE",
+      }),
+      {
+        loading: "Eliminando registro...",
+        success: (respuesta) => {
+          if (respuesta.ok) {
+            datosComunidad.value = datosComunidad.value.filter(
+              (u) => u.id !== id
+            );
+            return "Registro eliminado";
+          }
+        },
+        error: "Error al eliminar el registro",
+      }
+    );
   }
 };

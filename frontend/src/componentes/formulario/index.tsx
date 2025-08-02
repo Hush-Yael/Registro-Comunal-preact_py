@@ -2,7 +2,6 @@ import type { JSX } from "preact/jsx-runtime";
 import { createContext } from "preact";
 import { useEffect } from "preact/hooks";
 import { Signal, useSignal } from "@preact/signals";
-import Alerta from "../alerta";
 import { useContext } from "preact/hooks";
 import { rutaApi } from "~/lib";
 
@@ -196,23 +195,5 @@ export const Reiniciar = (props: JSX.IntrinsicElements["button"]) => {
     >
       {props.children}
     </button>
-  );
-};
-
-export const Mensaje = (props: { estado: FormEstado; texto: string }) => {
-  const { estado } = useContext(contextoFormulario);
-  const variante =
-    props.estado === "subiendo" || props.estado === "fetching"
-      ? "carga"
-      : props.estado === "exito"
-      ? "éxito"
-      : "";
-
-  return (
-    <Alerta
-      variante={variante}
-      texto={props.texto}
-      visible={estado.value === props.estado}
-    />
   );
 };

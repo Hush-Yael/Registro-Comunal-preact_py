@@ -12,6 +12,7 @@ import Navegacion from "./componentes/navegacion";
 import useTheme, { type Tema } from "~/hooks/useTheme";
 import { Select } from "radix-ui";
 import Iconos from "./componentes/iconos";
+import { Toaster } from "sonner";
 
 export const sesion = signal({
   usuario: "",
@@ -24,7 +25,7 @@ export function App() {
   return (
     <>
       <Navegacion />
-      <main class="col p-4 mx-auto py-5 px-6 rounded-box border border-base bg-base shadow-lg max-w-full h-full max-h-full overflow-auto only:row-span-2 only:h-max only:m-auto">
+      <main class="col p-4 mx-auto py-5 px-6 rounded-box border border-base bg-base shadow-lg max-w-full h-full max-h-full overflow-auto first:row-span-2 first:h-max first:m-auto">
         <SelectTema />
         {!sesion.value.usuario ? (
           <Router>
@@ -49,6 +50,24 @@ export function App() {
           </Router>
         )}
       </main>
+      <Toaster
+        theme={
+          tema.value === "oscuro"
+            ? "dark"
+            : tema.value === "claro"
+            ? "light"
+            : "system"
+        }
+        richColors
+        toastOptions={{
+          classNames: {
+            toast:
+              "font-[Sora] p-3 gap-2.5 not-[[data-type]]:bg-primary text-[var(--bg-base)] data-[type=loading]:bg-primary",
+            error: "bg-red-500 text-white",
+            success: "bg-green-400 text-[var(--bg-base)] text-green-950",
+          },
+        }}
+      />
     </>
   );
 }

@@ -1,16 +1,16 @@
 import { useContext } from "preact/hooks";
 import Cabecera from "~/componentes/cabecera";
 import Input from "~/componentes/formulario/input";
-import Formulario, {
-  contextoFormulario,
-  Mensaje,
-} from "~/componentes/formulario";
+import Formulario, { contextoFormulario } from "~/componentes/formulario";
 import Contraseña from "~/componentes/formulario/contraseña";
 import { Link, useLocation, useSearchParams } from "wouter-preact";
 import { sesion } from "~/index";
 import { useSignal } from "@preact/signals";
 import { listaUsuarios } from "./lista-usuarios";
 import { rutaApi } from "~/lib";
+import { toast } from "sonner";
+
+const mensajeId = "registro";
 
 export default () => {
   const [, setLocation] = useLocation();
@@ -33,13 +33,43 @@ export default () => {
         datos={datos}
         fetchValues={
           PUEDE_EDITAR
-            ? () => fetch(rutaApi(`obtener-datos-usuario/${ID}`))
+            ? () => {
+                const p = fetch(rutaApi(`obtener-datos-usuario/${ID}`));
+
+                setTimeout(() => {
+                  toast.promise(p, {
+                    loading: "Obteniendo datos...",
+                    error: (r: string) =>
+                      r.endsWith("404")
+                        ? "No se encontró el registro"
+                        : "Error al recuperar los datos del registro",
+                    id: mensajeId,
+                    duration: 4500,
+                  });
+                });
+                return p;
+              }
             : undefined
         }
         onFetchSuccess={async (r, { datos }) => {
           if (r.ok) return (datos.value = await r.json());
           else if (sesion.value.usuario)
             setLocation("/usuarios", { replace: true });
+        }}
+        onSubmit={() =>
+          toast.loading(
+            PUEDE_EDITAR ? "Verificando datos..." : "Registrando...",
+            { id: mensajeId }
+          )
+        }
+        onBadRequest={({ json }) => {
+          // ya se muestran los errores en el formulario
+          if (json.mensaje) toast.dismiss(mensajeId);
+          else
+            toast.error(
+              `Error al ${PUEDE_EDITAR ? "actualizar" : "guardar"} el usuario`,
+              { id: mensajeId }
+            );
         }}
         onSuccess={({ contexto }) => {
           if (PUEDE_EDITAR) {
@@ -48,18 +78,34 @@ export default () => {
               else return d;
             });
 
-            return setTimeout(() => {
+            setTimeout(() => {
               setLocation("/usuarios", { replace: true });
             }, 800);
+          } else {
+            listaUsuarios.value.push({
+              id: listaUsuarios.value.length
+                ? listaUsuarios.value[listaUsuarios.value.length - 1].id + 1
+                : 1,
+              nombre: contexto.datos.value.nombre,
+              rol: "supervisor",
+            });
           }
 
-          listaUsuarios.value.push({
-            id: listaUsuarios.value.length
-              ? listaUsuarios.value[listaUsuarios.value.length - 1].id + 1
-              : 1,
-            nombre: contexto.datos.value.nombre,
-            rol: "supervisor",
-          });
+          datos.value = { nombre: "", contraseña: "" };
+          toast.success(
+            `${
+              PUEDE_EDITAR ? "Datos actualizados" : "Usuario registrado"
+            } con éxito`,
+            { id: mensajeId }
+          );
+        }}
+        onError={() => {
+          toast.error(
+            `Error del servidor al ${
+              PUEDE_EDITAR ? "actualizar" : "guardar"
+            } el registro`,
+            { id: mensajeId }
+          );
         }}
       >
         <Datos />
@@ -105,7 +151,7 @@ const Datos = () => {
   };
 
   return (
-    <div class="col mt-16 gap-6">
+    <div class="col mt-16 gap-6 max-w-[350px]">
       <Input
         onChange={(e) => {
           clearTimeout(timeout);
@@ -123,19 +169,8 @@ const Datos = () => {
           </span>
         }
       />
+
       <Contraseña />
-
-      <Mensaje
-        estado="subiendo"
-        texto={PUEDE_EDITAR ? "Verificando datos..." : "Registrando..."}
-      />
-
-      <Mensaje
-        estado="exito"
-        texto={`${
-          PUEDE_EDITAR ? "Datos actualizados" : "Usuario registrado"
-        } con éxito`}
-      />
 
       <div class="col gap-2.5">
         <button

@@ -13,6 +13,7 @@
 		"@tanstack/react-virtual": "^3.13.12",
 		"preact": "^10.25.3",
 		"radix-ui": "^1.4.2",
+		"sonner": "^2.0.6",
 		"tailwindcss": "^4.1.10",
 		"wouter-preact": "^3.7.1"
 	},

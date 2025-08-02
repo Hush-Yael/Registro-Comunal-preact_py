@@ -1,7 +1,6 @@
 import Cabecera from "~/componentes/cabecera";
 import Formulario, {
   contextoFormulario,
-  Mensaje,
   Reiniciar,
   Subir,
 } from "~/componentes/formulario";
@@ -15,6 +14,7 @@ import { DatosComunidad } from "~/tipos";
 import { signal } from "@preact/signals";
 import { NOMBRE_MÍNIMO } from "~/constantes";
 import { datosComunidad } from "~/constantes/lista-comunidad";
+import { toast } from "sonner";
 
 const datos = signal<DatosComunidad>({
   nombres: "",
@@ -28,6 +28,7 @@ const datos = signal<DatosComunidad>({
 });
 
 let ultimoId: string | null;
+const mensajeId = "registro-comunidad";
 
 export default () => {
   const [params, setParams] = useSearchParams();
@@ -73,7 +74,22 @@ export default () => {
         })}
         fetchValues={
           editar
-            ? () => fetch(rutaApi(`obtener-datos-comunidad/${editar}`))
+            ? () => {
+                const p = fetch(rutaApi(`obtener-datos-comunidad/${editar}`));
+
+                setTimeout(() => {
+                  toast.promise(p, {
+                    loading: "Obteniendo datos...",
+                    error: (r: string) =>
+                      r.endsWith("404")
+                        ? "No se encontró el registro"
+                        : "Error al recuperar los datos del registro",
+                    id: mensajeId,
+                    duration: 4500,
+                  });
+                });
+                return p;
+              }
             : undefined
         }
         onFetchSuccess={async (r, { datos }) => {
@@ -92,6 +108,7 @@ export default () => {
               return p;
             });
         }}
+        onSubmit={() => toast.loading("Guardando...", { id: mensajeId })}
         onSuccess={({ contexto }) => {
           if (editar) {
             setParams((p) => {
@@ -115,19 +132,30 @@ export default () => {
                 : 1,
             });
 
+          toast.success(
+            `Registro ${editar ? "actualizado" : "guardado"} correctamente`,
+            { id: mensajeId }
+          );
           contexto.datos.value = contexto.datosIniciales;
-          setTimeout(() => (contexto.estado.value = ""), 800);
+        }}
+        onBadRequest={({ json }) => {
+          if (json.mensaje) toast.error(json.mensaje, { id: mensajeId });
+          else
+            toast.error(
+              `Error al ${editar ? "actualizar" : "guardar"} el registro`,
+              { id: mensajeId }
+            );
+        }}
+        onError={() => {
+          toast.error(
+            `Error del servidor al ${
+              editar ? "actualizar" : "guardar"
+            } el registro`,
+            { id: mensajeId }
+          );
         }}
       >
         <div class="col gap-5 max-w-[700px] min-h-full overflow-hidden">
-          <Mensaje estado="subiendo" texto="Guardando..." />
-          <Mensaje estado="fetching" texto="Recuperando datos..." />
-          <Mensaje
-            estado="exito"
-            texto={`Registro ${
-              editar ? "actualizado" : "guardado"
-            } correctamente`}
-          />
           <div class="grid grid-rows-[1fr_auto] gap-10 h-full max-h-full">
             <Campos />
             <Botones />

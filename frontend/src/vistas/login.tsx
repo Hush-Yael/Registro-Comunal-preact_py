@@ -1,15 +1,15 @@
 import { useContext } from "preact/hooks";
 import Cabecera from "~/componentes/cabecera";
 import Input from "~/componentes/formulario/input";
-import Formulario, {
-  contextoFormulario,
-  Mensaje,
-} from "~/componentes/formulario";
+import Formulario, { contextoFormulario } from "~/componentes/formulario";
 import Contraseña from "~/componentes/formulario/contraseña";
 import { Link } from "wouter-preact";
 import { sesion } from "~/index";
 import { signal } from "@preact/signals";
 import { NOMBRE_MÍNIMO } from "~/constantes";
+import { toast } from "sonner";
+
+const mensajeId = "login";
 
 export default () => {
   const datos = signal({ nombre: "", contraseña: "" });
@@ -20,12 +20,22 @@ export default () => {
       <Formulario
         rutaApi="login"
         datos={datos}
-        onSuccess={({ contexto, json }) =>
-          (sesion.value = {
+        onSubmit={() =>
+          toast.loading("Verificando datos...", { id: mensajeId })
+        }
+        onSuccess={({ contexto, json }) => {
+          sesion.value = {
             usuario: contexto.datos.value.nombre,
             rol: json,
-          })
-        }
+          };
+
+          toast.success("Inicio de sesión exitoso", { id: mensajeId });
+        }}
+        onBadRequest={({ json }) => {
+          // ya se muestran los errores en el formulario
+          if (json.mensaje) toast.dismiss(mensajeId);
+          else toast.error("Error al iniciar sesión", { id: mensajeId });
+        }}
       >
         <Datos />
       </Formulario>
@@ -46,8 +56,6 @@ const Datos = () => {
         minlength={NOMBRE_MÍNIMO}
       />
       <Contraseña />
-
-      <Mensaje estado="subiendo" texto="Verificando datos..." />
 
       <div class="col gap-2.5">
         <button class="btn btn-primario" disabled={estado.value == "subiendo"}>

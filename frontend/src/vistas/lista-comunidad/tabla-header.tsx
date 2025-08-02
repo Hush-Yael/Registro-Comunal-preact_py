@@ -14,6 +14,7 @@ import {
 } from "~/constantes/lista-comunidad";
 import { sesion } from "~/index";
 import { rutaApi } from "~/lib";
+import { toast } from "sonner";
 
 export default (props: {
   paginacion: PaginationState;
@@ -95,19 +96,31 @@ const eliminarMultiples = async (
   if (confirm("¿Realmente desea eliminar los registros seleccionados?")) {
     const ids = Object.keys(seleccion);
 
-    const r = await fetch(rutaApi("eliminar-registros-comunidad"), {
-      method: "DELETE",
-      body: JSON.stringify(ids),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const mensajeId = toast.loading("Eliminando registros...");
+
+    try {
+      const r = await fetch(rutaApi("eliminar-registros-comunidad"), {
+        method: "DELETE",
+        body: JSON.stringify(ids),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (r.ok) {
+        eliminandoMultiples.value = false;
+        tabla.resetRowSelection();
+        datosComunidad.value = datosComunidad.value.filter(
+          (u) => !ids.includes(u.id.toString())
+        );
+        return toast.success("Registros eliminados", { id: mensajeId });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
+    return toast.error("No se pudieron eliminar los registros", {
+      id: mensajeId,
     });
-    if (r.ok) {
-      eliminandoMultiples.value = false;
-      tabla.resetRowSelection();
-      datosComunidad.value = datosComunidad.value.filter(
-        (u) => !ids.includes(u.id.toString())
-      );
-    } else alert("No se pudieron eliminar los registros");
   }
 };

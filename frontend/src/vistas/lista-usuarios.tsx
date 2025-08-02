@@ -7,35 +7,62 @@ import Iconos from "~/componentes/iconos";
 import type { Usuario } from "~/tipos";
 import { rutaApi } from "~/lib";
 import { Link } from "wouter-preact";
+import { toast } from "sonner";
 
 export const listaUsuarios = signal<Usuario[]>([]);
 const carga = signal(true);
 
 const cambiarRol = async (datos: Usuario) => {
-  const r = await fetch(rutaApi("actualizar-rol"), {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      nombre: datos.nombre,
-      rol: datos.rol === "admin" ? "supervisor" : "admin",
-    }),
-  });
+  const mensajeId = toast.loading("Actualizando rol...");
 
-  if (!r.ok) console.error("No se pudo cambiar el rol");
+  try {
+    const respuesta = await fetch(rutaApi("actualizar-rol"), {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nombre: datos.nombre,
+        rol: datos.rol === "admin" ? "supervisor" : "admin",
+      }),
+    });
+
+    if (respuesta.ok)
+      return toast.success("Rol actualizado con éxito", { id: mensajeId });
+
+    toast.error("No se pudo cambiar el rol", { id: mensajeId });
+  } catch (error) {
+    console.error(error);
+    toast.error("Error interno en el servidor al cambiar el rol", {
+      id: mensajeId,
+    });
+  }
 };
 
 const eliminarUsuario = async (nombre: string) => {
   if (confirm("¿Realmente desea eliminar el usuario?")) {
-    const r = await fetch(rutaApi(`eliminar-usuario/${nombre}`), {
-      method: "DELETE",
-    });
+    const mensajeId = toast.loading("Importando datos...");
 
-    if (r.ok)
-      listaUsuarios.value = listaUsuarios.value.filter(
-        (u) => u.nombre !== nombre
-      );
+    try {
+      const respuesta = await fetch(rutaApi(`eliminar-usuario/${nombre}`), {
+        method: "DELETE",
+      });
+
+      if (respuesta.ok) {
+        listaUsuarios.value = listaUsuarios.value.filter(
+          (u) => u.nombre !== nombre
+        );
+
+        return toast.success("Usuario eliminado con éxito", { id: mensajeId });
+      }
+
+      toast.error("Error al eliminar el usuario", { id: mensajeId });
+    } catch (error) {
+      console.error(error);
+      toast.error("Error interno en el servidor al eliminar el usuario", {
+        id: mensajeId,
+      });
+    }
   }
 };
 
