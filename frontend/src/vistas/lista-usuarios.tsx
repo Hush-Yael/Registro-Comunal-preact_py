@@ -81,7 +81,7 @@ export default () => {
           },
           {
             header: "Acciones",
-            size: 150,
+            size: 90,
             cell: (info) => (
               <div className="flex justify-end gap-3 ml-auto">
                 {info.row.original.nombre !== sesion.value.usuario ? (
