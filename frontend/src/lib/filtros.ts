@@ -85,6 +85,8 @@ const busquedaIgualA = (
       Number.parseInt(valorActual.replace(/\./g, "")) ===
       Number.parseInt(valorBusqueda.replace(/\./g, ""))
     );
+  else if (columna === "Nombres y apellidos" || columna === "direccion")
+    return normalizarString(valorActual) === normalizarString(valorBusqueda);
 
   return valorActual === valorBusqueda;
 };
