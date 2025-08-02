@@ -26,7 +26,7 @@ export const COLUMNAS_FILTRABLES: FiltroKey[] = [
 ];
 
 export const COLUMNAS_ORDENABLES: OrdenKey[] = [
-  ...COLUMNAS,
+  ...COLUMNAS.filter((c) => c !== "id"),
   "rowid",
   "editado",
-];
+] as const;
