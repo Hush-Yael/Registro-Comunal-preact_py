@@ -108,6 +108,9 @@ export default () => {
         ]}
         datos={listaUsuarios}
         datosDebenCargar={carga}
+        options={{
+          enableColumnResizing: true,
+        }}
         obtencionDatos={() => fetch(rutaApi("usuarios")).then((r) => r.json())}
       />
     </div>
