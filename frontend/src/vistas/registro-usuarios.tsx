@@ -116,7 +116,12 @@ const Datos = () => {
         }}
         campo="nombre"
         id="nombre-de-usuario"
-        label={`Nombre de usuario ${PUEDE_EDITAR ? `(actual: ${nombre})` : ""}`}
+        label={
+          <span>
+            Nombre de usuario{" "}
+            {PUEDE_EDITAR && <i class="ml-1 text-sm">(actual: {nombre})</i>}
+          </span>
+        }
       />
       <Contraseña />
 

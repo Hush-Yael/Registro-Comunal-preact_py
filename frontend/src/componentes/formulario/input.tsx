@@ -4,7 +4,7 @@ import { useContext, useRef } from "preact/hooks";
 import { TargetedEvent } from "preact/compat";
 
 export type InputProps = JSX.IntrinsicElements["input"] & {
-  label: string;
+  label: JSX.Element | string;
   campo: string;
   inputClass?: string;
   id?: string;
