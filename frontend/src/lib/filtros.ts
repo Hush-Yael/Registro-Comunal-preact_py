@@ -53,7 +53,7 @@ const busquedaContiene = (
     return valorActual
       .replace(/\./g, "")
       .includes(valorBusqueda.replace(/\./g, ""));
-  else if (columna !== "Nombres y apellidos")
+  else if (columna === "numero_casa")
     return valorActual.includes(valorBusqueda);
 
   return comparacionInsensitiva(valorActual, valorBusqueda);
