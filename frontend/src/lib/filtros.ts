@@ -95,6 +95,7 @@ export const funcionFiltro = <T extends RowData>(
   valorBusqueda: string
 ) => {
   const valorFilaActual: string = fila.getValue(idColumna);
+  if (!valorFilaActual) return false;
 
   switch (configuracionFiltros.value[idColumna]) {
     case "contiene": {
