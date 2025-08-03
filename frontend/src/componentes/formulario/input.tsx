@@ -8,7 +8,7 @@ export type InputProps = JSX.IntrinsicElements["input"] & {
   campo: string;
   inputClass?: string;
   id?: string;
-  descripcion?: string;
+  descripcion?: JSX.Element | string;
   error?: string;
 };
 
@@ -25,7 +25,7 @@ export default (props: InputProps) => (
 
 export const Input = (
   props: Omit<JSX.IntrinsicElements["input"], "value"> & {
-    descripcion?: string;
+    descripcion?: string | JSX.Element;
     inputClass?: string;
     campo: string;
   }
@@ -78,7 +78,10 @@ export const Input = (
   );
 };
 
-export const Descripcion = (props: { texto: string; id?: string }) =>
+export const Descripcion = (props: {
+  texto: JSX.Element | string;
+  id?: string;
+}) =>
   props.texto && (
     <p
       class="ml-0.5 text-xs text-muted"

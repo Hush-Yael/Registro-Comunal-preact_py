@@ -9,7 +9,7 @@ import TerminarSesion from "~/componentes/terminar-sesion";
 import Iconos from "~/componentes/iconos";
 import { useContext, useEffect } from "preact/compat";
 import { useSearchParams } from "wouter-preact";
-import { rutaApi } from "~/lib";
+import { añosDesdeFecha, rutaApi } from "~/lib";
 import { DatosComunidad } from "~/tipos";
 import { signal } from "@preact/signals";
 import { NOMBRE_MÍNIMO } from "~/constantes";
@@ -262,6 +262,11 @@ const Campos = () => {
         id="fecha_nacimiento"
         type="date"
         max={new Date().toISOString().split("T")[0]}
+        descripcion={
+          datos.value.fecha_nacimiento && (
+            <i>{añosDesdeFecha(datos.value.fecha_nacimiento)} años</i>
+          )
+        }
       />
       <Input
         label="Patología / condición"
