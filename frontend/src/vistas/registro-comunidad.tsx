@@ -15,6 +15,7 @@ import { signal } from "@preact/signals";
 import { NOMBRE_MÍNIMO } from "~/constantes";
 import { datosComunidad } from "~/constantes/lista-comunidad";
 import { toast } from "sonner";
+import Main from "~/componentes/main";
 
 const datos = signal<DatosComunidad>({
   nombres: "",
@@ -47,7 +48,7 @@ export default () => {
   }, [params]);
 
   return (
-    <div class="grid grid-rows-[auto_1fr] gap-10 h-full max-h-full overflow-hidden">
+    <Main class="grid grid-rows-[auto_1fr] gap-10 overflow-hidden">
       <Cabecera titulo="Registro de la comunidad">
         <TerminarSesion />
       </Cabecera>
@@ -162,7 +163,7 @@ export default () => {
           </div>
         </div>
       </Formulario>
-    </div>
+    </Main>
   );
 };
 

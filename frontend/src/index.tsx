@@ -25,31 +25,29 @@ export function App() {
   return (
     <>
       <Navegacion />
-      <main class="col p-4 mx-auto py-5 px-6 rounded-box border border-base bg-base shadow-lg max-w-full h-full max-h-full overflow-auto first:row-span-2 first:h-max first:m-auto">
-        <SelectTema />
-        {!sesion.value.usuario ? (
-          <Router>
-            <Switch>
-              <Route path="/registro" component={RegistroUsuarios as any} />
-              <Route component={Login} />
-            </Switch>
-          </Router>
-        ) : (
-          <Router>
-            <Switch>
-              <Route path="/" component={RegistroComunidad} />
-              <Route
-                path="/login"
-                component={() => <Redirect to="/" replace />}
-              />
-              <Route path="/registro" component={RegistroUsuarios as any} />
-              <Route path="/usuarios" component={ListaUsuarios} />
-              <Route path="/registros" component={ListaComunidad} />
-              <Route component={() => <Redirect to="/ " replace />} />
-            </Switch>
-          </Router>
-        )}
-      </main>
+      {!sesion.value.usuario ? (
+        <Router>
+          <Switch>
+            <Route path="/registro" component={RegistroUsuarios as any} />
+            <Route component={Login} />
+          </Switch>
+        </Router>
+      ) : (
+        <Router>
+          <Switch>
+            <Route path="/" component={RegistroComunidad} />
+            <Route
+              path="/login"
+              component={() => <Redirect to="/" replace />}
+            />
+            <Route path="/registro" component={RegistroUsuarios as any} />
+            <Route path="/usuarios" component={ListaUsuarios} />
+            <Route path="/registros" component={ListaComunidad} />
+            <Route component={() => <Redirect to="/ " replace />} />
+          </Switch>
+        </Router>
+      )}
+      <SelectTema />
       <Toaster
         theme={
           tema.value === "oscuro"

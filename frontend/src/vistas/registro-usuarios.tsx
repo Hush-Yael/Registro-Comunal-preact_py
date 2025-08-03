@@ -9,6 +9,7 @@ import { useSignal } from "@preact/signals";
 import { listaUsuarios } from "./lista-usuarios";
 import { rutaApi } from "~/lib";
 import { toast } from "sonner";
+import Main from "~/componentes/main";
 
 const mensajeId = "registro";
 
@@ -23,7 +24,7 @@ export default () => {
     return setLocation("/usuarios", { replace: true });
 
   return (
-    <>
+    <Main class="h-max m-auto">
       <Cabecera
         titulo={PUEDE_EDITAR ? "Editar usuario" : "Registrar nuevo usuario"}
       />
@@ -110,7 +111,7 @@ export default () => {
       >
         <Datos />
       </Formulario>
-    </>
+    </Main>
   );
 };
 

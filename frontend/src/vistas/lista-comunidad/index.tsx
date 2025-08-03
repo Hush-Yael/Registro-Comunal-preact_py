@@ -23,6 +23,7 @@ import { funcionFiltro } from "~/lib/filtros";
 import { FiltroId } from "~/tipos/lista-comunidad";
 import { useEffect, useState } from "preact/hooks";
 import TablaHeader from "./tabla-header";
+import Main from "~/componentes/main";
 
 export default () => {
   const [seleccion, setSeleccion] = useState<RowSelectionState>({});
@@ -154,7 +155,7 @@ export default () => {
   }, []);
 
   return (
-    <div class="wrapper-tabla-comunidad col gap-4 relative h-full max-h-full max-w-[1000px]">
+    <Main class="wrapper-tabla-comunidad gap-4 relative max-w-[1000px]">
       <Cabecera titulo="Lista de registros de la comunidad" />
 
       <ModalGenerar />
@@ -213,6 +214,6 @@ export default () => {
           }).then((r) => r.json()) as Promise<DatosComunidad[]>
         }
       />
-    </div>
+    </Main>
   );
 };

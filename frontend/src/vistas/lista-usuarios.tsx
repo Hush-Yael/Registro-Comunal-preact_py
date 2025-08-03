@@ -8,6 +8,7 @@ import type { Usuario } from "~/tipos";
 import { rutaApi } from "~/lib";
 import { Link } from "wouter-preact";
 import { toast } from "sonner";
+import Main from "~/componentes/main";
 
 export const listaUsuarios = signal<Usuario[]>([]);
 const carga = signal(true);
@@ -68,7 +69,7 @@ const eliminarUsuario = async (nombre: string) => {
 
 export default () => {
   return (
-    <div class="col gap-6 h-full">
+    <Main class="gap-6">
       <Cabecera titulo="Lista de usuarios">
         <TerminarSesion />
       </Cabecera>
@@ -140,6 +141,6 @@ export default () => {
         }}
         obtencionDatos={() => fetch(rutaApi("usuarios")).then((r) => r.json())}
       />
-    </div>
+    </Main>
   );
 };

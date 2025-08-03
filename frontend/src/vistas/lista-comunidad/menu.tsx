@@ -21,7 +21,7 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
   return (
     <Menu.Root>
       <Menu.Trigger
-        class="trigger-primario absolute top-0 right-0 p-1!"
+        class="trigger-primario absolute top-4 right-4 p-1!"
         aria-label="Opciones"
       >
         <Iconos.Tuerca />

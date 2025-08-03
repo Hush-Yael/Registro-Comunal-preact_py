@@ -8,6 +8,7 @@ import { sesion } from "~/index";
 import { signal } from "@preact/signals";
 import { NOMBRE_MÍNIMO } from "~/constantes";
 import { toast } from "sonner";
+import Main from "~/componentes/main";
 
 const mensajeId = "login";
 
@@ -15,7 +16,7 @@ export default () => {
   const datos = signal({ nombre: "", contraseña: "" });
 
   return (
-    <>
+    <Main>
       <Cabecera titulo="Inicio de sesión" />
       <Formulario
         rutaApi="login"
@@ -39,7 +40,7 @@ export default () => {
       >
         <Datos />
       </Formulario>
-    </>
+    </Main>
   );
 };
 
