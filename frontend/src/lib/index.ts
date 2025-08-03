@@ -41,5 +41,5 @@ export const añosDesdeFecha = (fechaNacimiento: string) => {
   fecha.setHours(0, 0, 0, 0);
   const diferencia = Date.now() - fecha.getTime();
   const fechaEdad = new Date(diferencia);
-  return Math.abs(fechaEdad.getUTCFullYear() - 1970);
+  return fechaEdad.getUTCFullYear() - 1970;
 };
