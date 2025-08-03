@@ -162,7 +162,8 @@ const irAlRegistro = <T extends TablaDatos>(
 ) => {
   let n = parseInt(prompt("Indique el índice del registro a buscar:")) - 1;
 
-  if (isNaN(n) || n < 0 || n > props.tabla.getRowCount()) return;
+  if (isNaN(n) || n < 0) return;
+  else if (n > props.tabla.getRowCount()) n = props.tabla.getRowCount() - 1;
 
   const limiteFilas = props.tabla.getState().pagination.pageSize,
     paginaActual = props.tabla.getState().pagination.pageIndex;
