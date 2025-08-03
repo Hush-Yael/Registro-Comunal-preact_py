@@ -38,7 +38,7 @@ export default (props: { tabla: Table<DatosComunidad> }) => (
 
                   <select
                     id={c.id + "-fn"}
-                    class="py-1.25 border border-transparent rounded-field hover:border-base focus-visible:bg-darkest hover:bg-darkest transition-colors"
+                    class="dropdown-select"
                     name="filtro"
                     defaultValue={configuracionFiltros.value[c.id]}
                     onChange={(e) =>
