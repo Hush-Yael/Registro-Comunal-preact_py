@@ -16,6 +16,8 @@ import { NOMBRE_MÍNIMO } from "~/constantes";
 import { datosComunidad } from "~/constantes/lista-comunidad";
 import { toast } from "sonner";
 import Main from "~/componentes/main";
+import useMedia from "~/hooks/useMedia";
+import { Popover } from "radix-ui";
 
 const datos = signal<DatosComunidad>({
   nombres: "",
@@ -48,9 +50,12 @@ export default () => {
   }, [params]);
 
   return (
-    <Main class="grid grid-rows-[auto_1fr] gap-10 overflow-hidden">
+    <Main class="grid grid-rows-[auto_1fr] gap-10 max-w-[700px] overflow-hidden">
       <Cabecera titulo="Registro de la comunidad">
-        <TerminarSesion />
+        <div class="col gap-2">
+          <Editando id={editar} />
+          <TerminarSesion />
+        </div>
       </Cabecera>
       <Formulario
         class="h-full col overflow-hidden"
@@ -156,11 +161,9 @@ export default () => {
           );
         }}
       >
-        <div class="col gap-5 max-w-[700px] min-h-full overflow-hidden">
-          <div class="grid grid-rows-[1fr_auto] gap-10 h-full max-h-full">
-            <Campos />
-            <Botones />
-          </div>
+        <div class="grid grid-rows-[1fr_auto] gap-10 h-full max-h-full">
+          <Campos />
+          <Botones />
         </div>
       </Formulario>
     </Main>
@@ -297,34 +300,71 @@ const Botones = () => {
   const editar = params.get("editar");
 
   return (
-    <div class="col gap-4 max-[440px]:text-sm">
-      {editar && (
-        <small class="m-auto italic text-muted" role="status">
-          <Iconos.Editar /> Editando el registro: <b class="mx-1">{editar}</b>
-        </small>
-      )}
-      <div
-        role="group"
-        class={`${
-          editar ? "max-[440px]:col max-[440px]:*:py-2!" : ""
-        } grid grid-cols-2 gap-2 min-[440px]:m-auto max-[440px]:flex max-[440px]:justify-end`}
+    <div
+      role="group"
+      class={`${
+        editar ? "max-[440px]:col max-[440px]:*:py-2!" : ""
+      } grid grid-cols-2 gap-2 min-[440px]:m-auto max-[440px]:flex max-[440px]:justify-end max-[440px]:text-sm`}
+    >
+      <Reiniciar
+        onClick={() =>
+          setParams((p) => {
+            p.delete("editar");
+            return p;
+          })
+        }
       >
-        <Reiniciar
-          onClick={() =>
-            setParams((p) => {
-              p.delete("editar");
-              return p;
-            })
-          }
-        >
-          <Iconos.Borrar />
-          <span>{editar ? "Descartar cambios" : "Limpiar campos"}</span>
-        </Reiniciar>
-        <Subir>
-          <Iconos.Añadir />
-          <span>{editar ? "Guardar cambios" : "Registrar"}</span>
-        </Subir>
-      </div>
+        <Iconos.Borrar />
+        <span>{editar ? "Descartar cambios" : "Limpiar campos"}</span>
+      </Reiniciar>
+      <Subir>
+        <Iconos.Añadir />
+        <span>{editar ? "Guardar cambios" : "Registrar"}</span>
+      </Subir>
     </div>
+  );
+};
+
+const cl =
+  "bg-sky-100 dark:bg-sky-900 p-2 rounded-selector text-sky-900 dark:text-sky-100";
+
+const Editando = (props: { id?: string }) => {
+  if (!props.id) return null;
+
+  const media = props.id && useMedia("(max-width: 550px)");
+
+  const l = (
+    <span>
+      Editando el registro:{" "}
+      <span class="ml-0.5">
+        #<b>{props.id}</b>
+      </span>
+    </span>
+  );
+
+  return media.value ? (
+    <Popover.Root>
+      <Popover.Trigger
+        class={`${cl} border border-sky-200 dark:border-sky-800 hover:bg-sky-200 dark:hover:bg-sky-700 transition-colors`}
+      >
+        <Iconos.Info />
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          className="dropdown-content text-sm bg-sky-100! dark:bg-sky-800! text-sky-900 dark:text-sky-100 border-sky-200! dark:border-sky-800!"
+          side="bottom"
+          sideOffset={3}
+          align="end"
+          collisionPadding={10}
+        >
+          {l}
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
+  ) : (
+    <small role="status" class={`flex gap-2 items-center mr-auto italic ${cl}`}>
+      <Iconos.Info />
+      {l}
+    </small>
   );
 };
