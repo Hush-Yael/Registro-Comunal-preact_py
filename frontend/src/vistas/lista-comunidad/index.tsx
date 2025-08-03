@@ -164,7 +164,7 @@ export default () => {
         class="
           [&_th[data-id=id]]:text-right [&_td[data-column-id=id]]:justify-end
 
-          [&_th[data-id=cedula]]:text-right [&_td[data-column-id=cedula]]:justify-end
+          [&_th[data-id=cedula],&_th[data-id=cedula-filtro]_input]:text-right [&_td[data-column-id=cedula]]:justify-end
           
           [&_th[data-id=fecha\\_nacimiento],&_th[data-id=fecha\\_nacimiento-filtro]_input]:text-right [&_td[data-column-id=fecha\\_nacimiento]]:justify-end
           
