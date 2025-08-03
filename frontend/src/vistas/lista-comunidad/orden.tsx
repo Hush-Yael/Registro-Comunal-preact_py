@@ -3,103 +3,130 @@ import {
   cargarDatosComunidad,
   ordenColumnas,
 } from "~/constantes/lista-comunidad";
-import type { JSX } from "preact/jsx-runtime";
-import { DropdownMenu as Menu } from "radix-ui";
-import Iconos from "~/componentes/iconos";
+import { DropdownMenu as Menu, Select as RSelect } from "radix-ui";
 import SubTrigger from "~/componentes/menu/subtrigger";
+import { JSX } from "preact/jsx-runtime";
+import Iconos from "~/componentes/iconos";
 
-export default () => {
-  return (
-    <Menu.Sub>
-      <SubTrigger>Orden de los datos</SubTrigger>
-
-      <Menu.Portal>
-        <Menu.SubContent
-          sideOffset={10}
-          collisionPadding={10}
-          class="dropdown-content max-[450px]:transform-[translateX(70%)]! max-[500px]:transform-[translateX(50%)]! text-sm"
-        >
-          <Menu.Label class="font-bold text-center py-1">
-            Ordenar datos por:
-          </Menu.Label>
-
-          <div class="col gap-2.5" role="group">
-            <OrdenItem id="nombres">Nombres</OrdenItem>
-
-            <OrdenItem id="apellidos">Apellidos</OrdenItem>
-
-            <OrdenItem id="cedula">Cedula</OrdenItem>
-
-            <OrdenItem id="fecha_nacimiento">Fecha de nacimiento</OrdenItem>
-
-            <OrdenItem id="edad">Edad</OrdenItem>
-
-            <OrdenItem id="numero_casa">Número de casa</OrdenItem>
-
-            <OrdenItem id="rowid">Orden de añadido</OrdenItem>
-
-            <OrdenItem id="editado">Fecha de edición</OrdenItem>
-          </div>
-        </Menu.SubContent>
-      </Menu.Portal>
-    </Menu.Sub>
-  );
+type Opciones<K extends string> = {
+  // eslint-disable-next-line no-unused-vars
+  [key in K]: {
+    label?: string;
+    // eslint-disable-next-line no-unused-vars
+    icono: (p: JSX.IntrinsicElements["svg"]) => JSX.Element;
+  };
 };
 
-type OrdenItemProps = Omit<JSX.IntrinsicElements["input"], "type" | "id"> & {
-  id: OrdenKey;
+const COLUMNAS: Opciones<OrdenKey> = {
+  nombres: { icono: Iconos.Etiqueta },
+  apellidos: { icono: Iconos.Etiqueta },
+  edad: { icono: Iconos.Edad },
+  cedula: { label: "cédula", icono: Iconos.Cedula },
+  direccion: { label: "dirección", icono: Iconos.Direccion },
+  numero_casa: { label: "número de casa", icono: Iconos.Casa },
+  fecha_nacimiento: {
+    label: "fecha de nacimiento",
+    icono: Iconos.Calendario,
+  },
+  rowid: { label: "índice de añadido", icono: Iconos.Id },
+  patologia: { label: "patología o condición", icono: Iconos.Patologia },
+  editado: { label: "fecha de edición", icono: Iconos.Editar },
 };
 
-const OrdenItem = (props: OrdenItemProps) => {
-  const idChecked = ordenColumnas.value[0] === props.id;
-  const descChecked = idChecked && ordenColumnas.value[1] === "desc";
-  const ascChecked = idChecked && !descChecked;
+const DIRECCIONES: Opciones<"asc" | "desc"> = {
+  asc: { label: "ascendente", icono: Iconos.Ascendente },
+  desc: { label: "descendente", icono: Iconos.Descendente },
+};
 
-  return (
-    <Menu.Group class="flex items-center justify-between gap-6 w-full px-1">
-      <p id={props.id + "-l"}>
-        <span className="sr-only">Ordenar por </span>
-        {props.children}
-      </p>
+export default () => (
+  <Menu.Sub>
+    <SubTrigger>Orden de los datos</SubTrigger>
 
-      <Menu.Group
-        class="flex items-center gap-1"
-        aria-label="Dirección de orden"
+    <Menu.Portal>
+      <Menu.SubContent
+        onSelect={(e) => e.preventDefault()}
+        sideOffset={10}
+        collisionPadding={10}
+        class="dropdown-content max-[450px]:transform-[translateX(70%)]! max-[550px]:transform-[translateX(50%)]! text-sm"
       >
-        <Menu.CheckboxItem
-          class="dropdown-check-btn"
-          checked={ascChecked}
-          onSelect={(e) => e.preventDefault()}
-          aria-label="ascendente"
-          asChild
-        >
-          <button
-            onClick={() => {
-              ordenColumnas.value = ascChecked ? [] : [props.id, "asc"];
-              cargarDatosComunidad.value = true;
-            }}
-          >
-            <Iconos.Ascendente />
-          </button>
-        </Menu.CheckboxItem>
+        <Select
+          label="Ordenar por"
+          triggerValue={
+            COLUMNAS[ordenColumnas.value[0]].label || ordenColumnas.value[0]
+          }
+          value={ordenColumnas.value[0]}
+          onValueChange={(v) => {
+            ordenColumnas.value = [
+              v as OrdenKey,
+              ordenColumnas.value[1] || "asc",
+            ];
+            cargarDatosComunidad.value = true;
+            console.log(v);
+          }}
+          opciones={COLUMNAS}
+        />
 
-        <Menu.CheckboxItem
-          class="dropdown-check-btn"
-          checked={descChecked}
-          onSelect={(e) => e.preventDefault()}
-          aria-label="descendente"
-          asChild
-        >
-          <button
-            onClick={() => {
-              ordenColumnas.value = descChecked ? [] : [props.id, "desc"];
-              cargarDatosComunidad.value = true;
-            }}
-          >
-            <Iconos.Descendente />
-          </button>
-        </Menu.CheckboxItem>
-      </Menu.Group>
-    </Menu.Group>
-  );
-};
+        <Select
+          label="Dirección de orden"
+          disabled={!ordenColumnas.value[0]}
+          value={ordenColumnas.value[1]}
+          triggerValue={DIRECCIONES[ordenColumnas.value[1]].label}
+          onValueChange={(v) => {
+            ordenColumnas.value = [ordenColumnas.value[0], v as "asc" | "desc"];
+            cargarDatosComunidad.value = true;
+          }}
+          opciones={DIRECCIONES}
+        />
+      </Menu.SubContent>
+    </Menu.Portal>
+  </Menu.Sub>
+);
+
+const Select = <K extends string>(props: {
+  label: string;
+  value: string;
+  triggerValue?: string;
+  disabled?: boolean;
+  // eslint-disable-next-line no-unused-vars
+  onValueChange: (v: string) => void;
+  opciones: Opciones<K>;
+}) => (
+  <RSelect.Root
+    disabled={props.disabled}
+    value={props.value}
+    onValueChange={props.onValueChange}
+  >
+    <RSelect.Trigger class="flex items-center justify-between gap-4">
+      {props.label || "Seleccionar"}:
+      <span class="flex items-center gap-2 dropdown-select pl-2! pr-1!">
+        {props.triggerValue || props.value}
+        <Iconos.FlechaDer class="size-4 transform-[rotate(90deg)] text-muted" />
+      </span>
+    </RSelect.Trigger>
+
+    <RSelect.Content
+      align="end"
+      sideOffset={3}
+      position="popper"
+      class="group/content z-1 text-sm"
+    >
+      <RSelect.Viewport class="dropdown-content">
+        {Object.entries<Opciones<K>[keyof Opciones<K>]>(props.opciones).map(
+          ([id, { label, icono }]) => (
+            <RSelect.Item
+              onSelect={(e) => console.log(e)}
+              class="group dropdown-check"
+              value={id}
+            >
+              {icono({
+                class:
+                  "size-4.5 opacity-60 group-[[data-state=checked]]:opacity-90",
+              })}
+              <RSelect.ItemText>{label || id}</RSelect.ItemText>
+            </RSelect.Item>
+          )
+        )}
+      </RSelect.Viewport>
+    </RSelect.Content>
+  </RSelect.Root>
+);

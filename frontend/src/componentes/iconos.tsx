@@ -640,4 +640,127 @@ export default {
       <path d="M6 6l12 12" />
     </svg>
   ),
+
+  Etiqueta: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M16.52 7h-10.52a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h10.52a1 1 0 0 0 .78 -.375l3.7 -4.625l-3.7 -4.625a1 1 0 0 0 -.78 -.375" />
+    </svg>
+  ),
+
+  Calendario: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M8 2v4" />
+      <path d="M16 2v4" />
+      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <path d="M3 10h18" />
+      <path d="M8 14h.01" />
+      <path d="M12 14h.01" />
+      <path d="M16 14h.01" />
+      <path d="M8 18h.01" />
+      <path d="M12 18h.01" />
+      <path d="M16 18h.01" />
+    </svg>
+  ),
+
+  Cedula: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      style="enable-background:new 0 0 24 24;"
+      version="1.1"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M18,5H6C3.8,5,2,6.8,2,9v6c0,2.2,1.8,4,4,4h12c2.2,0,4-1.8,4-4V9C22,6.8,20.2,5,18,5z M20,15c0,1.1-0.9,2-2,2H6    c-1.1,0-2-0.9-2-2V9c0-1.1,0.9-2,2-2h12c1.1,0,2,0.9,2,2V15z" />
+      <path d="M8,12c-1.7,0-3,1.3-3,3c0,0.6,0.4,1,1,1s1-0.4,1-1c0-0.6,0.4-1,1-1s1,0.4,1,1c0,0.6,0.4,1,1,1s1-0.4,1-1    C11,13.3,9.7,12,8,12z" />
+      <circle cx="8" cy="10" r="2" />
+      <path d="M14,11h1c0.6,0,1-0.4,1-1s-0.4-1-1-1h-1c-0.6,0-1,0.4-1,1S13.4,11,14,11z" />
+      <path d="M17,13h-3c-0.6,0-1,0.4-1,1s0.4,1,1,1h3c0.6,0,1-0.4,1-1S17.6,13,17,13z" />
+    </svg>
+  ),
+
+  Edad: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+      <path d="M13 15v-6" />
+      <path d="M15.5 12h3" />
+      <path d="M17 10.5v3" />
+      <path d="M7 10.5a1.5 1.5 0 0 1 3 0c0 .443 -.313 .989 -.612 1.393l-2.388 3.107h3" />
+    </svg>
+  ),
+
+  Patologia: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M6 4h-1a2 2 0 0 0 -2 2v3.5h0a5.5 5.5 0 0 0 11 0v-3.5a2 2 0 0 0 -2 -2h-1" />
+      <path d="M8 15a6 6 0 1 0 12 0v-3" />
+      <path d="M11 3v2" />
+      <path d="M6 3v2" />
+      <path d="M20 10m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+    </svg>
+  ),
+
+  Direccion: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 21v-4" />
+      <path d="M12 13v-4" />
+      <path d="M12 5v-2" />
+      <path d="M10 21h4" />
+      <path d="M8 5v4h11l2 -2l-2 -2z" />
+      <path d="M14 13v4h-8l-2 -2l2 -2z" />
+    </svg>
+  ),
+
+  Id: (props: JSX.IntrinsicElements["svg"]) => (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <line x1="4" x2="20" y1="9" y2="9" />
+      <line x1="4" x2="20" y1="15" y2="15" />
+      <line x1="10" x2="8" y1="3" y2="21" />
+      <line x1="16" x2="14" y1="3" y2="21" />
+    </svg>
+  ),
 };
