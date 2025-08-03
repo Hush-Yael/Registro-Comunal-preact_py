@@ -3,7 +3,7 @@ from typing import Callable
 from flask_cors import CORS
 from threading import Thread, Event
 from flask import Flask, request
-from api.index import api
+from api.index import montar_api
 from waitress import serve
 import locale
 
@@ -26,7 +26,7 @@ CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
-app.register_blueprint(api)
+montar_api(app)
 
 if PROD or PREVIEW:
 

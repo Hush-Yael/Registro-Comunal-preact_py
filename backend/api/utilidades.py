@@ -1,8 +1,25 @@
 from datetime import datetime, date
 from os import path
 from pdf2docx import Converter
-from constantes import RUTA_BASE
+from constantes import RUTA_BASE, ErrorDeValidacion
 from xhtml2pdf import pisa
+from flask import (
+    abort,
+    jsonify,
+)
+
+
+def fetch(func, *datos):
+    try:
+        return jsonify(func(*datos))
+    except Exception as e:
+        if isinstance(e, ErrorDeValidacion):
+            return jsonify(e.args[0]), 400
+        elif isinstance(e, KeyError):
+            print(f"Ocurrio un error de validación: {e}")
+            return jsonify(e.args[0]), 400
+        print(f"Ocurrio un error inesperado: {e}")
+        return abort(500)
 
 
 def fecha_a_años(fecha: str):
