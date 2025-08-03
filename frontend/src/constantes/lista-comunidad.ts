@@ -17,7 +17,7 @@ export const eliminandoMultiples = signal(false);
 
 export const ordenColumnas = useLocalStorage<OrdenColumnas>({
   key: "orden-comunidad",
-  default: [],
+  default: ["rowid", "asc"],
   validacion: (v) =>
     Array.isArray(v) &&
     v.length === 2 &&
