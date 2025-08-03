@@ -292,7 +292,7 @@ const Botones = () => {
   const editar = params.get("editar");
 
   return (
-    <div class="col gap-4">
+    <div class="col gap-4 max-[440px]:text-sm">
       {editar && (
         <small class="m-auto italic text-muted" role="status">
           <Iconos.Editar /> Editando el registro: <b class="mx-1">{editar}</b>
@@ -300,7 +300,9 @@ const Botones = () => {
       )}
       <div
         role="group"
-        class="grid grid-cols-2 gap-2 min-[440px]:m-auto max-[440px]:flex max-[440px]:justify-end max-[440px]:text-sm"
+        class={`${
+          editar ? "max-[440px]:col max-[440px]:*:py-2!" : ""
+        } grid grid-cols-2 gap-2 min-[440px]:m-auto max-[440px]:flex max-[440px]:justify-end`}
       >
         <Reiniciar
           onClick={() =>
