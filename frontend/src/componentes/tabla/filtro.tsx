@@ -33,7 +33,7 @@ export default <T extends TablaDatos>({
 
   return (
     <input
-      class="w-full p-1.5 outline-0 focus:inset-shadow-[0_0_0_1px] focus:inset-shadow-primary [[type=date]]:not-focus:text-muted font-[400] placeholder:font-thin placeholder:text-muted"
+      class="w-full p-1.5 outline-0 focus:inset-shadow-[0_0_0_1px] focus:inset-shadow-primary hover:not-focus:shadow-[0_1px_0_#0003] dark:hover:not-focus:shadow-[0_1px_0_#fff3] [[type=date]]:not-focus:text-muted [[type=date]]:not-focus:hover:text-[inherit] font-[400] placeholder:font-thin placeholder:text-muted hover:placeholder:text-[inherit] focus:placeholder:text-[inherit] placeholder:transition-colors"
       placeholder="buscar..."
       type={filterVariant}
       name="filtro"
