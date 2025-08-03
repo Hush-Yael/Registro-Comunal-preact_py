@@ -79,9 +79,7 @@ export default () => {
               else return d;
             });
 
-            setTimeout(() => {
-              setLocation("/usuarios", { replace: true });
-            }, 800);
+            setLocation("/usuarios", { replace: true });
           } else {
             listaUsuarios.value.push({
               id: listaUsuarios.value.length
