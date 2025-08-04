@@ -124,6 +124,14 @@ button:disabled {
   opacity: 0.5;
 }
 
+input:-webkit-autofill {
+  -webkit-background-clip: text;
+  -webkit-box-shadow: 0 0 0 30px var(--bg-darkest) inset !important;
+}
+
+input[aria-invalid=true]:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-red-500) !important;
+}
 
 option:checked {
   background-color: var(--primary);
