@@ -7,10 +7,11 @@ import {
 import { COLUMNAS_FILTRABLES } from "~/constantes";
 import { configuracionFiltros } from "~/constantes/lista-comunidad";
 
-const busquedaMayor = (
+const busquedaMayorOMenor = (
   columna: (typeof COLUMNAS_FILTRABLES)[number],
   valorActual: string,
-  valorBusqueda: string
+  valorBusqueda: string,
+  mayor = true
 ) => {
   if (columna === "fecha_nacimiento") {
     const edad = añosDesdeFecha(valorActual),
@@ -18,17 +19,17 @@ const busquedaMayor = (
 
     if (!edad || isNaN(edadBusqueda) || edadBusqueda < 0) return false;
 
-    return edad > edadBusqueda;
+    return mayor ? edad > edadBusqueda : edad < edadBusqueda;
   }
 
-  return (
-    Number.parseInt(
+  const numActual = Number.parseInt(
       columna === "cedula" ? valorActual.replace(/\./g, "") : valorActual
-    ) >
-    Number.parseInt(
+    ),
+    numBusqueda = Number.parseInt(
       columna === "cedula" ? valorBusqueda.replace(/\./g, "") : valorBusqueda
-    )
-  );
+    );
+
+  return mayor ? numActual > numBusqueda : numActual < numBusqueda;
 };
 
 const busquedaAntesODespues = (
@@ -121,11 +122,16 @@ export const funcionFiltro = <T extends RowData>(
     }
 
     case "mayor-a": {
-      return busquedaMayor(idColumna, valorFilaActual, valorBusqueda);
+      return busquedaMayorOMenor(idColumna, valorFilaActual, valorBusqueda);
     }
 
     case "menor-a": {
-      return !busquedaMayor(idColumna, valorFilaActual, valorBusqueda);
+      return busquedaMayorOMenor(
+        idColumna,
+        valorFilaActual,
+        valorBusqueda,
+        false
+      );
     }
 
     case "despues-de": {
