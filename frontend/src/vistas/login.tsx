@@ -62,7 +62,7 @@ const Datos = () => {
         <button class="btn btn-primario" disabled={estado.value == "subiendo"}>
           Entrar
         </button>
-        <Link href="/registro" class="text-center underline underline-offset-2">
+        <Link href="/registro" class="link">
           Ir al registro
         </Link>
       </div>

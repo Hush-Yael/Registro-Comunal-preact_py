@@ -179,7 +179,7 @@ const Datos = () => {
           {PUEDE_EDITAR ? "Guardar cambios" : "Registrar"}
         </button>
         {!PUEDE_EDITAR && (
-          <Link href="/" class="text-center underline underline-offset-2">
+          <Link href="/" class="link">
             Ir al inicio de sesión
           </Link>
         )}

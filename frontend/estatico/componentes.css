@@ -72,6 +72,10 @@ label.btn {
   @apply absolute m-auto h-full
 }
 
+.link {
+  @apply text-center underline underline-offset-2
+}
+
 .carga {
   --speed: .8s;
   --bg-opacity: 0.1;
