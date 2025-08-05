@@ -41,7 +41,7 @@ export default <T extends TablaDatos>(props: {
       <tr class="flex w-full border-t border-base">
         {props.tabla.getHeaderGroups()[0].headers.map((header) => (
           <th
-            class="block bg-base"
+            class="relative block bg-base"
             key={header.id + "-filtro"}
             data-id={header.id + "-filtro"}
             style={{ width: header.getSize() }}

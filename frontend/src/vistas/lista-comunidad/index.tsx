@@ -164,13 +164,14 @@ export default () => {
         class="
           [&_th[data-id=id]]:text-right [&_td[data-column-id=id]]:justify-end
 
-          [&_th[data-id=cedula],&_th[data-id=cedula-filtro]_input]:text-right [&_td[data-column-id=cedula]]:justify-end
+          [&_th[data-id=cedula],&_th[data-id=cedula-filtro]_input]:text-right [&_td[data-column-id=cedula]]:justify-end [&_th[data-id=cedula-filtro]_.filtro-popover-btn]:right-[unset] [&_th[data-id=cedula-filtro]_.filtro-popover-btn]:left-0
           
-          [&_th[data-id=fecha\\_nacimiento],&_th[data-id=fecha\\_nacimiento-filtro]_input]:text-right [&_td[data-column-id=fecha\\_nacimiento]]:justify-end
+          [&_th[data-id=fecha\\_nacimiento],&_th[data-id=fecha\\_nacimiento-filtro]_input]:text-right [&_td[data-column-id=fecha\\_nacimiento]]:justify-end [&_th[data-id=fecha\\_nacimiento-filtro]_.filtro-popover-btn]:right-[unset] [&_th[data-id=fecha\\_nacimiento-filtro]_.filtro-popover-btn]:left-0
           
           [&_th[data-id=edad],&_th[data-id=edad-filtro]_input]:text-right [&_td[data-column-id=edad]]:justify-end
+          [&_th[data-id=edad-filtro]_.filtro-popover-btn]:right-[unset] [&_th[data-id=edad-filtro]_.filtro-popover-btn]:left-0
 
-          [&_th[data-id=numero\\_casa],&_th[data-id=numero\\_casa-filtro]_input]:text-right [&_td[data-column-id=numero\\_casa]]:justify-end
+          [&_th[data-id=numero\\_casa],&_th[data-id=numero\\_casa-filtro]_input]:text-right [&_td[data-column-id=numero\\_casa]]:justify-end [&_th[data-id=numero\\_casa-filtro]_.filtro-popover-btn]:right-[unset] [&_th[data-id=numero\\_casa-filtro]_.filtro-popover-btn]:left-0
 
           [&_th[data-id=Acciones]]:text-[0px]
         "
