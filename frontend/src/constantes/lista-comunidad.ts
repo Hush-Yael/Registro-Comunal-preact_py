@@ -64,3 +64,5 @@ export const OPCIONES_FILTROS = {
     return this.cedula as (typeof OPCIONES_FILTROS)["cedula"];
   },
 } as const;
+
+export const COLUMNAS_NUMEROS: FiltroKey[] = ["cedula", "edad", "numero_casa"];

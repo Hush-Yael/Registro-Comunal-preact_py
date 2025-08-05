@@ -5,7 +5,10 @@ import {
   normalizarString,
 } from "~/lib";
 import { COLUMNAS_FILTRABLES } from "~/constantes";
-import { configuracionFiltros } from "~/constantes/lista-comunidad";
+import {
+  COLUMNAS_NUMEROS,
+  configuracionFiltros,
+} from "~/constantes/lista-comunidad";
 
 const busquedaMayorOMenor = (
   columna: (typeof COLUMNAS_FILTRABLES)[number],
@@ -58,8 +61,8 @@ const busquedaContiene = (
     return valorActual
       .replace(/\./g, "")
       .includes(valorBusqueda.replace(/\./g, ""));
-  else if (columna === "numero_casa")
-    return valorActual.includes(valorBusqueda);
+  else if (COLUMNAS_NUMEROS.includes(columna))
+    return valorActual.trim().includes(valorBusqueda.trim());
 
   return comparacionInsensitiva(valorActual, valorBusqueda);
 };
@@ -74,10 +77,10 @@ const busquedaEmpiezaOTerminaCon = (
 
   if (columna === "cedula")
     return valorActual.replace(/\./g, "")[fn](valorBusqueda.replace(/\./g, ""));
-  else if (columna === "Nombres y apellidos" || columna === "direccion")
-    return comparacionInsensitiva(valorActual, valorBusqueda, fn);
+  else if (COLUMNAS_NUMEROS.includes(columna))
+    return valorActual.trim()[fn](valorBusqueda.trim());
 
-  return valorActual.trim()[fn](valorBusqueda.trim());
+  return comparacionInsensitiva(valorActual, valorBusqueda, fn);
 };
 
 const busquedaIgualA = (
@@ -90,10 +93,10 @@ const busquedaIgualA = (
       Number.parseInt(valorActual.replace(/\./g, "")) ===
       Number.parseInt(valorBusqueda.replace(/\./g, ""))
     );
-  else if (columna === "Nombres y apellidos" || columna === "direccion")
-    return normalizarString(valorActual) === normalizarString(valorBusqueda);
+  else if (COLUMNAS_NUMEROS.includes(columna))
+    return valorActual.trim() === valorBusqueda.trim();
 
-  return valorActual.trim() === valorBusqueda.trim();
+  return normalizarString(valorActual) === normalizarString(valorBusqueda);
 };
 
 export const funcionFiltro = <T extends RowData>(
