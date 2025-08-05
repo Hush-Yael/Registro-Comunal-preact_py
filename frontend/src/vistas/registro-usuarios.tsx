@@ -10,6 +10,7 @@ import { listaUsuarios } from "./lista-usuarios";
 import { rutaApi } from "~/lib";
 import { toast } from "sonner";
 import Main from "~/componentes/main";
+import Iconos from "~/componentes/iconos";
 
 const mensajeId = "registro";
 
@@ -176,11 +177,21 @@ const Datos = () => {
           class="btn btn-primario"
           disabled={estado.value == "subiendo" || estado.value == "fetching"}
         >
-          {PUEDE_EDITAR ? "Guardar cambios" : "Registrar"}
+          {PUEDE_EDITAR ? (
+            <>
+              <Iconos.Check class="size-5" /> Guardar cambios
+            </>
+          ) : (
+            "Registrar"
+          )}
         </button>
-        {!PUEDE_EDITAR && (
+        {!PUEDE_EDITAR ? (
           <Link href="/" class="link">
             Ir al inicio de sesión
+          </Link>
+        ) : (
+          <Link href="/usuarios" class="btn btn-secundario" replace>
+            <Iconos.X class="size-5" /> Descartar edición
           </Link>
         )}
       </div>
