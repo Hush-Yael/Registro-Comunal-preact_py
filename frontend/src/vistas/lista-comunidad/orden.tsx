@@ -61,7 +61,6 @@ export default () => (
               ordenColumnas.value[1] || "asc",
             ];
             cargarDatosComunidad.value = true;
-            console.log(v);
           }}
           opciones={COLUMNAS}
         />
@@ -113,11 +112,7 @@ const Select = <K extends string>(props: {
       <RSelect.Viewport class="dropdown-content">
         {Object.entries<Opciones<K>[keyof Opciones<K>]>(props.opciones).map(
           ([id, { label, icono }]) => (
-            <RSelect.Item
-              onSelect={(e) => console.log(e)}
-              class="group dropdown-check"
-              value={id}
-            >
+            <RSelect.Item class="group dropdown-check" value={id}>
               {icono({
                 class:
                   "size-4.5 opacity-60 group-[[data-state=checked]]:opacity-90",
