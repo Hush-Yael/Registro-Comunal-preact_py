@@ -74,6 +74,7 @@ export default () => {
         }}
         modificarValoresEnviados={(d) => ({
           ...d,
+          nombres: (d.nombres as string).trim().replace(/\s{2,}/g, " "),
           cedula: (d.cedula as string).trim()
             ? parseInt((d.cedula as string).replace(/\D/g, "")) || null
             : null,
@@ -214,6 +215,11 @@ const Campos = () => {
         type="text"
         minlength={NOMBRE_MÍNIMO}
         required
+        onBeforeInput={(e) => {
+          const { data } = e;
+          if (data && !/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]/.test(data))
+            e.preventDefault();
+        }}
       />
       <Input
         label="Apellidos"
@@ -222,6 +228,11 @@ const Campos = () => {
         type="text"
         minlength={NOMBRE_MÍNIMO}
         required
+        onBeforeInput={(e) => {
+          const { data } = e;
+          if (data && !/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]/.test(data))
+            e.preventDefault();
+        }}
       />
       <Input
         label="Cédula"
