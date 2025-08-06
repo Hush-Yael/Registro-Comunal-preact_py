@@ -39,7 +39,7 @@ def lista_comunidad():
             "desc",
         ]:
             columnaOrden = []
-        if columnaOrden[0] == "edad":
+        elif columnaOrden[0] == "edad":
             columnaOrden[0] = "CAST(edad AS INTEGER)"
 
     return obtener_datos_comunidad(columnaOrden)
