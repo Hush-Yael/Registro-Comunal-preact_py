@@ -34,13 +34,16 @@ def lista_comunidad():
     if not columnaOrden or type(columnaOrden) is not list:
         columnaOrden = []
     else:
-        if columnaOrden[0] not in COLUMNAS_ORDENABLES or columnaOrden[1] not in [
-            "asc",
-            "desc",
-        ]:
+        if len(columnaOrden) < 2 or columnaOrden[0] not in COLUMNAS_ORDENABLES:
             columnaOrden = []
         elif columnaOrden[0] == "edad":
             columnaOrden[0] = "CAST(edad AS INTEGER)"
+
+        if columnaOrden[1] not in [
+            "asc",
+            "desc",
+        ]:
+            columnaOrden[1] = "asc"
 
     return obtener_datos_comunidad(columnaOrden)
 
