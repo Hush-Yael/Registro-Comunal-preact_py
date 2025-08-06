@@ -11,6 +11,7 @@ import { rutaApi } from "~/lib";
 import { toast } from "sonner";
 import Main from "~/componentes/main";
 import Iconos from "~/componentes/iconos";
+import { NOMBRE_MÍNIMO } from "~/constantes";
 
 const mensajeId = "registro";
 
@@ -162,6 +163,8 @@ const Datos = () => {
         }}
         campo="nombre"
         id="nombre-de-usuario"
+        required
+        minLength={NOMBRE_MÍNIMO}
         label={
           <span>
             Nombre de usuario{" "}
