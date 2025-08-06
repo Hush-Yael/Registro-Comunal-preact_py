@@ -294,6 +294,9 @@ const Campos = () => {
         id="numero_casa"
         type="text"
         min={1}
+        onBeforeInput={(e) => {
+          if (e.data && !/[\d\-_\s]/.test(e.data)) e.preventDefault();
+        }}
       />
       <Input
         class="col-span-2"
