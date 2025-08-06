@@ -100,7 +100,7 @@ export default <T extends TablaDatos>(props: TablaProps<T>) => {
           />
           <tbody
             class="grid relative min-h-full bg-dark border border-t-0 border-base rounded-b empty:before:content-['No_se_encontraron_datos'] before:m-auto before:text-lg before:text-muted"
-            style={{ height: `${virtualizadorFilas.getTotalSize()}px` }}
+            style={{ height: `${virtualizadorFilas.getTotalSize() + 1}px` }}
           >
             {virtualizadorFilas.getVirtualItems().map((virtualRow) => {
               const row = filas[virtualRow.index] as Row<T>;
