@@ -128,7 +128,7 @@ const Datos = () => {
     if (!valor) return (errores.value = { ...errores.value, nombre: "" });
 
     try {
-      const respuesta = await fetch(rutaApi(`verificar-nombre-usuario`), {
+      const respuesta = await fetch(rutaApi("verificar-nombre-usuario"), {
         method: "POST",
         body: JSON.stringify({ nombre: valor, id: datos.value.id }),
         headers: {

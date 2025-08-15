@@ -130,6 +130,7 @@ def verificar_cedula():
 @post_api.route("/api/verificar-nombre-usuario", methods=["POST"])
 def verificar_nombre():
     json = request.json
+
     if not json:
         return "No se proporcionaron datos", 400
 
@@ -138,8 +139,6 @@ def verificar_nombre():
         return "No se proporcionó un nombre", 400
 
     id = json.get("id", "")
-    if not id:
-        return "No se proporcionó un id", 400
 
     existe = verificar_nombre_existente(nombre, id)
     return ("", 404) if not existe else ("", 204)
