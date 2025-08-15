@@ -82,7 +82,16 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
             accept=".csv"
             id="exportar"
           />
-          <Menu.Item onSelect={(e) => e.preventDefault()} asChild>
+          <Menu.Item
+            onSelect={(e) => {
+              e.preventDefault();
+              if (sesion.value.rol !== "admin" || _portando.value)
+                toast.error("No tienes permisos de administrador", {
+                  id: "no-admin",
+                });
+            }}
+            asChild
+          >
             <label
               class="dropdown-item cursor-pointer peer-disabled/input:border-0! peer-disabled/input:data-highlighted:bg-base!"
               htmlFor="exportar"
@@ -101,6 +110,12 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
               sesion.value.rol !== "admin" ||
               _portando.value ||
               datosComunidad.value.length < 1
+            }
+            onClick={(e) =>
+              (e.target as HTMLInputElement).hasAttribute("data-disabled") &&
+              toast.error("No tienes permisos de administrador", {
+                id: "no-admin",
+              })
             }
             class="group dropdown-item justify-between"
           >
