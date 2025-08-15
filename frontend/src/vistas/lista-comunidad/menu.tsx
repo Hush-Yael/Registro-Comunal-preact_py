@@ -83,7 +83,10 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
             id="exportar"
           />
           <Menu.Item onSelect={(e) => e.preventDefault()} asChild>
-            <label class="dropdown-item cursor-pointer" htmlFor="exportar">
+            <label
+              class="dropdown-item cursor-pointer peer-disabled/input:border-0! peer-disabled/input:data-highlighted:bg-base!"
+              htmlFor="exportar"
+            >
               <Iconos.Importar />
               Importar datos...
             </label>
