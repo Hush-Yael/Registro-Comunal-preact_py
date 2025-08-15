@@ -9,7 +9,7 @@
     "dev-frontend": "cd frontend && node --run dev",
     "dev-backend": ".\\backend\\.venv-32\\Scripts\\python backend\\app-webview2.py -D",
     "dev-webview": "concurrently --kill-others \"node --run dev-frontend\" \"node --run start-webview-dev\"",
-    "star-webview-dev": ".\\backend\\.venv-32\\Scripts\\python backend\\app-webview2.py -P -D",
+    "start-webview-dev": ".\\backend\\.venv-32\\Scripts\\python backend\\app-webview2.py -P -D",
     "preview-webview": ".\\backend\\.venv-32\\Scripts\\python backend\\app-webview2.py -P",
     "preview-tk": ".\\backend\\.venv-32\\Scripts\\python backend\\app-tk.py -P",
     "init-frontend": "cd frontend && pnpm install",
