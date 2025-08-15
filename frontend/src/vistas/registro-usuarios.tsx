@@ -80,8 +80,6 @@ export default () => {
               if (d.id === parseInt(ID)) return { ...d, ...datos.value };
               else return d;
             });
-
-            setLocation("/usuarios", { replace: true });
           } else {
             listaUsuarios.value.push({
               id: listaUsuarios.value.length
@@ -92,13 +90,18 @@ export default () => {
             });
           }
 
-          datos.value = { nombre: "", contraseña: "" };
           toast.success(
             `${
               PUEDE_EDITAR ? "Datos actualizados" : "Usuario registrado"
             } con éxito`,
             { id: mensajeId }
           );
+
+          if (!PUEDE_EDITAR)
+            sesion.value = { usuario: datos.value.nombre, rol: "supervisor" };
+
+          setLocation(PUEDE_EDITAR ? "/usuarios" : "/", { replace: true });
+          datos.value = { nombre: "", contraseña: "" };
         }}
         onError={() => {
           toast.error(
