@@ -44,9 +44,11 @@ export default <T extends TablaDatos>(props: PaginasProps<T>) => (
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
 
-      <Cantidad {...props} />
+      <Cantidad
+        {...props}
+        pageSize={props.tabla.getState().pagination.pageSize}
+      />
     </div>
-
     <div
       role="group"
       class="flex items-center gap-1.5 [&_svg]:size-5! [&_button]:rounded-field [&_button]:not-disabled:hover:bg-base [&_button]:not-disabled:focus-visible:bg-base"
@@ -132,15 +134,19 @@ const cambiarLimite = <T extends TablaDatos>(props: PaginasProps<T>) => {
   );
 };
 
-const media = useMedia("(max-width: 500px)");
+const media = useMedia("(max-width: 600px)");
 
-const Cantidad = <T extends TablaDatos>(props: PaginasProps<T>) => {
-  const l = `${props.tabla.getRowCount()} ${props.apodoFilas || "filas"}`;
+const Cantidad = <T extends TablaDatos>(
+  props: PaginasProps<T> & { pageSize: number }
+) => {
+  const l = `${props.tabla.getRowCount()} ${props.apodoFilas || "filas"} - ${
+    props.pageSize
+  } por página`;
 
   return media.value ? (
     <Popover.Root>
       <Popover.Trigger>
-        <Iconos.Info class="max-[450px]:size-4!" />
+        <Iconos.Info class="size-5 max-[450px]:size-4!" />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
