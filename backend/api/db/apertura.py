@@ -16,7 +16,7 @@ def abrir_db():
     cursor.executescript(f"""--sql
       CREATE TABLE IF NOT EXISTS usuarios(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nombre TEXT NOT NULL UNIQUE {nombres_check('nombre')},
+        nombre TEXT NOT NULL UNIQUE {nombres_check("nombre")},
         rol TEXT NOT NULL CHECK(rol in ('admin', 'supervisor')),
         contraseña TEXT NOT NULL CHECK(length(trim(contraseña)) >= {CONTRASEÑA_MÍNIMA})
       );
@@ -28,8 +28,8 @@ def abrir_db():
 
       CREATE TABLE IF NOT EXISTS comunidad (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nombres TEXT NOT NULL {nombres_check('nombres')},
-        apellidos TEXT NOT NULL {nombres_check('apellidos')},
+        nombres TEXT NOT NULL {nombres_check("nombres")},
+        apellidos TEXT NOT NULL {nombres_check("apellidos")},
         cedula TEXT UNIQUE DEFAULT NULL CHECK(cedula = NULL OR CAST(cedula AS INTEGER) > 0),
         fecha_nacimiento TEXT,
         patologia TEXT,
