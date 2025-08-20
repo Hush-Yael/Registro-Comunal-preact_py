@@ -1,6 +1,10 @@
 import os
+from pathlib import Path
 import sqlite3
+import sys
 from constantes import RUTA_BASE, NOMBRE_MÍNIMO, CONTRASEÑA_MÍNIMA
+
+NOMBRE_ARCHIVO_DB = "comunidad.db"
 
 
 def nombres_check(nombre_columna: str):
@@ -8,7 +12,7 @@ def nombres_check(nombre_columna: str):
 
 
 def abrir_db():
-    conn = sqlite3.connect(os.path.join(RUTA_BASE, "comunidad.db"))
+    conn = sqlite3.connect(obtener_ruta_db())
     conn.row_factory = sqlite3.Row
 
     cursor = conn.cursor()
@@ -40,3 +44,17 @@ def abrir_db():
     """)
 
     return (conn, cursor)
+
+
+def obtener_ruta_db():
+    # Si estamos en el ejecutable
+    if getattr(sys, "frozen", False):
+        # Usar AppData en vez del directorio del ejecutable
+        app_data_dir = (
+            Path(os.getenv("APPDATA") or "~") / "Registro Comunal (preact_py)"
+        )
+        app_data_dir.mkdir(exist_ok=True, parents=True)
+        return app_data_dir / NOMBRE_ARCHIVO_DB
+    else:
+        # Modo desarrollo
+        return os.path.join(RUTA_BASE, NOMBRE_ARCHIVO_DB)
