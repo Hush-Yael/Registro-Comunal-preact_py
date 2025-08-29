@@ -3,10 +3,26 @@ from main import PORT, setup
 from webbrowser import open
 import socket
 
-hostname = socket.gethostname()
-ip = socket.gethostbyname(hostname)
 
-LAN = not ip.startswith("127")
+def obtener_ip_local():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+    try:
+        s.connect(("192.255.255.255", 1))
+        IP = s.getsockname()
+    except Exception:
+        IP = "127.0.0.1"
+    finally:
+        s.close()
+    return IP
+
+
+ip = obtener_ip_local()
+
+if isinstance(ip, tuple):
+    ip = ip[0]
+
+LAN = not ip.startswith("127") and ip.startswith("192")
 
 
 def abrir_navegador(label):
