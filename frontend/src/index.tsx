@@ -66,6 +66,13 @@ export function App() {
           },
         }}
       />
+      <span
+        class="fixed bottom-1 left-3 text-muted text-xs tabular-nums -z-1"
+        role="status"
+      >
+        {import.meta.env.VITE_APP_VERSION}{" "}
+        {import.meta.env.DEV ? "<dev>" : "<prod>"}
+      </span>
     </>
   );
 }

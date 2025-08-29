@@ -45,3 +45,5 @@ draft/
 *.log
 *.pdf
 *.docx
+
+.env
