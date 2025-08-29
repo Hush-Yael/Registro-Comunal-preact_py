@@ -153,7 +153,7 @@ export default () => {
                 </>
               }
               onChange={() =>
-                (documento.value = { ...documento.value, base: "plantilla" })
+                (documento.value = { base: "plantilla", tipo: "docx" })
               }
               checked={documento.value.base === "plantilla"}
             >
