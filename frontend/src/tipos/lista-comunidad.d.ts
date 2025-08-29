@@ -2,7 +2,7 @@ import { OPCIONES_FILTROS } from "~/constantes/lista-comunidad";
 import { DatosComunidad } from ".";
 
 export type FiltroKey =
-  | Exclude<keyof DatosComunidad, "nombres" | "apellidos" | "id" | "patologia">
+  | Exclude<keyof DatosComunidad, "nombres" | "apellidos" | "id">
   | "Nombres y apellidos";
 
 export type FiltroId<ColumnaId extends FiltroKey> =
