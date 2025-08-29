@@ -141,7 +141,7 @@ const importar = async (e: Event) => {
     )
   ) {
     const contraseña = prompt(
-      "Por favor, ingrese la contraseña para confirmar la operación:"
+      `Por favor, ingrese la contraseña de este usuario (${sesion.value.usuario}) para confirmar la operación:`
     );
 
     if (!contraseña || !contraseña.trim()) {
