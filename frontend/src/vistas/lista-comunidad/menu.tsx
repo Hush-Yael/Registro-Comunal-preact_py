@@ -47,8 +47,12 @@ export default (props: { tabla: Table<DatosComunidad> }) => {
 
           <Menu.Item
             class="dropdown-item"
-            // @ts-expect-error: no importa
-            onSelect={props.tabla.resetColumnFilters}
+            onSelect={() => {
+              props.tabla.resetColumnFilters();
+              document
+                .querySelectorAll("[name=filtro]")
+                .forEach((f) => ((f as HTMLInputElement).value = ""));
+            }}
           >
             <Iconos.LimpiarFiltros />
             Limpiar filtros
