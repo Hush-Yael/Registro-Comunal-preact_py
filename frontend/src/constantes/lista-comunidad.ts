@@ -32,7 +32,10 @@ export const configuracionFiltros = useLocalStorage({
     // eslint-disable-next-line no-unused-vars
     {} as { [key in FiltroKey]: FiltroId<FiltroKey> }
   ),
-  validacion: (v) => typeof v === "object" && Object.keys(v).length > 0,
+  validacion: (v) =>
+    typeof v === "object" &&
+    Object.keys(v).length === COLUMNAS_FILTRABLES.length &&
+    COLUMNAS_FILTRABLES.every((c) => c in v),
 });
 
 export const OPCIONES_FILTROS = {
