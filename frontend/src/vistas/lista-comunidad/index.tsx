@@ -82,14 +82,8 @@ export default () => {
       size: 150,
       meta: {
         filterInputValuePattern: /\d|-/,
-        filterVariant: (
-          [
-            "igual-a",
-            "diferente-de",
-            "antes-de",
-            "despues-de",
-          ] as FiltroId<"fecha_nacimiento">[]
-        )
+        filterVariant: // el cálculo requiere que sea una fecha válida
+        (["antes-de", "despues-de"] as FiltroId<"fecha_nacimiento">[])
           // @ts-expect-error: el tipo del valor es correcto
           .includes(configuracionFiltros.value["fecha_nacimiento"])
           ? "date"
