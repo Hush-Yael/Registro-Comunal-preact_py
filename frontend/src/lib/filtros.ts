@@ -112,20 +112,35 @@ export const funcionFiltro = <T extends RowData>(
   const valorFilaActual: string = fila.getValue(idColumna);
   if (!valorFilaActual) return false;
 
-  switch (configuracionFiltros.value[idColumna]) {
+  return filtrarFila(
+    { buscado: valorBuscado, filaActual: valorFilaActual },
+    idColumna,
+    configuracionFiltros.value[idColumna]
+  );
+};
+
+export const filtrarFila = <C extends FiltroKey>(
+  valores: {
+    buscado: string;
+    filaActual: string;
+  },
+  idColumna: C,
+  filtroColumna: FiltroId<C>
+) => {
+  switch (filtroColumna) {
     case "contiene": {
-      return busquedaContiene(idColumna, valorFilaActual, valorBusqueda);
+      return busquedaContiene(idColumna, valores.filaActual, valores.buscado);
     }
 
     case "no-contiene": {
-      return !busquedaContiene(idColumna, valorFilaActual, valorBusqueda);
+      return !busquedaContiene(idColumna, valores.filaActual, valores.buscado);
     }
 
     case "igual-a": {
       return busquedaSemiExacta(
         idColumna,
-        valorFilaActual,
-        valorBusqueda,
+        valores.filaActual,
+        valores.buscado,
         true
       );
     }
@@ -133,8 +148,8 @@ export const funcionFiltro = <T extends RowData>(
     case "diferente-de": {
       return busquedaSemiExacta(
         idColumna,
-        valorFilaActual,
-        valorBusqueda,
+        valores.filaActual,
+        valores.buscado,
         false
       );
     }
@@ -142,8 +157,8 @@ export const funcionFiltro = <T extends RowData>(
     case "mayor-a": {
       return busquedaMayorOMenor(
         idColumna,
-        valorFilaActual,
-        valorBusqueda,
+        valores.filaActual,
+        valores.buscado,
         true
       );
     }
@@ -151,25 +166,25 @@ export const funcionFiltro = <T extends RowData>(
     case "menor-a": {
       return busquedaMayorOMenor(
         idColumna,
-        valorFilaActual,
-        valorBusqueda,
+        valores.filaActual,
+        valores.buscado,
         false
       );
     }
 
     case "despues-de": {
-      return busquedaAntesODespues(valorFilaActual, valorBusqueda, false);
+      return busquedaAntesODespues(valores.filaActual, valores.buscado, false);
     }
 
     case "antes-de": {
-      return busquedaAntesODespues(valorFilaActual, valorBusqueda, true);
+      return busquedaAntesODespues(valores.filaActual, valores.buscado, true);
     }
 
     case "empieza-con": {
       return busquedaEmpiezaOTerminaCon(
         idColumna,
-        valorFilaActual,
-        valorBusqueda,
+        valores.filaActual,
+        valores.buscado,
         true
       );
     }
@@ -177,8 +192,8 @@ export const funcionFiltro = <T extends RowData>(
     case "no-empieza-con": {
       return !busquedaEmpiezaOTerminaCon(
         idColumna,
-        valorFilaActual,
-        valorBusqueda,
+        valores.filaActual,
+        valores.buscado,
         true
       );
     }
@@ -186,8 +201,8 @@ export const funcionFiltro = <T extends RowData>(
     case "termina-con": {
       return busquedaEmpiezaOTerminaCon(
         idColumna,
-        valorFilaActual,
-        valorBusqueda,
+        valores.filaActual,
+        valores.buscado,
         false
       );
     }
@@ -195,8 +210,8 @@ export const funcionFiltro = <T extends RowData>(
     case "no-termina-con": {
       return !busquedaEmpiezaOTerminaCon(
         idColumna,
-        valorFilaActual,
-        valorBusqueda,
+        valores.filaActual,
+        valores.buscado,
         false
       );
     }
