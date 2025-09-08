@@ -193,7 +193,6 @@ export default () => {
           onRowSelectionChange: setSeleccion,
           onColumnVisibilityChange: setVisibilidad,
           onPaginationChange: setPaginacion,
-          autoResetPageIndex: false,
           getFilteredRowModel: getFilteredRowModel(),
         }}
         columnas={columnas}
