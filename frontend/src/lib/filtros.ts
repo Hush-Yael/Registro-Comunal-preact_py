@@ -14,7 +14,7 @@ const busquedaMayorOMenor = (
   columna: FiltroKey,
   valorActual: string,
   valorBuscado: string,
-  mayor = true
+  mayor: boolean
 ) => {
   if (columna === "fecha_nacimiento") {
     const edad = añosDesdeFecha(valorActual),
@@ -126,7 +126,12 @@ export const funcionFiltro = <T extends RowData>(
     }
 
     case "mayor-a": {
-      return busquedaMayorOMenor(idColumna, valorFilaActual, valorBusqueda);
+      return busquedaMayorOMenor(
+        idColumna,
+        valorFilaActual,
+        valorBusqueda,
+        true
+      );
     }
 
     case "menor-a": {
