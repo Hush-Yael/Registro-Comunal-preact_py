@@ -88,16 +88,20 @@ const busquedaSemiExacta = (
   columna: FiltroKey,
   valorActual: string,
   valorBuscado: string,
+  igual?: boolean
 ) => {
-  if (columna === "cedula")
-    return (
-      Number.parseInt(valorActual.replace(/\./g, "")) ===
-      Number.parseInt(valorBusqueda.replace(/\./g, ""))
-    );
-  else if (COLUMNAS_NUMEROS.includes(columna))
-    return valorActual.trim() === valorBusqueda.trim();
+  let val1: string | number, val2: string | number;
 
-  return normalizarString(valorActual) === normalizarString(valorBusqueda);
+  if (columna === "cedula")
+    (val1 = Number.parseInt(valorActual.replace(/\./g, ""))),
+      (val2 = Number.parseInt(valorBuscado.replace(/\./g, "")));
+  else if (COLUMNAS_NUMEROS.includes(columna))
+    (val1 = valorActual.trim()), (val2 = valorBuscado.trim());
+  else
+    (val1 = normalizarString(valorActual)),
+      (val2 = normalizarString(valorBuscado));
+
+  return igual ? val1 === val2 : val1 !== val2;
 };
 
 export const funcionFiltro = <T extends RowData>(
@@ -118,11 +122,21 @@ export const funcionFiltro = <T extends RowData>(
     }
 
     case "igual-a": {
-      return busquedaIgualA(idColumna, valorFilaActual, valorBusqueda);
+      return busquedaSemiExacta(
+        idColumna,
+        valorFilaActual,
+        valorBusqueda,
+        true
+      );
     }
 
     case "diferente-de": {
-      return !busquedaIgualA(idColumna, valorFilaActual, valorBusqueda);
+      return busquedaSemiExacta(
+        idColumna,
+        valorFilaActual,
+        valorBusqueda,
+        false
+      );
     }
 
     case "mayor-a": {
