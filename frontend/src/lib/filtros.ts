@@ -1,17 +1,17 @@
-import { RowData, Row } from "@tanstack/react-table";
+import type { RowData, Row } from "@tanstack/react-table";
 import {
   añosDesdeFecha,
   comparacionInsensitiva,
   normalizarString,
 } from "~/lib";
-import { COLUMNAS_FILTRABLES } from "~/constantes";
 import {
   COLUMNAS_NUMEROS,
   configuracionFiltros,
 } from "~/constantes/lista-comunidad";
+import type { FiltroId, FiltroKey } from "~/tipos/lista-comunidad";
 
 const busquedaMayorOMenor = (
-  columna: (typeof COLUMNAS_FILTRABLES)[number],
+  columna: FiltroKey,
   valorActual: string,
   valorBusqueda: string,
   mayor = true
@@ -53,7 +53,7 @@ const busquedaAntesODespues = (
 };
 
 const busquedaContiene = (
-  columna: (typeof COLUMNAS_FILTRABLES)[number],
+  columna: FiltroKey,
   valorActual: string,
   valorBusqueda: string
 ) => {
@@ -68,7 +68,7 @@ const busquedaContiene = (
 };
 
 const busquedaEmpiezaOTerminaCon = (
-  columna: (typeof COLUMNAS_FILTRABLES)[number],
+  columna: FiltroKey,
   valorActual: string,
   valorBusqueda: string,
   empieza: boolean
@@ -84,7 +84,7 @@ const busquedaEmpiezaOTerminaCon = (
 };
 
 const busquedaIgualA = (
-  columna: (typeof COLUMNAS_FILTRABLES)[number],
+  columna: FiltroKey,
   valorActual: string,
   valorBusqueda: string
 ) => {
@@ -101,7 +101,7 @@ const busquedaIgualA = (
 
 export const funcionFiltro = <T extends RowData>(
   fila: Row<T>,
-  idColumna: (typeof COLUMNAS_FILTRABLES)[number],
+  idColumna: FiltroKey,
   valorBusqueda: string
 ) => {
   const valorFilaActual: string = fila.getValue(idColumna);
