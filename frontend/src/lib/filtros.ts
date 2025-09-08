@@ -13,12 +13,12 @@ import type { FiltroId, FiltroKey } from "~/tipos/lista-comunidad";
 const busquedaMayorOMenor = (
   columna: FiltroKey,
   valorActual: string,
-  valorBusqueda: string,
+  valorBuscado: string,
   mayor = true
 ) => {
   if (columna === "fecha_nacimiento") {
     const edad = añosDesdeFecha(valorActual),
-      edadBusqueda = Number.parseInt(valorBusqueda);
+      edadBusqueda = Number.parseInt(valorBuscado);
 
     if (!edad || isNaN(edadBusqueda) || edadBusqueda < 0) return false;
 
@@ -29,7 +29,7 @@ const busquedaMayorOMenor = (
       columna === "cedula" ? valorActual.replace(/\./g, "") : valorActual
     ),
     numBusqueda = Number.parseInt(
-      columna === "cedula" ? valorBusqueda.replace(/\./g, "") : valorBusqueda
+      columna === "cedula" ? valorBuscado.replace(/\./g, "") : valorBuscado
     );
 
   return mayor ? numActual > numBusqueda : numActual < numBusqueda;
@@ -37,10 +37,10 @@ const busquedaMayorOMenor = (
 
 const busquedaAntesODespues = (
   valorActual: string,
-  valorBusqueda: string,
+  valorBuscado: string,
   antes?: boolean
 ) => {
-  const fechaBusqueda = new Date(valorBusqueda.trim()),
+  const fechaBusqueda = new Date(valorBuscado.trim()),
     fechaActual = new Date(valorActual);
 
   if (
@@ -55,38 +55,39 @@ const busquedaAntesODespues = (
 const busquedaContiene = (
   columna: FiltroKey,
   valorActual: string,
-  valorBusqueda: string
+  valorBuscado: string
 ) => {
   if (columna === "cedula")
     return valorActual
       .replace(/\./g, "")
-      .includes(valorBusqueda.replace(/\./g, ""));
+      .includes(valorBuscado.replace(/\./g, ""));
   else if (COLUMNAS_NUMEROS.includes(columna))
-    return valorActual.trim().includes(valorBusqueda.trim());
+    return valorActual.trim().includes(valorBuscado.trim());
 
-  return comparacionInsensitiva(valorActual, valorBusqueda);
+  return comparacionInsensitiva(valorActual, valorBuscado);
 };
 
 const busquedaEmpiezaOTerminaCon = (
   columna: FiltroKey,
   valorActual: string,
-  valorBusqueda: string,
+  valorBuscado: string,
   empieza: boolean
 ) => {
   const fn = empieza ? "startsWith" : "endsWith";
 
   if (columna === "cedula")
-    return valorActual.replace(/\./g, "")[fn](valorBusqueda.replace(/\./g, ""));
+    return valorActual.replace(/\./g, "")[fn](valorBuscado.replace(/\./g, ""));
   else if (COLUMNAS_NUMEROS.includes(columna))
-    return valorActual.trim()[fn](valorBusqueda.trim());
+    return valorActual.trim()[fn](valorBuscado.trim());
 
-  return comparacionInsensitiva(valorActual, valorBusqueda, fn);
+  return comparacionInsensitiva(valorActual, valorBuscado, fn);
 };
 
-const busquedaIgualA = (
+// es semi exacta porque se ignoran los espacios y los acentos
+const busquedaSemiExacta = (
   columna: FiltroKey,
   valorActual: string,
-  valorBusqueda: string
+  valorBuscado: string,
 ) => {
   if (columna === "cedula")
     return (
@@ -102,7 +103,7 @@ const busquedaIgualA = (
 export const funcionFiltro = <T extends RowData>(
   fila: Row<T>,
   idColumna: FiltroKey,
-  valorBusqueda: string
+  valorBuscado: string
 ) => {
   const valorFilaActual: string = fila.getValue(idColumna);
   if (!valorFilaActual) return false;
