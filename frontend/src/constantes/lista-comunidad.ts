@@ -68,4 +68,9 @@ export const OPCIONES_FILTROS = {
   },
 } as const;
 
-export const COLUMNAS_NUMEROS: FiltroKey[] = ["cedula", "edad", "numero_casa"];
+export const COLUMNAS_NUMEROS: FiltroKey[] = [
+  "cedula",
+  "edad",
+  "numero_casa",
+  "fecha_nacimiento",
+];
