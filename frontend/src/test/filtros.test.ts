@@ -20,14 +20,16 @@ const conInverso = (
   filtro: FiltroId<FiltroKey>,
   v: Valores
 ): {
+  // eslint-disable-next-line no-unused-vars
   [k in FiltroId<FiltroKey>]: Valores;
-} => ({
-  [filtro]: v,
-  [getInverso(filtro)]: v.map((v) => ({
-    ...v,
-    retorna: !v.retorna,
-  })) as Valores,
-});
+} =>
+  ({
+    [filtro]: v,
+    [getInverso(filtro)]: v.map((v) => ({
+      ...v,
+      retorna: !v.retorna,
+    })) as Valores,
+  } as any);
 
 const valoresBúsqueda: V<FiltroKey> = {
   "Nombres y apellidos": {
