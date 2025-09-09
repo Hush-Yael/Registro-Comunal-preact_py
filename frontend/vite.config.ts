@@ -1,10 +1,13 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import preact from "@preact/preset-vite";
 import legacy from "@vitejs/plugin-legacy";
 import tailwindcss from "@tailwindcss/vite";
 import { resolve } from "path";
 
 export default defineConfig({
+  test: {
+    environment: "jsdom", // or 'happy-dom'
+  },
   plugins: [
     preact(),
     tailwindcss(),
