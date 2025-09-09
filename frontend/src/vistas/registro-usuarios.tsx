@@ -39,7 +39,7 @@ export default () => {
             ? () => {
                 const p = fetch(rutaApi(`obtener-datos-usuario/${ID}`));
 
-                setTimeout(() => {
+                window.setTimeout(() => {
                   toast.promise(p, {
                     loading: "Obteniendo datos...",
                     error: (r: string) =>
@@ -159,7 +159,7 @@ const Datos = () => {
       <Input
         onChange={(e) => {
           clearTimeout(timeout);
-          timeout = setTimeout(
+          timeout = window.setTimeout(
             () => buscarNombre((e.target as HTMLInputElement).value.trim()),
             500
           );

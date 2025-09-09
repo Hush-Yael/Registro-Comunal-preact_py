@@ -191,7 +191,7 @@ const irAlRegistro = <T extends TablaDatos>(
 
   props.virtualizador.scrollToIndex(n);
 
-  setTimeout(() => {
+  window.setTimeout(() => {
     const fila = document.querySelector(`[data-index="${n}"]`);
 
     if (fila) {
@@ -201,7 +201,7 @@ const irAlRegistro = <T extends TablaDatos>(
       });
 
       // esperar el scroll
-      setTimeout(() => {
+      window.setTimeout(() => {
         fila.animate(
           [
             {

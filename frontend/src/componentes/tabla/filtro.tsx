@@ -28,7 +28,7 @@ export default <T extends TablaDatos>({
   const change = (value: string) => {
     clearTimeout(timeout);
 
-    timeout = setTimeout(() => {
+    timeout = window.setTimeout(() => {
       column.setFilterValue(value);
     }, 500);
   };

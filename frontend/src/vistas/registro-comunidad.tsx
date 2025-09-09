@@ -84,7 +84,7 @@ export default () => {
             ? () => {
                 const p = fetch(rutaApi(`obtener-datos-comunidad/${editar}`));
 
-                setTimeout(() => {
+                window.setTimeout(() => {
                   toast.promise(p, {
                     loading: "Obteniendo datos...",
                     error: (r: string) =>
@@ -241,7 +241,7 @@ const Campos = () => {
         minlength={1}
         onChange={(e) => {
           clearTimeout(timeout);
-          timeout = setTimeout(
+          timeout = window.setTimeout(
             () =>
               buscarCedula(
                 parseInt(
